@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome');});
+
+
+
+
+Route::get('/listar_alumno',[AlumnoController::class,'index2'])->name('listarAlumno');
+Route::post('/import', [AlumnoController::class, 'import'])->name('import');
+
+
+Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
+

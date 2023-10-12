@@ -1,5 +1,25 @@
 import './bootstrap';
 import { createApp } from "vue";
-import app from "./layouts/app.vue";
+import app from "./src/app.vue";
 import vuetify from "./vuetify";
-createApp(app).use(vuetify).mount("#app");
+
+import { createRouter, createWebHistory } from 'vue-router';
+
+import '@mdi/font/css/materialdesignicons.min.css';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/', component: () => import('./src/components/inicio.vue') },
+        { path: '/dashboard', component: () => import('./src/components/dashboard.vue') },
+        { path: '/login', component: () => import('./src/components/login.vue') },
+        { path: '/navegacion', component: () => import('./src/components/barra_navegacion.vue') },
+        { path: '/publicaciones', component: () => import('./src/components/publicaciones.vue') }
+
+    ],
+})
+
+createApp(app)
+.use(vuetify)
+.use(router)
+.mount("#app");
