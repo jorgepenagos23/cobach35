@@ -7,6 +7,7 @@
           @click="rail = false" >
           <v-list-item
             title="Plantel 35"  nav >
+            <p>{{ mensaje }}</p>
             <template v-slot:append>
               <v-btn
                 variant="text"
@@ -41,8 +42,12 @@
 </style>
 <script>
 export default {
+
+
+
   data () {
     return {
+      mensaje: "Hola",
       drawer: true,
       rail: true,
     }

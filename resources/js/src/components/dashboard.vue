@@ -3,10 +3,9 @@
 
   <header>
 
-    <inicioVue> </inicioVue>
+    <navegacion> </navegacion>
 
         </header>
-     <navegacion> </navegacion>
 
         <body>
 
@@ -215,23 +214,14 @@
 
 </div>
 
-<div class="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2">
-</div>
+
 </div>
 
 </body>
 
 </template>
 
+
 <script>
-//import Swal from "sweetalert2";
-//import navegacion from "../../../js/Componentes/navegacion.vue";
-//import inicioVue from "../inicio.vue";
-
-
-
-
-
-
 
 </script>

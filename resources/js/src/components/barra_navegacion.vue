@@ -1,42 +1,42 @@
 <template>
-    <v-card style="dark">
-      <v-layout>
-        <v-navigation-drawer
-          v-model="drawer"
-          :rail="rail"
-          permanent
-          @click="rail = false" >
+  <v-card>
+    <v-layout>
+      <!-- Barra de navegación -->
+      <v-navigation-drawer
+        color="#226f54"
+        expand-on-hover
+        rail
+        style="position: fixed; z-index: 4;"
+        :width="drawerWidth"
+      >
+        <v-list>
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-            title="John Leider"  nav >
-            <template v-slot:append>
-              <v-btn
-                variant="text"
-                icon="mdi-chevron-left"
-                @click.stop="rail = !rail"
-              ></v-btn>
-            </template>
-          </v-list-item>
-  
-          <v-divider></v-divider>
-  
-          <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
-          </v-list>
-        </v-navigation-drawer>
-      </v-layout>
-    </v-card>
-  </template>
-  
-  <script>
-    export default {
-      data () {
-        return {
-          drawer: true,
-          rail: true,
-        }
-      },
-    }
-  </script>
+            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+            title="Usuario"
+            subtitle="Rol"
+          ></v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list density="compact" nav>
+          <v-list-item :to="{ name: 'dashboard' }" prepend-icon="mdi-folder" title="Inicio"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-multiple" title="Base de Datos" value="shared"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title="Configuracion " value="starred"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title="Modo Dark" @click="toggleTheme"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title="Salir" @click="logout"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title=" Vista Alumno " @click="$router.push('/index-alumno')"></v-list-item>
+          <v-list-item prepend-icon="mdi-star" title=" banner " @click="$router.push('/banner')"></v-list-item>
+
+        </v-list>
+      </v-navigation-drawer>
+
+   
+    </v-layout>
+  </v-card>
+</template>
+
+<script>
+
+
+</script>

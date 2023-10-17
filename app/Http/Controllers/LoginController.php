@@ -24,12 +24,18 @@ class LoginController extends Controller
 
                 return response()->json([
                     'status' => 'success',
-                    'token' => $token
+                    'access_token' => $token,
+                     'user' => $user,
+
                 ]);
             }
         }
-
         throw new AutenticateExeption;
     }
-
+    
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json(['message' => 'Cierre de sesión exitoso'], 200);
+    }
 }
