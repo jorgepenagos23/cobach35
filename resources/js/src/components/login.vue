@@ -5,12 +5,11 @@
 
   <main>
     <v-container>
-       <pre>{{ user }}</pre>
       <v-card theme="light" max-width="800" class="mx-auto">
         <v-card width="320" theme="light" class="mx-auto mt-5">
           <v-card-title class="pb-0">
             <v-img
-              src="URL_DE_TU_LOGO"
+              src="https://play-lh.googleusercontent.com/X2YowxHVznInuQ23NaoE_rbS7Kq3V0nhnRbxUm7YHcHIndNNXAcG5hKg6nxD5930_w"
               max-height="150"
               max-width="150"
               aspect-ratio="1"
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import banner from '../components/inicio.vue';
+import banner from "../components/inicio.vue";
 
 export default {
   data() {
@@ -88,4 +87,12 @@ main {
   margin-top: 60px;
   padding: 20px;
 }
+
+
+h1{
+
+  text-align: center;
+  
+}
+
 </style>

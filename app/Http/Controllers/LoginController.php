@@ -33,9 +33,20 @@ class LoginController extends Controller
         throw new AutenticateExeption;
     }
     
-    public function logout(Request $request)
-    {
-        $request->user()->token()->revoke();
-        return response()->json(['message' => 'Cierre de sesión exitoso'], 200);
+    public function logout()
+{
+    // Verificar si el usuario está autenticado
+    if (Auth::check()) {
+        // Revocar todos los tokens de autenticación del usuario
+        Auth::user()->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+        return response()->json(['message' => 'Sesión cerrada exitosamente']);
+    } else {
+        return response()->json(['message' => 'No se pudo cerrar sesión. El usuario no está autenticado.']);
     }
+
+    
+}
+
 }

@@ -25,13 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) { re
 });
 Route::post('/logout',[LoginController::class, 'logout']);
 
-
 ///// rutas nuevas 
 Route::apiResource('v1/alumnos',AlumnoController::class);
 Route::post('v1/login', [LoginController::class, 'authenticate']);
 
 Route::get('user/index', [UserController::class, 'index']);
-
 Route::post('user/create',[UserController::class,'create']);
 
 

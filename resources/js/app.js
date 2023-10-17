@@ -14,7 +14,9 @@ const router = createRouter({
         { path: '/dashboard', component: () => import('./src/components/dashboard.vue') },
         { path: '/login', component: () => import('./src/components/login.vue') },
         { path: '/navegacion', component: () => import('./src/components/barra_navegacion.vue') },
-        { path: '/publicaciones', component: () => import('./src/components/publicaciones.vue') }
+        { path: '/publicaciones', component: () => import('./src/components/publicaciones.vue') },
+        { path: '/main_alumnos', component: () => import('./src/components/alumnos/Main.vue') },
+        { path: '/tabla_alumnos', component: () => import('./src/components/alumnos/TablaAlumnos.vue') }
 
     ],
 })
