@@ -42,4 +42,3 @@ Route::get('user/index', [UserController::class, 'index'])->middleware('auth:san
 Route::post('user/create',[UserController::class,'create']);
 
 Route::post('/logout',[LoginController::class, 'logout']);
-

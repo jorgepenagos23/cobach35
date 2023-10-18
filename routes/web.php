@@ -20,7 +20,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
 
 
-Route::get('/', function () { return view('welcome');});
+Route::get('/', function () { return view('welcome');})->name('welcome');
 Route::get('/listar_alumno',[AlumnoController::class,'index2'])->name('listarAlumno');
 Route::post('/import', [AlumnoController::class, 'import'])->name('import');
 Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');

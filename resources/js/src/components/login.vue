@@ -64,7 +64,8 @@ export default {
     password: this.password,
 }, {
     headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization':'accessToken'
     }
 })
 .then((response) => {
