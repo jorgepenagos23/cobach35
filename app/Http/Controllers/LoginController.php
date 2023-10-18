@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\AutenticateExeption;
-
+use Laravel\Sanctum\PersonalAccessToken;
 class LoginController extends Controller
 {
     public function authenticate(Request $request)
@@ -33,20 +33,28 @@ class LoginController extends Controller
         throw new AutenticateExeption;
     }
     
-    public function logout()
-{
-    // Verificar si el usuario está autenticado
-    if (Auth::check()) {
-        // Revocar todos los tokens de autenticación del usuario
-        Auth::user()->tokens->each(function ($token, $key) {
-            $token->delete();
-        });
-        return response()->json(['message' => 'Sesión cerrada exitosamente']);
-    } else {
-        return response()->json(['message' => 'No se pudo cerrar sesión. El usuario no está autenticado.']);
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+    
+        if ($user) {
+            $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+        }
+    
+        Auth::logout();
+        $request->session()->invalidate();
+    
+        return response()->json(['message' => 'Sesión cerrada y token revocado']);
+    }
+    
+
+    public function revokeAllTokens()
+    {
+        PersonalAccessToken::where('id', '>', 0)->delete();
+        
+        return response()->json(['message' => 'Todos los tokens han sido revocados']);
     }
 
-    
-}
+
 
 }

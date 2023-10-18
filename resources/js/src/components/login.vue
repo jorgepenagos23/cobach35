@@ -47,6 +47,7 @@
 import banner from "../components/inicio.vue";
 
 export default {
+  
   data() {
     return {
       email: "",
@@ -56,20 +57,38 @@ export default {
     };
   },
   methods: {
+    
     login() {
       axios.post("/api/v1/login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log("Datos de inicio de sesión:", this.email, this.password , this.token);
-   
-          this.$router.push('/dashboard');
-        })
+    email: this.email,
+    password: this.password,
+}, {
+    headers: {
+        'Accept': 'application/json'
+    }
+})
+.then((response) => {
+  // Accede a los datos en la respuesta
+  const status = response.data.status;
+  const accessToken = response.data.access_token;
+  const user = response.data.user;
 
-        .catch((error) => {
-          console.error("Error al iniciar sesión:", error);
-        });
+  // Hacer lo que necesites con estos datos
+  console.log("Estado:", status);
+  console.log("Token de acceso:", accessToken);
+  console.log("Datos del usuario:", user);
+
+  // Guarda los datos en el estado de tu componente Vue (si es necesario)
+  this.status = status;
+  this.accessToken = accessToken;
+  this.userData = user;
+
+    console.log("Datos de inicio de sesión:", this.email, this.password, this.token);
+    this.$router.push('/dashboard');
+})
+.catch((error) => {
+    console.error("Error al iniciar sesión:", error);
+});
     },
   },
   components: {
@@ -77,7 +96,10 @@ export default {
   },
  
 };
+
 </script>
+
+
 
 <style>
 @import 'tailwindcss/base';

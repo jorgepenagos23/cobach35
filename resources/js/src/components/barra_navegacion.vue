@@ -33,6 +33,7 @@ methods: {
   logout() {
         axios.post('/api/logout')
           .then(response => {
+            localStorage.removeItem('access_token');
             console.error('cerrado sesión correctamente:', response.status);
             window.location.reload();
           })
