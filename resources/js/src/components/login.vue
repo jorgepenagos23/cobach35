@@ -18,8 +18,8 @@
             <h1>Iniciar Sesión</h1>
           </v-card-title>
           <v-card-text>
-            <form @submit.prevent="login">
-              <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-email" />
+            <form @submit.prevent="loginUser({ email: email, password: password })">      
+            <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-email" />
               <v-text-field
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
@@ -49,6 +49,7 @@ import banner from "../components/inicio.vue";
 export default {
   data() {
     return {
+      
       email: "",
       password: "",
       user:{} ,
@@ -56,21 +57,23 @@ export default {
     };
   },
   methods: {
-    login() {
-      axios.post("/api/v1/login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log("Datos de inicio de sesión:", this.email, this.password , this.token);
-   
-          this.$router.push('/dashboard');
-        })
-
-        .catch((error) => {
-          console.error("Error al iniciar sesión:", error);
-        });
-    },
+ 
+    loginUser(credentials) {
+  axios
+    .post('/api/v1/login', credentials) // Asegúrate de que la URL sea la correcta
+    .then(response => {
+      // Almacenar el token de autenticación en el almacenamiento local o en una cookie
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      this.$router.push('/dashboard'); // Redirigir a la página de inicio después del inicio de sesión
+      // Redirigir a la página de inicio o realizar otras acciones
+    })
+    .catch(error => {
+      console.error('Error de inicio de sesión', error);
+    });
+}
+    
+    
   },
   components: {
     banner,

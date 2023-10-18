@@ -1,42 +1,64 @@
 <template>
   <v-app>
-    <v-navigation-drawer 
-      v-model="drawer"
-      :rail="rail"
-      permanent
-      @click="rail = false"
-    >
-      <!-- Contenido de la barra de navegación -->
-      <v-list-item title="Plantel 35" nav>
-        <p>{{ mensaje }}</p>
-        <template v-slot:append>
-          <v-btn variant="text" icon="mdi-chevron-left" @click.stop="rail = !rail"></v-btn>
-        </template>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list density="compact" nav color="success">
-        <v-list-item to="/" prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-        <v-list-item to="/login" prepend-icon="mdi-account" title="Sistema" value="account"></v-list-item>
-        <v-list-item to="/publicaciones" prepend-icon="mdi-newspaper" title="Noticias" value="users"></v-list-item>
+    <v-navigation-drawer app>
+      <!-- ... otros elementos de navegación ... -->
+      <v-list dense>
+        <v-list-item to="/" link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Inicio</v-list-item-title>
+        </v-list-item>
+        <v-list-item to="/navegacion" link>
+          <v-list-item-icon>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Dashboard</v-list-item-title>
+        </v-list-item>
+        
+        <v-list-item to="/login" link>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Iniciar Sesión</v-list-item-title>
+        </v-list-item>
+   
+        <v-list-item to="/publicaciones" link>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>publicaciones</v-list-item-title>
+        </v-list-item>
+        <!-- Otros elementos de menú de navegación -->
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="#0a2463" style="position: fixed; top: 0; width: 100%;">
-      <v-img src="https://www.cobach.edu.mx/assets/img/contenido/logoCBC.png" max-width="100" max-height="30"></v-img>
-      <v-toolbar-title></v-toolbar-title>
+    <v-app-bar app>
+      <!-- ... contenido de la barra de la aplicación ... -->
     </v-app-bar>
 
-    <v-main style="padding-top: 200px;">
-      <!-- Contenido de la página -->
-      <router-view></router-view>
-    </v-main>
+    <!-- Contenido principal -->
+    <div class="main-content">
+
+
+    </div>
   </v-app>
 </template>
-<style>
-    @import 'tailwindcss/base';
-    @import 'tailwindcss/components';
-    @import 'tailwindcss/utilities';
+
+<style scoped>
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Alinea verticalmente el contenido al centro */
+  align-items: center; /* Alinea horizontalmente el contenido al centro */
+  height: 100vh; /* Ajusta la altura al 100% del viewport */
+}
 </style>
+
 <script>
 export default {
   data() {
@@ -46,5 +68,5 @@ export default {
       rail: true,
     };
   },
-}
+};
 </script>

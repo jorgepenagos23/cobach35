@@ -27,20 +27,41 @@
   </v-card>
 </template>
 
+
+
+
 <script>
-export default{
-methods: {
-  logout() {
-        axios.post('/api/logout')
-          .then(response => {
-            console.error('cerrado sesión correctamente:', response.status);
-            window.location.reload();
-          })
-          .catch(error => {
-            console.error('Error al cerrar sesión:', error);
-          });
-},
-  
-}
-}
+import banner from "../components/inicio.vue";
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      user:{} ,
+      showPassword: false,
+    };
+  },
+  methods: {
+    login() {
+      axios.post("/api/v1/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          console.log("Dce");
+   
+          this.$router.push('/dashboard');
+        })
+
+        .catch((error) => {
+          console.error("Error al  cerrar iniciar sesión:", error);
+        });
+    },
+  },
+  components: {
+    banner,
+  },
+ 
+};
 </script>

@@ -1,11 +1,11 @@
 <template>
-
-  <header>
- <navegacion> </navegacion>
-
-  </header>
-
-        
+<header>
+  <div>
+    <!-- Otro contenido de tu página de dashboard -->
+    <button @click="logout">Cerrar Sesión</button>
+  </div>
+</header>
+  
   <body>
 
 <v-container class="bg-gradient-to-r from-green-400 to-blue-500 ">
@@ -178,20 +178,29 @@ style="background-image: url('https://miro.medium.com/v2/resize:fit:720/format:w
 </body>
 </template>
 
+
 <script>
+export default {
+  methods: {
+  logout() {
+    axios
+      .post('/api/logout')
+      .then(response => {
+        console.log('Cierre de sesión exitoso');
+        // Elimina el token de autenticación
+        localStorage.removeItem('token');
 
-import navegacion from "../components/barra_navegacion.vue";
-
-  export default {
-   
-    components: {
-      navegacion,
-    },
-
-    methods:{
- 
- 
-   }
+        // Redirige al usuario a la página de inicio de sesión
+        this.$router.push('/login');
+      })
+      .catch(error => {
+        console.error('Error de cierre de sesión', error);
+      });
   }
+  // ... Otros métodos y propiedades de tu componente
+}
 
-  </script>
+
+  
+}
+</script>
