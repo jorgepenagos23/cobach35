@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permisos_usuarios', function (Blueprint $table) {
+        Schema::create('rol_permiso', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('rol_id');
+            $table->unsignedBigInteger('permiso_id');
+
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
-        Schema::dropIfExists('permisos_usuarios');
+        Schema::dropIfExists('rol_permiso');
     }
 };

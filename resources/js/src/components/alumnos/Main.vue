@@ -2,18 +2,18 @@
 
     <header>
       <navegacion></navegacion>
-      <h1>hola</h1>
 
     </header>
 
 
     <main>
         <div class="d-flex">
+          <tablaAlumnos></tablaAlumnos>
 
         </div>
+        
         <body>
 
-        <tablaAlumnos></tablaAlumnos>
 
 
           <subir-alumno>

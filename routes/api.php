@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 
@@ -32,11 +33,18 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('/revoke',[LoginController::class, 'revokeAllTokens']);
 
+
 ///// rutas nuevas 
-Route::apiResource('v1/alumnos',AlumnoController::class)->middleware('auth:sanctum');;
-Route::post('v1/login', [LoginController::class, 'authenticate']);
-
+Route::apiResource('v1/alumnos',AlumnoController::class)->middleware('auth:sanctum');
 Route::get('user/index', [UserController::class, 'index']);
-Route::post('user/create',[UserController::class,'create']);
 
+Route::get('user/boleta', [UserController::class, 'index']);
+
+
+
+
+
+Route::post('v1/login', [LoginController::class, 'authenticate']);
+Route::post('user/create',[UserController::class,'create']);
 Route::post('/logout',[LoginController::class, 'logout']);
+
