@@ -22,12 +22,19 @@ const router = createRouter({
         { path: '/app-bar', component: () => import('./src/components/app_bar.vue') },
         { path: '/menus', component: () => import('./src/components/menus.vue') },
         { path: '/editar-publicaciones', component: () => import('./src/components/publicaciones/Editar.vue') },
+        { path: '/dashboard-estudiante', component: () => import('./src/components/VistaEstudiantes/dashboard.vue') },
+
         {
+
             path: '/crear-publicaciones',
             name: 'crear_publicaciones',
             component: CrearPublicaciones,
-        }
+        },
 
+        { path: '/index-alumnos', component: () => import('./src/components/VistaEstudiantes/index.vue') },
+        { path: '/index-main', component: () => import('./src/components/index_main.vue') },
+        { path: '/index-descargas', component: () => import('./src/components/VistaEstudiantes/index_descargas.vue') },
+        { path: '/index-boletas', component: () => import('./src/components/VistaEstudiantes/index_boletas.vue') }
 
 
 

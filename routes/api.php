@@ -38,7 +38,10 @@ Route::middleware('auth:api')->group(function () {
 ///// rutas nuevas PARA API REST
 Route::apiResource('v1/alumnos', AlumnoController::class, [ 'parameters' => ['v1/alumnos' => 'alumno' ]])->middleware('auth:sanctum');
 
+
 Route::get('user/index', [UserController::class, 'index']);
+Route::get('user/index2', [UserController::class, 'index2']);
+
 Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');
 
 

@@ -61,13 +61,32 @@ class UserController extends Controller
 
         
     }
-    public function showBoletas()
+
+    public function index2(IndexRequest $request)
     {
-        // Lógica para recuperar y mostrar las boletas
-        $boletas = Boleta::all(); // Suponiendo que tienes un modelo Boleta
+        // Obtén los modelos o datos que deseas devolver
+        $users = User::all();
+        $boletas = Boleta::all();
+        $publicaciones = Publicacion::all();
+        $alumnos = Alumno::all();
+        
+        // Crear un arreglo para almacenar los datos combinados
+        $combinedData = [];
     
-        // Devuelve las boletas como un JSON
-        return response()->json(['boletas' => $boletas]);
+        // Itera a través de los usuarios para combinar los datos de "alumnos" y "users"
+        foreach ($users as $user) {
+            // Encuentra el alumno correspondiente basado en la relación por "matricula"
+            $alumno = $alumnos->where('matricula', $user->matricula)->first();
+    
+            // Combinar datos del usuario y el alumno
+            $combinedData[] = [
+                'user' => $user,
+                'alumno' => $alumno,
+            ];
+        }
+        
+        // Devuelve una respuesta JSON con los datos combinados
+        return response()->json($combinedData);
     }
 
  

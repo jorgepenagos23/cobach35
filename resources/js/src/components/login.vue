@@ -73,21 +73,21 @@ export default {
 .then((response) => {
 
 
-  // Accede a los datos en la respuesta
-  const status = response.data.status;
-  const accessToken = response.data.access_token;
-  const user = response.data.user;
+            // Accede a los datos en la respuesta
+            const status = response.data.status;
+            const accessToken = response.data.access_token;
+            const user = response.data.user;
 
-  // Hacer lo que necesites con estos datos
-  console.log("Estado:", status);
-  console.log("Token de acceso:", accessToken);
-  console.log("Datos del usuario:", user);
+            // Hacer lo que necesites con estos datos
+            console.log("Estado:", status);
+            console.log("Token de acceso:", accessToken);
+            console.log("Datos del usuario:", user);
 
-  // Guarda los datos en el estado de tu componente Vue (si es necesario)
-  this.status = status;
-  this.accessToken = accessToken;
-  this.userData = user;
-  if(response){
+            // Guarda los datos en el estado de tu componente Vue (si es necesario)
+            this.status = status;
+            this.accessToken = accessToken;
+            this.userData = user;
+            if(response){
 
     
     Swal.fire({
