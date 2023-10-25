@@ -46,6 +46,27 @@
           </div>
         </v-card>
       </v-container>
+
+      <v-container fluid class="bg-gradient-to-r from-green-400 to-blue-500 ">
+        <!-- Contenido de la página -->
+        <v-card color="#0d1b2a" theme="dark">
+          <div class="flex-no-wrap d-flex justify-space-between">
+            <div>
+              <v-card-title class="text-h5">REPORTES</v-card-title>
+              <v-card-subtitle>Manejador de Repores </v-card-subtitle>
+              <v-card-actions>
+                <button @click="$router.push('/main-reportes')" class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
+                  ENTRAR
+                </button>
+              </v-card-actions>
+            </div>
+            <v-avatar class="ma-3" size="125" rounded="0">
+              <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKPMoA5Knj1TmQv6M7YHccrbwfRrjujwHnIQ&usqp=CAU"></v-img>
+            </v-avatar>
+          </div>
+        </v-card>
+      </v-container>
+
    </body>
     </v-app>
   </div>

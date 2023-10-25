@@ -40,14 +40,28 @@
 }
 </style>
 <script>
+import Swal from 'sweetalert2';
+
 export default{
+  
 methods: {
   logout() {
         axios.post('/api/logout')
           .then(response => {
+           if(response){
+            Swal.fire({
+                background: 'rgba(238, 59, 27)', // Estilo de fondo definido en tu CSS
+                icon: 'success',
+                title: '¡Hasta pronto!',
+                text: 'Has cerrado sesión exitosamente.',
+                showConfirmButton: false,
+                timer: 7000 // Cambia el tiempo que deseas que aparezca la alerta
+                });
+                window.location.reload();
+
+           }
             localStorage.removeItem('access_token');
-            console.error('cerrado sesión correctamente:', response.status);
-            window.location.reload();
+
           })
           .catch(error => {
             console.error('Error al cerrar sesión:', error);

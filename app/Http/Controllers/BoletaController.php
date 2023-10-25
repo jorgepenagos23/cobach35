@@ -16,7 +16,11 @@ class BoletaController extends Controller
         // Lógica para obtener las boletas en formato JSON
         $boletas = Boleta::all();
 
-        return response()->json($boletas);
+        return response()->json([
+            'boletas' => $boletas,
+            'message' => 'Solicitud API '
+
+        ] ,200);
     }
 
 

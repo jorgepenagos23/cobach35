@@ -7,6 +7,8 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PublicacionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,20 +33,30 @@ Route::middleware('auth:api')->group(function () {
 });
 
 
-Route::post('/revoke',[LoginController::class, 'revokeAllTokens']);
 
 
-///// rutas nuevas 
-Route::apiResource('v1/alumnos',AlumnoController::class)->middleware('auth:sanctum');
+///// rutas nuevas PARA API REST
+Route::apiResource('v1/alumnos', AlumnoController::class, [ 'parameters' => ['v1/alumnos' => 'alumno' ]])->middleware('auth:sanctum');
+
 Route::get('user/index', [UserController::class, 'index']);
-
-Route::get('user/boleta', [UserController::class, 'index']);
-
+Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');
 
 
+Route::get('v1/publicacion', [PublicacionController::class,'index'])->middleware('auth:sanctum');
+Route::get('v1/publicacion/create', [PublicacionController::class, 'create'])->middleware('auth:sanctum');
+Route::post('v1/publicacion', [PublicacionController::class, 'store'])->middleware('auth:sanctum');
+Route::get('v1/publicacion/{id}', [PublicacionController::class, 'show'])->middleware('auth:sanctum');
+Route::get('v1/publicacion/{id}/edit', [PublicacionController::class, 'edit'])->middleware('auth:sanctum');
+Route::put('v1/publicacion/{id}', [PublicacionController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('v1/publicacion/{id}', [PublicacionController::class, 'destroy'])->middleware('auth:sanctum');
 
 
+
+
+
+// POST NO MOVER 
 Route::post('v1/login', [LoginController::class, 'authenticate']);
 Route::post('user/create',[UserController::class,'create']);
 Route::post('/logout',[LoginController::class, 'logout']);
+Route::post('/revoke',[LoginController::class, 'revokeAllTokens']);
 

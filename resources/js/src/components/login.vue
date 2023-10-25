@@ -45,6 +45,8 @@
 
 <script>
 import banner from "../components/inicio.vue";
+import Swal from 'sweetalert2';
+
 
 export default {
   
@@ -69,6 +71,8 @@ export default {
     }
 })
 .then((response) => {
+
+
   // Accede a los datos en la respuesta
   const status = response.data.status;
   const accessToken = response.data.access_token;
@@ -83,9 +87,22 @@ export default {
   this.status = status;
   this.accessToken = accessToken;
   this.userData = user;
+  if(response){
 
+    
+    Swal.fire({
+              icon: "success",
+              title: "Bienvenido!",
+              text: "Has iniciado sesión exitosamente.",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+  }
+  
     console.log("Datos de inicio de sesión:", this.email, this.password, this.token);
     this.$router.push('/dashboard');
+
+    
 })
 .catch((error) => {
     console.error("Error al iniciar sesión:", error);

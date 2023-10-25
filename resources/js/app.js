@@ -4,6 +4,7 @@ import app from "./src/app.vue";
 import vuetify from "./vuetify";
 import CrearPublicaciones from  "./src/components/publicaciones/Crear.vue"
 import { createRouter, createWebHistory } from 'vue-router';
+import 'vuetify/styles';
 
 import '@mdi/font/css/materialdesignicons.min.css';
 

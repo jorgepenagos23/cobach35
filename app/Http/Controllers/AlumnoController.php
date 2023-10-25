@@ -13,13 +13,12 @@ class AlumnoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){    
-
-        $alumno = Alumno::get();
-
-        return Alumno::all();
+    public function index()
+    {
+        $alumnos = Alumno::all();
+        return response()->json(['alumnos' => $alumnos], 200);
     }
-
+   
     public function index2()
     {
         $alumno = Alumno::get();
