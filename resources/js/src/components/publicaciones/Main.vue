@@ -44,13 +44,15 @@
             <v-list-item>
               <v-list-item-title>{{ publicacion.titulo }}</v-list-item-title>
               <template v-slot:append>
-              <v-btn  @click="editarPublicacion(publicacion)" size="small" variant="secondary">
+                <v-btn @click="editarPublicacion(publicacion.id)" size="small" color="red">
                 <v-icon>
                   mdi-pencil
                 </v-icon>
                 Editar
-              <v-icon color="orange-darken-4" end> mdi-open-in-new </v-icon>
               </v-btn>
+
+              <v-icon color="orange-darken-4" end> mdi-open-in-new </v-icon>
+            
               <v-btn @click="eliminarPublicacion(publicacion.id)" size="small" color="red">
                 <v-icon size="18">
                   mdi-delete
@@ -66,6 +68,22 @@
             </v-list-item>
           </template>
         </v-virtual-scroll>
+
+            <!-- Formulario de edición -->
+             <v-card>
+              <v-card-title>Edicion de Publicaciones</v-card-title>
+
+            <form>
+              
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" v-model="publicacionEditando.titulo">
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" v-model="publicacionEditando.descripcion"></textarea>
+            <button @click="guardarCambios">Guardar Cambios</button>
+
+          </form>
+        </v-card>
       </v-card>
     </v-app>
 
@@ -99,21 +117,36 @@ export default {
   methods: {
    
     editarPublicacion(publicacion) {
-      // Lógica para editar la publicación
+      this.publicacionEditando = {}; // Inicializa publicacionEditando como un objeto vacío
+
+    const url = `/api/v1/publicacion/${publicacion}`;
+
+axios.get(url)
+  .then((response) => {
+    // Asigna los datos de la respuesta a publicacionEditando
+    this.publicacionEditando = response.data.data;
+  })
+  .catch((error) => {
+    console.error('Error al obtener la publicación:', error);
+  });
     },
-    eliminarPublicacion(publicacionId) {
-    
   },
-
-  agregarPublicacion(publicacion){
-
-    router.router.push("/crear-publicaciones");
-    
-  },
-  navigateToIndex() {
-      this.$router.push('/index_publicaciones');
-    }
-  
+  guardarCambios() {
+    // Realiza una solicitud para actualizar la publicación en el servidor
+    // Usando axios o la librería que estés utilizando para manejar las solicitudes HTTP
+    axios.put(`/api/v1/publicacion/${this.publicacionEditando.id}`, {
+      titulo: this.publicacionEditando.titulo,
+      descripcion: this.publicacionEditando.descripcion,
+    })
+    .then((response) => {
+      // La publicación se ha actualizado con éxito en el servidor
+      console.log('Cambios guardados con éxito', response);
+      // Redirige a donde desees después de guardar los cambios
+      this.$router.push('/index_publicaciones'); // O la ruta que necesites
+    })
+    .catch((error) => {
+      console.error('Error al guardar los cambios:', error);
+    });
   },
 
   components: {
@@ -124,6 +157,12 @@ export default {
   data() {
     return {
       publicaciones: [], 
+      publicacionEditando: {
+      titulo: '',
+      descripcion: '',
+      // Otras propiedades que necesites
+    } // Publicación que se está editando
+
     };
   },
   mounted() {
@@ -131,9 +170,7 @@ export default {
   const token = ''; 
 
   axios.get('http://127.0.0.1/api/user/index', {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
+   
   })
     .then((response) => {
       console.log('Respuesta de la API:', response.data);

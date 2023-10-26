@@ -45,9 +45,9 @@ Route::get('user/index2', [UserController::class, 'index2']);
 Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');
 
 
-Route::get('v1/publicacion', [PublicacionController::class,'index'])->middleware('auth:sanctum');
+Route::get('v1/publicacion', [PublicacionController::class,'index']);
 Route::get('v1/publicacion/create', [PublicacionController::class, 'create'])->middleware('auth:sanctum');
-Route::post('v1/publicacion', [PublicacionController::class, 'store'])->middleware('auth:sanctum');
+Route::post('v1/publicacion', [PublicacionController::class, 'store']);
 Route::get('v1/publicacion/{id}', [PublicacionController::class, 'show'])->middleware('auth:sanctum');
 Route::get('v1/publicacion/{id}/edit', [PublicacionController::class, 'edit'])->middleware('auth:sanctum');
 Route::put('v1/publicacion/{id}', [PublicacionController::class, 'update'])->middleware('auth:sanctum');
