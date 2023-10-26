@@ -1,7 +1,17 @@
 <template>
   <v-app>
-    <v-navigation-drawer expand-on-hover rail>
-      <v-list>
+    <v-app-bar app>
+      <v-btn icon @click="toggleDrawer">
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
+      <v-app-bar-title>Estudiantes</v-app-bar-title>
+    </v-app-bar>
+    <v-navigation-drawer
+        v-model="drawer"
+        :rail="rail"
+        permanent
+        @click="rail = false"
+      >      <v-list>
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
           :title="user.fullName"
@@ -11,45 +21,25 @@
       <v-divider></v-divider>
       <v-list density="compact" nav>
         <v-list-item
-          prepend-icon="mdi-folder"
-          title="My Files"
+          prepend-icon="mdi-home"
+          title="Inicio"
+          link @click="$router.push('/index-alumnos')"
           value="myfiles"
         ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-file"
+          title="Calificaciones"
+          value="myfiles"
+          link @click="$router.push('/index-boletas')"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-file-download"
+          title="Descargas"
+          value="myfiles"
+          link @click="$router.push('/index-descargas')"
+        ></v-list-item>
+        <v-list-item prepend-icon="mdi-close" title="Salir" @click="logout"></v-list-item>
       </v-list>
-      <v-list-item link @click="$router.push('/index-boletas')">
-        <template v-slot:prepend>
-          <v-avatar class="mt-2 me-4" rounded="0">
-            <v-img
-              src="https://ofertaeducativa.org/wp-content/uploads/2022/06/Universidad-en-Linea-6-1024x1024.jpg"
-              cover
-            ></v-img>
-          </v-avatar>
-        </template>
-        <v-list-item-title class="text-left text-no-wrap">Boletas</v-list-item-title>
-      </v-list-item>
-      <v-list-item link>
-        <template v-slot:prepend>
-          <v-avatar class="mt-2 me-4" rounded="0">
-            <v-img
-              src="https://us.123rf.com/450wm/creativepriyanka/creativepriyanka2201/creativepriyanka220100582/181466550-icono-de-calificaci%C3%B3n-m%C3%A9rito.jpg?ver=6"
-              cover
-            ></v-img>
-          </v-avatar>
-        </template>
-        <v-list-item-title class="text-left text-no-wrap">Reportes</v-list-item-title>
-      </v-list-item>
-      <v-list-item link @click="$router.push('/index-descargas')">
-        <template v-slot:prepend>
-          <v-avatar class="mt-2 me-4" rounded="0">
-            <v-img
-              src="https://calificacionessep.online/wp-content/uploads/2023/07/descargar-boleta-sep.png"
-              cover
-            ></v-img>
-          </v-avatar>
-        </template>
-        <v-list-item-title class="text-left text-no-wrap">Descargas</v-list-item-title>
-      </v-list-item>
-      <v-list-item prepend-icon="mdi-close" title="Salir" @click="logout"></v-list-item>
     </v-navigation-drawer>
   </v-app>
 </template>
@@ -67,6 +57,7 @@ export default {
       fullName: '',
       email: '',
     },
+    drawer: true, // Inicialmente el drawer estará cerrado
   }),
   created() {
     axios.get('http://127.0.0.1/api/user')
@@ -79,6 +70,9 @@ export default {
       });
   },
   methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    },
     logout() {
       axios.post('/api/logout')
         .then(response => {

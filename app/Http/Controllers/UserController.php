@@ -66,8 +66,7 @@ class UserController extends Controller
     {
         // Obtén los modelos o datos que deseas devolver
         $users = User::all();
-        $boletas = Boleta::all();
-        $publicaciones = Publicacion::all();
+      
         $alumnos = Alumno::all();
         
         // Crear un arreglo para almacenar los datos combinados

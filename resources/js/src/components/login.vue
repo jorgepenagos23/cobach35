@@ -4,8 +4,8 @@
   </div>
 
   <main>
-    <v-container>
-      <v-card theme="light" max-width="800" class="mx-auto">
+    <v-container >
+      <v-card theme="light" max-width="800" class="mx-auto ">
         <v-card width="320" theme="light" class="mx-auto mt-5">
           <v-card-title class="pb-0">
             <v-img
@@ -15,7 +15,9 @@
               aspect-ratio="1"
               class="mx-auto"
             />
-            <h1>Iniciar Sesión</h1>
+            <v-theme-provider theme="success" with-background class="pa-5">
+              <v-card title="Iniciar Sesion" subtitle="Sistema "></v-card>
+            </v-theme-provider>
           </v-card-title>
           <v-card-text>
             <form @submit.prevent="login">

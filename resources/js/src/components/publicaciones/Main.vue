@@ -34,7 +34,7 @@
         </v-card-item>
 
         <v-card-text class="pt-8">
-        Crear , Editar  , Eliminar Publicaciones
+       Panel de Administracion de Publicaciones
         </v-card-text>
 
         <v-divider></v-divider>

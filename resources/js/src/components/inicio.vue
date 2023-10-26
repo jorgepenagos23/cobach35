@@ -22,7 +22,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="#0a2463" style="position: fixed; top: 0; width: 100%;">
+    <v-app-bar app color="#041233" style="position: fixed; top: 0; width: 100%;">
       <v-img src="https://www.cobach.edu.mx/assets/img/contenido/logoCBC.png" max-width="100" max-height="30"></v-img>
       <v-toolbar-title></v-toolbar-title>
     </v-app-bar>

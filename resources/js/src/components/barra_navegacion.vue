@@ -22,11 +22,8 @@
 
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-star" title=" Inicio " @click="$router.push('/dashboard')"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title=" alumnos vista " @click="$router.push('/index-alumnos')"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Salir" @click="logout"></v-list-item>
+          <v-list-item prepend-icon="mdi-home" title=" Inicio " @click="$router.push('/dashboard')"></v-list-item>
+          <v-list-item prepend-icon="mdi-close" title="Salir" @click="logout"></v-list-item>
           
         </v-list>
       </v-navigation-drawer>

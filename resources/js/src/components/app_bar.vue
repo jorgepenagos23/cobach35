@@ -5,7 +5,7 @@
           <v-flex xs12>
               <v-img src="https://www.cobach.edu.mx/assets/img/contenido/logoCBC.png"  size="40"
               alt="Logotipo"></v-img>
-            <v-toolbar-title class="white--text">Dashboard</v-toolbar-title>
+            <v-toolbar-title class="white--text">Plantel 35</v-toolbar-title>
           </v-flex>
         </v-layout>
       </v-container>
