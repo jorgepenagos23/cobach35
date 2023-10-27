@@ -70,28 +70,26 @@
         </v-virtual-scroll>
 
             <!-- Formulario de edición -->
-             <v-card>
-              <v-card-title>Edicion de Publicaciones</v-card-title>
-
-            <form>
-              
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" v-model="publicacionEditando.titulo">
-
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" v-model="publicacionEditando.descripcion"></textarea>
-            <button @click="guardarCambios">Guardar Cambios</button>
-
-          </form>
-        </v-card>
+    
       </v-card>
     </v-app>
 
+    <v-card class="mx-auto" max-width="600">
+  <!-- ... Otras partes de la tarjeta ... -->
 
-
-
-
-  
+  <!-- Formulario de edición dentro de la tarjeta -->
+  <form @submit.prevent="guardarCambios">
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" v-model="publicacionEditando.titulo">
+    
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" v-model="publicacionEditando.descripcion">
+    </textarea>
+    
+    <button type="submit">Guardar Cambios</button>
+  </form>
+</v-card>
+        
 </template>
 
 
@@ -125,15 +123,21 @@ axios.get(url)
   .then((response) => {
     // Asigna los datos de la respuesta a publicacionEditando
     this.publicacionEditando = response.data.data;
-  })
+
+    console.log("ID de la publicación:", this.publicacionEditando.id);
+    console.log("Título:", this.publicacionEditando.titulo);
+    console.log("Descripción:", this.publicacionEditando.descripcion);
+      })
   .catch((error) => {
     console.error('Error al obtener la publicación:', error);
   });
     },
-  },
-  guardarCambios() {
-    // Realiza una solicitud para actualizar la publicación en el servidor
-    // Usando axios o la librería que estés utilizando para manejar las solicitudes HTTP
+
+    
+    guardarCambios() {
+    console.log("ID de la publicación:", this.publicacionEditando.id);
+    console.log("Título:", this.publicacionEditando.titulo);
+    console.log("Descripción:", this.publicacionEditando.descripcion);
     axios.put(`/api/v1/publicacion/${this.publicacionEditando.id}`, {
       titulo: this.publicacionEditando.titulo,
       descripcion: this.publicacionEditando.descripcion,
@@ -149,6 +153,12 @@ axios.get(url)
     });
   },
 
+
+    
+  },
+  
+ 
+
   components: {
       navegacion,
       appbar,
@@ -160,12 +170,16 @@ axios.get(url)
       publicacionEditando: {
       titulo: '',
       descripcion: '',
+      id:'',
       // Otras propiedades que necesites
     } // Publicación que se está editando
 
     };
   },
   mounted() {
+
+
+    
 
   const token = ''; 
 
@@ -187,7 +201,6 @@ axios.get(url)
     document.body.appendChild(script);
     
 }
-
 
 };
 </script> 
