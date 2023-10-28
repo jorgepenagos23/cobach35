@@ -12,16 +12,20 @@ class PublicacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-     
-        $publicaciones = Publicacion::all();
+        $page = $request->input('page', 1); // Obtiene el número de página desde la solicitud
+        $perPage = 3; // Establece la cantidad de resultados por página según tus necesidades
+    
+        $publicaciones = Publicacion::skip(($page - 1) * $perPage)->take($perPage)->get();
+        $totalPublicaciones = Publicacion::count();
+    
         return response()->json([
-           'publicaciones' =>$publicaciones, 
-           'message' => 'Solicitud Exitosa API'
-        ],200);
+            'publicaciones' => $publicaciones,
+            'total' => $totalPublicaciones, // Puedes devolver el total de resultados para que la vista lo utilice
+            'message' => 'Solicitud Exitosa API'
+        ], 200);
     }
-
     /**
      * Store a newly created resource in storage.
      */

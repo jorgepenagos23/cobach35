@@ -39,7 +39,7 @@
 
         <v-divider></v-divider>
 
-        <v-virtual-scroll :items="publicaciones" height="500" item-height="50">
+        <v-virtual-scroll :items="publicaciones" style="margin-top: 40px;" item-height="100">
           <template v-slot:default="{ item: publicacion }">
             <v-list-item>
               <v-list-item-title>{{ publicacion.titulo }}</v-list-item-title>
@@ -61,7 +61,7 @@
               </v-btn>
               
              </template>
-             
+
               <v-list-item-subtitle>{{ publicacion.descripcion }}</v-list-item-subtitle>
             
             
@@ -177,9 +177,6 @@ axios.get(url)
     };
   },
   mounted() {
-
-
-    
 
   const token = ''; 
 

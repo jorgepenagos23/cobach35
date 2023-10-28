@@ -1,12 +1,13 @@
 import './bootstrap';
+
 import { createApp } from "vue";
 import app from "./src/app.vue";
 import vuetify from "./vuetify";
 import CrearPublicaciones from  "./src/components/publicaciones/Crear.vue"
 import { createRouter, createWebHistory } from 'vue-router';
 import 'vuetify/styles';
-
 import '@mdi/font/css/materialdesignicons.min.css';
+import InfiniteLoading from "v3-infinite-loading";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -35,14 +36,18 @@ const router = createRouter({
         { path: '/index-descargas', component: () => import('./src/components/VistaEstudiantes/index_descargas.vue') },
         { path: '/index-boletas', component: () => import('./src/components/VistaEstudiantes/index_boletas.vue') },
         {path: '/main-boletas', component:()=>import('./src/components/boletas/Main.vue')},
-        {path: '/main-reportes', component:()=>import('./src/components/reportes/Main.vue')}
+        {path: '/main-reportes', component:()=>import('./src/components/reportes/Main.vue')},
 
-
+        {path: '/prueba-post', component:()=>import('./src/PostComponent.vue')},
+        {path: '/prueba-scroll', component:()=>import('./src/components/ListComponent.vue')}
 
     ],
 })
 
+
 createApp(app)
 .use(vuetify)
+.use(InfiniteLoading)
 .use(router)
+
 .mount("#app");
