@@ -39,7 +39,7 @@ const router = createRouter({
         {path: '/main-reportes', component:()=>import('./src/components/reportes/Main.vue')},
 
         {path: '/prueba-post', component:()=>import('./src/PostComponent.vue')},
-        {path: '/prueba-scroll', component:()=>import('./src/components/ListComponent.vue')}
+        {path: '/prueba-scroll', component:()=>import('./src/components/ListComponent.vue')},
 
     ],
 })

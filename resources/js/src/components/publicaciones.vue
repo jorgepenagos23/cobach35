@@ -22,6 +22,10 @@
         </v-card>
       </v-carousel-item>
     </v-carousel>
+
+
+    <listcomponent></listcomponent>
+    
   </div>
       
 
@@ -36,6 +40,7 @@
 <script>
 import banner from '../components/inicio.vue';
 import axios from 'axios';
+import listcomponent from '../components/ListComponent.vue'
 export default {
 mounted(){
 
@@ -56,6 +61,7 @@ mounted(){
   },
   components: {
     banner,
+    listcomponent,
   },
   created() {
     this.cargarPublicaciones();
