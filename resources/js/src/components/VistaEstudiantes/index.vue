@@ -1,31 +1,78 @@
 <template>
   <barra></barra>
   <v-app>
-    <v-card class="mx-auto" max-width="mx-auto">
+    <v-card max-width="900" class="mx-500">
       <v-expansion-panels>
         <v-expansion-panel v-for="(dataItem, index) in alumnoYUsuario" :key="index">
-          <v-expansion-panel-header>
+          <v-expansion-panel-header class="text-black teal lighten-2"> <!-- Agregar color de fondo a la cabecera -->      
+            <v-chip class="ms-0" color="red" label size="small">
+     
             {{ dataItem.user.nombre }}
+            </v-chip>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-list-item>
-              <v-list-item-subtitle>Matrícula: {{ dataItem.user.matricula }}</v-list-item-subtitle>
-              <v-list-item-subtitle v-if="dataItem.alumno">
-                Grado: {{ dataItem.alumno.grado }}
-                Grupo: {{ dataItem.alumno.grupo }}
-                Nombre del Alumno: {{ dataItem.alumno.nombre_completo }}
-                Email: {{ dataItem.alumno.curp }}
-                Observaciones: {{ dataItem.alumno.observaciones }}
-              </v-list-item-subtitle>
-            
-            </v-list-item>
+            <v-extension-panels v-model="panel" :disabled="disabled" multiple>
+              <v-container>
+                <v-row justify="center">
+                  <v-menu min-width="200px" rounded>
+                    <template v-slot:activator="{ props }">
+                      <v-btn icon v-bind="props">
+                        <v-avatar color="brown" size="large">
+                          <span class="text-h5">{{ dataItem.initials }}</span>
+                        </v-avatar>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-text>
+                        <div class="mx-auto text-center">
+                          <v-avatar color="brown">
+                            <span class="text-h5">{{ dataItem.initials }}</span>
+                          </v-avatar>
+                          <h3>{{ dataItem.alumno.nombre_completo }}</h3>
+                          <p class="mt-1 text-caption">{{ dataItem.user.email }}</p>
+                          <v-divider class="my-3"></v-divider>
+                          <v-btn rounded variant="text"> Edit Account </v-btn>
+                          <v-divider class="my-3"></v-divider>
+                          <v-btn rounded variant="text"> Disconnect </v-btn>
+                        </div>
+                      </v-card-text>
+                    </v-card>
+                  </v-menu>
+                </v-row>
+              </v-container>
+            </v-extension-panels>
+            <v-expansion-panels v-model="panel" :disabled="disabled" multiple >
+              <v-expansion-panel >
+                <v-expansion-panel-title class="primary" theme="dark" color="indigo-darken-4">Datos Escolares</v-expansion-panel-title>
+                <v-expansion-panel-text v-if="dataItem.alumno">
+                </v-expansion-panel-text>
+
+                  <v-expansion-panel-text>Matricula: {{ dataItem.alumno.matricula }}</v-expansion-panel-text>
+                  <v-expansion-panel-text>Nombre: {{ dataItem.alumno.nombre_completo }}</v-expansion-panel-text>
+                <v-expansion-panel-text>Grupo: {{ dataItem.alumno.grupo }}</v-expansion-panel-text>
+
+                <v-expansion-panel-text>Grado: {{ dataItem.alumno.grado }}</v-expansion-panel-text>
+                <v-expansion-panel-text>Curp: {{ dataItem.alumno.curp }}</v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-title>Calificaciones</v-expansion-panel-title>
+                <v-expansion-panel-text> Calificaciones </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-title>Conducta Academica</v-expansion-panel-title>
+                <v-expansion-panel-text>  Reporte </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
+
+
+
+    
   </v-app>
 </template>
-
 
 <script>
 import appbar from "../app_bar.vue";
@@ -34,45 +81,53 @@ import Swal from 'sweetalert2';
 
 export default {
   data: () => ({
-    // ... (otros datos)
     combinedData: [], // Almacena datos combinados de usuarios y alumnos
     alumnoYUsuario: [], // Almacena datos combinados de un alumno y su usuario
-
+    panel: [0, 1],
+      disabled: false,
   }),
   components: {
     appbar,
     barra,
   },
   created() {
-  // Realiza una solicitud GET para obtener los datos de usuario y su matrícula desde el servidor
-  axios.get('http://127.0.0.1/api/user/')
-    .then(response => {
-      // Asumiendo que la matrícula del usuario se encuentra en la propiedad "matricula" de la respuesta
-      const matriculaDelUsuario = response.data.matricula;
-      console.log('Matrícula del usuario:', matriculaDelUsuario);
+    // Realiza una solicitud GET para obtener los datos de usuario y su matrícula desde el servidor
+    axios.get('http://127.0.0.1/api/user/')
+      .then(response => {
+        // Asumiendo que la matrícula del usuario se encuentra en la propiedad "matricula" de la respuesta
+        const matriculaDelUsuario = response.data.matricula;
 
-      // Ahora puedes usar "matriculaDelUsuario" en tu filtro
-      axios.get('http://127.0.0.1/api/user/index2')
-        .then(response => {
-          console.log(response.data);
-          this.combinedData = response.data; // Asigna los datos combinados a combinedData
+        // Ahora puedes usar "matriculaDelUsuario" en tu filtro
+        axios.get('http://127.0.0.1/api/user/index2')
+          .then(response => {
+            this.combinedData = response.data; // Asigna los datos combinados a combinedData
 
-          // Filtra y muestra solo el usuario cuya matrícula coincide con matriculaDelUsuario
-          this.alumnoYUsuario = this.combinedData.filter(dataItem =>
-            dataItem.user.matricula === matriculaDelUsuario
-          );
-        })
-        .catch(error => {
-          console.error('Error al obtener los datos combinados:', error);
-        });
-    })
-    .catch(error => {
-      console.error('Error al obtener la matrícula del usuario:', error);
-    });
-},
+            // Filtra y muestra solo el usuario cuya matrícula coincide con matriculaDelUsuario
+            this.alumnoYUsuario = this.combinedData.filter(dataItem =>
+              dataItem.user.matricula === matriculaDelUsuario
+            );
 
-  methods: {
-    // ... (otros métodos)
+            // Lógica para obtener las iniciales del nombre completo
+            this.alumnoYUsuario = this.alumnoYUsuario.map(dataItem => {
+              // Separa el nombre completo en palabras
+              const palabras = dataItem.alumno.nombre_completo.split(' ');
+
+              // Obtiene la primera letra de cada palabra y las une en un string
+              const iniciales = palabras.map(palabra => palabra.charAt(0)).join('');
+
+              // Actualiza el objeto dataItem con las iniciales
+              dataItem.initials = iniciales;
+
+              return dataItem;
+            });
+          })
+          .catch(error => {
+            console.error('Error al obtener los datos combinados:', error);
+          });
+      })
+      .catch(error => {
+        console.error('Error al obtener la matrícula del usuario:', error);
+      });
   },
 };
 </script>

@@ -4,39 +4,81 @@
 </script>
 
 <template>
-    <div class="p-6 bg-gray-100">
-      <header class="p-4 text-white bg-blue-500">
+    <div class="p-6 bg-emerald-400">
+     <header class="bg-green-100 dark:bg-blue-400">
+        <div class="container flex flex-col px-6 py-4 mx-auto space-y-6 md:h-128 md:py-16 md:flex-row md:items-center md:space-x-6">
+    
+          <v-carousel
+    height="400"
+    hide-delimiters
+    progress="primary"
+    show-arrows="hover"
+    v-model="currentIndex"
+  >
+    <v-carousel-item v-for="publicacion in publicaciones" :key="publicacion.id">
+      <v-sheet class="bg-opacity-0" height="100%">
+        <div class="justify-center d-flex fill-height align-center">
+          <div class="text-h2">
+            <div class="grid w-4/6 p-8 m-auto text-center bg-gray-200 border rounded-lg hero md:grid-cols-2 bg-opacity-90">
+              <img class="m-auto rounded-lg icon" :src="'https://becasbenitojuarez.net/wp-content/uploads/2023/01/monto_beca_JEF_2023_bueno.jpeg'" alt="" />
+              <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
+                <div class="mb-3 text-3xl font-semibold head">{{ publicacion.titulo }}</div>
+                <div class="mb-2 text-2xl font-semibold head">{{ formatDate(publicacion.fecha) }}</div>
 
+                <div class="desc">{{ publicacion.descripcion }}</div>
+                <div class="desc">{{ publicacion.nombre }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </v-sheet>
+    </v-carousel-item>
+  </v-carousel>
+          
+      
+      
+        </div>
+    </header>
 
-
-      </header>
-
-      <h1 class="text-4xl font-bold text-gray-800 lg:px-20 md:px-10 lg:mx-40 md:mx-20">
-      Publicaciones
-    </h1>
-    <v-carousel cycle hide-delimiters>
-      <v-carousel-item v-for="publicacion in publicaciones" :key="publicacion.id">
-        <v-card max-width="300" class="mx-auto">
-          <v-img :src="publicacion.imagen" aspect-ratio="16/9"></v-img>
-          <v-card-title>{{ publicacion.titulo }}</v-card-title>
-          <v-card-text>{{ publicacion.descripcion }}</v-card-text>
-          <v-card-actions>
-            <v-btn text color="blue">Leer más</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-carousel-item>
-    </v-carousel>
-
-  
-      <div v-for="publicacion in list" :key="publicacion.id" class="p-4 my-4 bg-white shadow-md">
-        <div>
-          <img :src="'https://fastly.picsum.photos/id/743/200/200.jpg?hmac=p4EqNQGnGvZo65W4_FlXvjPQG8g1ogR7bgvnrQCUnEs'" alt="Imagen de la publicación">
-            <h2 class="text-xl font-semibold">{{ publicacion.id }}</h2>
-          <h2 class="text-xl font-semibold">{{ publicacion.titulo }}</h2>
-          <p class="text-gray-600">{{ publicacion.nombre }}</p>
-          <p class="text-gray-600">{{ publicacion.fecha }}</p>
+    <div v-for="publicacion in list" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+    <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
+      <div class="flex flex-row items-center justify-between py-2">
+        <div class="flex flex-row items-center">
+          <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
+            <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
+            <p class="ml-2 text-base font-medium">{{ publicacion.nombre }}</p>
+          </a>
+        </div>
+      
+        <div class="flex flex-row items-center">
+        
+          <div class="mb-2 text-2xl font-light head">{{ formatDate(publicacion.fecha) }}</div>
         </div>
       </div>
+
+      <div class="mt-2">
+        <img class="object-cover w-full rounded-lg" src="https://i.ytimg.com/vi/49jGSdOobbQ/maxresdefault.jpg" alt="">
+        <div class="flex flex-row items-center py-2">
+         
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+            <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
+        </div>
+      <div class="py-2">
+        <p class="leading-snug">Descripcion: {{ publicacion.descripcion }}</p>
+      </div>
+    </div>
+  
+  </div>
+  
+    
+  <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md">
+
+  
+</div>
+
+  
   
       <infinite-loading @infinite="infiniteHandler" class="my-4">
         <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
@@ -51,6 +93,13 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
   
+.centered-content {
+  display: flex;
+ justify-content: center;
+  height: auto; /* Elimina la altura fija para que el contenido se ajuste automáticamente */
+}
+
+
 main {
   margin-top: 20px; /* Adjust the top margin to make space for the banner */
   padding: 20px; /* Adjust the interior space of the content */
@@ -69,7 +118,9 @@ main {
 </style>
   <script>
   import axios from 'axios';
-  
+import { VImg } from "vuetify/lib/components/index.mjs";
+import { format } from 'date-fns';
+import es from 'date-fns/locale/es'; // Importa el idioma español
   const api = 'http://127.0.0.1/api/v1/publicacion';
   
   export default {
@@ -86,8 +137,8 @@ main {
       ],
       publicaciones: [],
 
-
-
+        slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
+        currentIndex: 0,
         
       };
     },
@@ -141,6 +192,10 @@ main {
         .catch((error) => {
           console.error('Error al cargar las publicaciones:', error);
         });
+    },
+
+    formatDate(isoDate) {
+  return format(new Date(isoDate), 'dd MMM yyyy', { locale: es });
     },
 
     },

@@ -1,9 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app
+        color="teal-darken-4"
+        image="https://picsum.photos/1920/1080?random"
+    
+    >
+
       <v-btn icon @click="toggleDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
+     
+
+
       <v-app-bar-title>Estudiantes</v-app-bar-title>
     </v-app-bar>
     <v-navigation-drawer
@@ -11,13 +19,8 @@
         :rail="rail"
         permanent
         @click="rail = false"
-      >      <v-list>
-        <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-          :title="user.fullName"
-          :subtitle="user.email"
-        ></v-list-item>
-      </v-list>
+      >     
+     
       <v-divider></v-divider>
       <v-list density="compact" nav>
         <v-list-item
@@ -52,17 +55,22 @@
 import Swal from 'sweetalert2';
 
 export default {
-  data: () => ({
-    user: {
-      fullName: '',
-      email: '',
-    },
-    drawer: true, // Inicialmente el drawer estará cerrado
-  }),
+  data() {
+    return {
+      user: {
+        fullName: '',
+        email: '',
+        matricula: '',
+      },
+      drawer: false, // Inicialmente, el cajón está cerrado
+      rail: false,
+    };
+  },
   created() {
     axios.get('http://127.0.0.1/api/user')
       .then(response => {
         this.user.fullName = response.data.nombre;
+        this.user.matricula = response.data.matricula;
         this.user.email = response.data.email;
       })
       .catch(error => {
@@ -71,7 +79,7 @@ export default {
   },
   methods: {
     toggleDrawer() {
-      this.drawer = !this.drawer;
+      this.drawer = !this.drawer; // Abre o cierra el cajón al hacer clic en el botón
     },
     logout() {
       axios.post('/api/logout')

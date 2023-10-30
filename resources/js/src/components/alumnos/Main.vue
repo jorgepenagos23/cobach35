@@ -1,42 +1,34 @@
 <template>
+  <header>
+    <navegacion></navegacion>
+  </header>
 
-    <header>
-      <navegacion></navegacion>
+  <main>
+    <div class="flex-wrap d-flex"> <!-- Utiliza flex-wrap para que los elementos se ajusten al tamaño del contenido -->
+   
 
-    </header>
-
-
-    <main>
-        <div class="d-flex">
-          <tablaAlumnos></tablaAlumnos>
-
-        </div>
-        
-        <body>
-
-
-
-          <subir-alumno>
-
-          </subir-alumno>
-
-
-        </body>
-    </main>
-
-  </template>
-
+      <tablaAlumnos class="mx-auto" max-width="600" style="width: 100%;"> <!-- Ajusta el tamaño de la tabla -->
+      </tablaAlumnos>
+    </div>
+  </main>
+  <v-card max-width="400" class="mx-auto mb-3"> <!-- Agrega margen inferior (mb-4) para separar los elementos -->
+                <subiralumno></subiralumno>
+            
+        </v-card>
+</template>
   
 <script>
 
 import navegacion from "../barra_navegacion.vue";
 import tablaAlumnos from "../alumnos/TablaAlumnos.vue";
+import subiralumno from "../Excel/SubirAlumno.vue";
 
   export default {
    
     components: {
       navegacion,
       tablaAlumnos,
+      subiralumno,
     },
 
     methods:{

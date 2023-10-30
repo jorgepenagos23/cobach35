@@ -2,9 +2,12 @@
   <div>
     <banner></banner>
   </div>
+  <div class="centered-content group relative h-50 w-200 overflow-hidden rounded-[16px] bg-gradient-to-bl from-blue-800 to-sky-900 p-[1px] transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:via-blue-700 hover:to-green-500">
 
   <main>
+
     <v-container >
+
       <v-card theme="light" max-width="800" class="mx-auto ">
         <v-card width="320" theme="light" class="mx-auto mt-5">
           <v-card-title class="pb-0">
@@ -18,7 +21,8 @@
           
           </v-card-title>
           <v-card-text>
-         <div class="centered-content">
+            <div class="centered-content">
+      
           
 
             <form @submit.prevent="login">
@@ -34,11 +38,16 @@
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showPassword = !showPassword"
               />
-              <button class="w-72 border bg-[#d63434] p-2 text-white shadow-xl font-sans" type="submit">
-                Entrar
+              <button type="submit" class="flex items-center p-2 px-6 text-xl font-thin tracking-widest text-black bg-transparent btn group">
+                <span class="relative pr-4 pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">Entrar</span>
+                <svg viewBox="0 0 46 16" height="10" width="30" xmlns="http://www.w3.org/2000/svg" id="arrow-horizontal" class="transition-all duration-300 ease-out -translate-x-2 fill-slate-700 group-hover:translate-x-1 group-hover:scale-x-105 group-hover:fill-white">
+                  <path transform="translate(30)" d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" data-name="Path 10" id="Path_10"></path>
+                </svg>
               </button>
+           
             </form>
           </div>
+          
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
@@ -48,6 +57,8 @@
       </v-card>
     </v-container>
   </main>
+</div>
+
 </template>
 
 <style>
