@@ -15,12 +15,16 @@
               aspect-ratio="1"
               class="mx-auto"
             />
-            <v-theme-provider theme="success" with-background class="pa-5">
-              <v-card title="Iniciar Sesion" subtitle="Sistema "></v-card>
-            </v-theme-provider>
+          
           </v-card-title>
           <v-card-text>
+         <div class="centered-content">
+          
+
             <form @submit.prevent="login">
+              <v-theme-provider theme="success" with-background class="pa-5">
+              <v-card title="Iniciar Sesion" subtitle="Sistema "></v-card>
+            </v-theme-provider>
               <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-email" />
               <v-text-field
                 v-model="password"
@@ -34,6 +38,7 @@
                 Entrar
               </button>
             </form>
+          </div>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
@@ -44,6 +49,15 @@
     </v-container>
   </main>
 </template>
+
+<style>
+.centered-content {
+  display: flex;
+  text-align: center;
+ justify-content: center;
+  height: auto; /* Elimina la altura fija para que el contenido se ajuste automáticamente */
+}
+</style>
 
 <script>
 import banner from "../components/inicio.vue";
@@ -118,23 +132,3 @@ export default {
 };
 
 </script>
-
-
-
-<style>
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-main {
-  margin-top: 60px;
-  padding: 20px;
-}
-
-
-h1{
-
-  text-align: center;
-  
-}
-
-</style>

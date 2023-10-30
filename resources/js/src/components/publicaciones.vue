@@ -44,7 +44,6 @@ import listcomponent from '../components/ListComponent.vue'
 export default {
 mounted(){
 
-  
 },
   
   data() {

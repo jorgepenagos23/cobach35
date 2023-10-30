@@ -17,8 +17,6 @@
       <v-list density="compact" nav color="success">
         <v-list-item to="/" prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
         <v-list-item to="/login" prepend-icon="mdi-account" title="Sistema" value="account"></v-list-item>
-        <v-list-item to="/publicaciones" prepend-icon="mdi-newspaper" title="Noticias" value="users"></v-list-item>
-        <v-list-item to="/prueba-scroll" prepend-icon="mdi-newspaper" title="Noticias" value="users"></v-list-item>
 
       </v-list>
     </v-navigation-drawer>
@@ -28,10 +26,6 @@
       <v-toolbar-title></v-toolbar-title>
     </v-app-bar>
 
-    <v-main style="padding-top: 200px;">
-      <!-- Contenido de la página -->
-      <router-view></router-view>
-    </v-main>
   </v-app>
 </template>
 <style>

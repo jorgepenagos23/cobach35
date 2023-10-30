@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     \App\Models\User::factory(4)->create();
     //\App\Models\Alumno::factory(1)->create();
     \App\Models\Permiso::factory()->count(5)->create();
-    \App\Models\Publicacion::factory()->count(10)->create();
+    \App\Models\Publicacion::factory()->count(700)->create();
 
 
             $rol = new Rol();
