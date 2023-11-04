@@ -3,9 +3,9 @@
       <v-container>
         <v-layout row wrap align-center>
           <v-flex xs12>
-              <v-img src="https://www.cobach.edu.mx/assets/img/contenido/logoCBC.png"  size="40"
+              <v-img src="https://www.cobach.edu.mx/assets/img/contenido/logoCBC.png"  size="70"
               alt="Logotipo"></v-img>
-            <v-toolbar-title class="white--text">Plantel 35</v-toolbar-title>
+            <v-toolbar-title class="white--text">Cobach 35</v-toolbar-title>
           </v-flex>
         </v-layout>
       </v-container>

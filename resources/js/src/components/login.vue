@@ -29,13 +29,13 @@
               <v-theme-provider theme="success" with-background class="pa-5">
               <v-card title="Iniciar Sesion" subtitle="Sistema "></v-card>
             </v-theme-provider>
-              <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-email" />
+              <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-card-account-mail" />
               <v-text-field
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
                 label="Contraseña"
                 prepend-icon="mdi-lock"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off-outline'"
                 @click:append="showPassword = !showPassword"
               />
               <button type="submit" class="flex items-center p-2 px-6 text-xl font-thin tracking-widest text-black bg-transparent btn group">

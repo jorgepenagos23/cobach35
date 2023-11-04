@@ -63,7 +63,7 @@
               <v-card color="#0d1b2a" theme="light">
                 <div class="flex-no-wrap d-flex justify-space-between">
                   <div>
-                    <v-card-title class="text-h5">Reportes</v-card-title>
+                    <v-card-title class="text-h5">REPORTES</v-card-title>
                     <v-card-subtitle>Manejador de Reportes</v-card-subtitle>
                     <v-card-actions>
                       <button @click="$router.push('/main-reportes')" class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">

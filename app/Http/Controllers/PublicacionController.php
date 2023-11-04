@@ -99,7 +99,8 @@ class PublicacionController extends Controller
         // Realizar la actualización de la publicación
         $publicacion->titulo = $request->input('titulo');
         $publicacion->descripcion = $request->input('descripcion');
-        
+        $publicacion->fecha = $request->input('fecha');
+
         if ($publicacion->save()) {
             return response()->json([
                 'data' => $publicacion,

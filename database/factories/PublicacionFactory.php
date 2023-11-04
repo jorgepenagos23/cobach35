@@ -22,7 +22,7 @@ class PublicacionFactory extends Factory
             'titulo' => $this->faker->sentence,
             'descripcion' => $this->faker->paragraph,
             'fecha' => $this->faker->date,
-            'nombre' => $this->faker->randomElement(['administrador', 'orientador', 'director', 'estudiante', 'subdirector']),
+            'publicador' => $this->faker->randomElement(['administrador', 'orientador', 'director', 'estudiante', 'subdirector']),
 
         ];
     }

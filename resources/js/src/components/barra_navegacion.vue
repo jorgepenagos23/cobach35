@@ -22,8 +22,11 @@
 
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home" title=" Inicio " @click="$router.push('/dashboard')"></v-list-item>
-          <v-list-item prepend-icon="mdi-close" title="Salir" @click="logout"></v-list-item>
+          <v-list-item prepend-icon="mdi-home-city" title=" Inicio " @click="$router.push('/dashboard')"></v-list-item>
+          <v-list-item prepend-icon="mdi-file-excel" title=" subir alumno " @click="$router.push('/subir-excel-alumno')"></v-list-item>
+          <v-list-item prepend-icon="mdi-file-excel-outline" title=" subir usuarios " @click="$router.push('/subir-excel-usuarios')"></v-list-item>
+
+          <v-list-item prepend-icon="mdi-location-exit" title="Salir" @click="logout"></v-list-item>
           
         </v-list>
       </v-navigation-drawer>

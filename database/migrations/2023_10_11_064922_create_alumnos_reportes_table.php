@@ -11,17 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('alumnos_reportes', function (Blueprint $table) {
+        Schema::create('alumno_reportes', function (Blueprint $table) {
             $table->id();
+            $table->string('descripcion');
+            $table->string('matricula');
+            $table->date('fecha');
+            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('reporte_id');
+            $table->foreign('reporte_id')->references('id')->on('reportes');
+            $table->foreign('usuario_id')->references('id')->on('alumnos');
+
+
+
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('alumnos_reportes');
+        Schema::dropIfExists('alumno_reportes');
     }
+
+
 };

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('descripcion',555);
             $table->date('fecha')->default(now()); // Establece la fecha predeterminada a la fecha actual            $table->enum('tipo',['banner','publicacion']);
-            $table->string('nombre');
+            $table->string('publicador');
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
     }

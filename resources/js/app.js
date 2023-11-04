@@ -41,6 +41,9 @@ const router = createRouter({
         {path: '/prueba-post', component:()=>import('./src/PostComponent.vue')},
         {path: '/prueba-scroll', component:()=>import('./src/components/ListComponent.vue')},
         {path: '/subir-excel-alumno', component:()=>import('./src/components/Excel/SubirAlumno.vue')},
+        {path: '/subir-excel-usuarios', component:()=>import('./src/components/Excel/subirUsuarios.vue')},
+
+        {path: '/main-usuarios', component:()=>import('./src/components/main_usuarios.vue')}
 
 
     ],

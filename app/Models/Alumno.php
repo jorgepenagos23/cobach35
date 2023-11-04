@@ -30,4 +30,13 @@ class Alumno extends Model
         return $this->hasOne(User::class, 'matricula', 'matricula');
     }
 
+    
+    public function Reportes()
+    {
+        return $this->belongsTo(Reporte::class, 'reporte_id');
+    }
+
+
+
+
 }

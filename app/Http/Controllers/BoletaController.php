@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Boleta;
 use App\Models\Alumno;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Resources\UserResource;
+use App\Imports\BoletasExcelIMport;
+
 class BoletaController extends Controller
 {
    
@@ -23,6 +26,21 @@ class BoletaController extends Controller
         ] ,200);
     }
 
+    public function import(Request $request){
+
+        $request->validate([
+          
+            'excel_file' =>'required|mimes:xls,xlsx,csv'
+
+        ]);
+        
+        Excel::import(new BoletasExcelIMport,$request->file('exce;_file'));
+
+        return response()->json([
+
+            'message' => 'archivo excel de boletas  subido con exito'
+        ]);
+    }
 
 
     /**

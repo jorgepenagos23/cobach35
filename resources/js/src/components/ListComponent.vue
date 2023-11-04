@@ -4,14 +4,16 @@
 </script>
 
 <template>
-    <div class="p-6 bg-emerald-400">
-     <header class="bg-green-100 dark:bg-blue-400">
+
+ 
+    <div class="p-6 bg-white">
+     <header class="bg-green-100 dark:bg-blue-950">
         <div class="container flex flex-col px-6 py-4 mx-auto space-y-6 md:h-128 md:py-16 md:flex-row md:items-center md:space-x-6">
     
           <v-carousel
     height="400"
     hide-delimiters
-    progress="primary"
+    progress="green"
     show-arrows="hover"
     v-model="currentIndex"
   >
@@ -20,8 +22,8 @@
         <div class="justify-center d-flex fill-height align-center">
           <div class="text-h2">
             <div class="grid w-4/6 p-8 m-auto text-center bg-gray-200 border rounded-lg hero md:grid-cols-2 bg-opacity-90">
-              <img class="m-auto rounded-lg icon" :src="'https://becasbenitojuarez.net/wp-content/uploads/2023/01/monto_beca_JEF_2023_bueno.jpeg'" alt="" />
-              <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
+              <img :src="publicacion.imagen" alt="Imagen" style="width: 500px; height: 300px;" />
+                <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
                 <div class="mb-3 text-3xl font-semibold head">{{ publicacion.titulo }}</div>
                 <div class="mb-2 text-2xl font-semibold head">{{ formatDate(publicacion.fecha) }}</div>
 
@@ -46,7 +48,7 @@
         <div class="flex flex-row items-center">
           <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
             <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
-            <p class="ml-2 text-base font-medium">{{ publicacion.nombre }}</p>
+            <p class="ml-2 text-base font-medium">{{ publicacion.publicador }}</p>
           </a>
         </div>
       
@@ -57,7 +59,7 @@
       </div>
 
       <div class="mt-2">
-        <img class="object-cover w-full rounded-lg" src="https://i.ytimg.com/vi/49jGSdOobbQ/maxresdefault.jpg" alt="">
+        <img :src="publicacion.imagen" alt="Imagen" style="width: 500px; height: 300px;" />
         <div class="flex flex-row items-center py-2">
          
         </div>
@@ -71,14 +73,6 @@
     </div>
   
   </div>
-  
-    
-  <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md">
-
-  
-</div>
-
-  
   
       <infinite-loading @infinite="infiniteHandler" class="my-4">
         <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
@@ -110,9 +104,6 @@ main {
   margin: 0 auto;
 }
 
-.carousel-image {
-  height: 600px; /* Set a fixed height for the images within the carousel */
-}
 
 
 </style>
@@ -195,7 +186,15 @@ import es from 'date-fns/locale/es'; // Importa el idioma español
     },
 
     formatDate(isoDate) {
-  return format(new Date(isoDate), 'dd MMM yyyy', { locale: es });
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        //hour: '2-digit',
+        timeZone: 'UTC'
+      };
+      return new Date(isoDate).toLocaleString('es-es', options);
+
     },
 
     },

@@ -8,7 +8,7 @@ use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicacionController;
-
+use App\Http\Controllers\ReporteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +41,10 @@ Route::apiResource('v1/alumnos', AlumnoController::class, [ 'parameters' => ['v1
 
 Route::get('user/index', [UserController::class, 'index']);
 Route::get('user/index2', [UserController::class, 'index2']);
+Route::get('user/index3', [UserController::class, 'index3']);
 
 Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');
+
 
 
 Route::get('v1/publicacion', [PublicacionController::class,'index']);
@@ -54,6 +56,9 @@ Route::put('v1/publicacion/{id}', [PublicacionController::class, 'update'])->mid
 Route::delete('v1/publicacion/{id}', [PublicacionController::class, 'destroy'])->middleware('auth:sanctum');
 
 
+Route::get('v1/reporte', [ReporteController::class,'index']);
+Route::get('v1/reportes/alumnos', [ReporteController::class,'index2']);
+
 
 
 
@@ -62,4 +67,5 @@ Route::post('v1/login', [LoginController::class, 'authenticate']);
 Route::post('user/create',[UserController::class,'create']);
 Route::post('/logout',[LoginController::class, 'logout']);
 Route::post('/revoke',[LoginController::class, 'revokeAllTokens']);
-
+Route::post('/subir-excel-alumno', [AlumnoController::class, 'import'])->name('upload-excel-alumno')->middleware('auth:sanctum');;
+Route::post('/subir-excel-users', [UserController::class, 'import'])->name('upload-excel-users')->middleware('auth:sanctum');;

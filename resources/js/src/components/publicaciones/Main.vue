@@ -1,3 +1,9 @@
+
+<script setup>
+  import InfiniteLoading from "v3-infinite-loading";
+  import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+</script>
+
 <template>
     <header>
       <navegacion></navegacion>
@@ -8,11 +14,7 @@
       <appbar></appbar>
       <v-card class="mx-auto" max-width="600">
         <v-container class="text-center">
-          <v-autocomplete
-                      label="Buscar publicacion"
-                      theme="dark"
-                  :items="['Publicacion']"
-                  ></v-autocomplete>
+         
              </v-container>
         <v-card-item class="bg-blue-darken-4">
           
@@ -38,20 +40,44 @@
         </v-card-text>
 
         <v-divider></v-divider>
+            <!-- Scroll vue infinite para publicaciones -->
+            <div v-for="publicacion in list" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+    <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
+      <div class="flex flex-row items-center justify-between py-2">
+        <div class="flex flex-row items-center">
+               
+              
+          <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
+            <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
+            <p class="ml-2 text-base font-medium">{{ publicacion.publicador }}</p>
+          </a>
+        </div>
+      
+        <div class="flex flex-row items-center">
+        
+          <div class="mb-2 text-2xl font-light head">{{ formatDate(publicacion.fecha) }}</div>
+        </div>
+      </div>
 
-        <v-virtual-scroll :items="publicaciones" style="margin-top: 40px;" item-height="100">
-          <template v-slot:default="{ item: publicacion }">
-            <v-list-item>
-              <v-list-item-title>{{ publicacion.titulo }}</v-list-item-title>
-              <template v-slot:append>
-                <v-btn @click="editarPublicacion(publicacion.id)" size="small" color="red">
+      <div class="mt-2">
+        <img :src="publicacion.imagen" alt="Imagen" style="width: 500px; height: 300px;" />
+        <div class="flex flex-row items-center py-2">
+         
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+            <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
+        </div>
+      <div class="py-2">
+        <p class="leading-snug">Descripcion: {{ publicacion.descripcion }}</p>
+      </div>
+    </div>
+    <v-btn @click="editarPublicacion(publicacion.id)" size="small" color="green">
                 <v-icon>
                   mdi-pencil
                 </v-icon>
                 Editar
               </v-btn>
-
-              <v-icon color="orange-darken-4" end> mdi-open-in-new </v-icon>
             
               <v-btn @click="eliminarPublicacion(publicacion.id)" size="small" color="red">
                 <v-icon size="18">
@@ -59,36 +85,67 @@
                 </v-icon>
                 Eliminar
               </v-btn>
-              
-             </template>
+  </div>
+  
+      <infinite-loading @infinite="infiniteHandler" class="my-4">
+     
+      </infinite-loading>
 
-              <v-list-item-subtitle>{{ publicacion.descripcion }}</v-list-item-subtitle>
-            
-            
-            </v-list-item>
-          </template>
-        </v-virtual-scroll>
+        
 
             <!-- Formulario de edición -->
     
       </v-card>
     </v-app>
 
-    <v-card class="mx-auto" max-width="600">
+    <v-card class="mx-auto" max-width="400">
   <!-- ... Otras partes de la tarjeta ... -->
 
   <!-- Formulario de edición dentro de la tarjeta -->
-  <form @submit.prevent="guardarCambios">
-    <label for="titulo">Título:</label>
-    <input type="text" id="titulo" v-model="publicacionEditando.titulo">
-    
-    <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" v-model="publicacionEditando.descripcion">
-    </textarea>
-    
-    <button type="submit">Guardar Cambios</button>
-  </form>
+  
+  
 </v-card>
+<v-row justify="center">
+        <v-col cols="15">
+          <v-card color="#385F73" theme="light" class="mt-4">
+            <v-theme-provider theme="dark" with-background class="pa-5">
+              <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
+            </v-theme-provider>
+            <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
+            <v-sheet width="1000">
+              
+              <form @submit.prevent="guardarCambios">
+            <v-text-field
+                v-model="publicacionEditando.titulo"
+                label="Titulo"
+                id="titulo" 
+                type="text "
+              ></v-text-field>
+              
+              <v-text-field
+                v-model="publicacionEditando.descripcion"
+                label="Descripcion"
+                id="Descripcion" 
+                type="text "
+              ></v-text-field>
+             
+              <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
+            <input type="date" id="fecha" name="fecha" v-model="publicacionEditando.fecha" class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+
+            
+        
+                <button  type="submit"
+              class="relative w-40 h-12 overflow-hidden text-white transition-all bg-green-500 border border-green-500 shadow-2xl before:ease before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-green-500 hover:before:-translate-x-40">
+                  <span relative="relative z-10">Guardar Cambios</span>
+                </button>
+              </form>
+
+              
+            </v-sheet>
+          </v-card>
+        </v-col>
+      </v-row>
+
         
 </template>
 
@@ -108,10 +165,17 @@
 import axios from 'axios';
 import navegacion from "../barra_navegacion.vue";
 import appbar from "../app_bar.vue";
+import Swal from "sweetalert2";
+import { format } from 'date-fns';
+import es from 'date-fns/locale/es'; // Importa el idioma español
+const api = 'http://127.0.0.1/api/v1/publicacion';
 
 export default {
+ 
 
-
+  created() {
+    this.cargarPublicaciones();
+  },
   methods: {
    
     editarPublicacion(publicacion) {
@@ -127,6 +191,8 @@ axios.get(url)
     console.log("ID de la publicación:", this.publicacionEditando.id);
     console.log("Título:", this.publicacionEditando.titulo);
     console.log("Descripción:", this.publicacionEditando.descripcion);
+    console.log("fecha:", this.publicacionEditando.fecha);
+
       })
   .catch((error) => {
     console.error('Error al obtener la publicación:', error);
@@ -138,25 +204,110 @@ axios.get(url)
     console.log("ID de la publicación:", this.publicacionEditando.id);
     console.log("Título:", this.publicacionEditando.titulo);
     console.log("Descripción:", this.publicacionEditando.descripcion);
+    console.log("fecha:", this.publicacionEditando.fecha);
+
     axios.put(`/api/v1/publicacion/${this.publicacionEditando.id}`, {
       titulo: this.publicacionEditando.titulo,
       descripcion: this.publicacionEditando.descripcion,
+      fecha: this.publicacionEditando.fecha,
+
     })
     .then((response) => {
-      // La publicación se ha actualizado con éxito en el servidor
-      console.log('Cambios guardados con éxito', response);
+
+      if(response){
+        Swal.fire({
+              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
+              icon: 'success' ,
+              title: 'Se ha actualizado exitosamente',
+              showConfirmButton: true,
+              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+              
+            });
+                
+        console.log('Cambios guardados con éxito', response);
+        this.cargarPublicaciones();
+      }
+      
       // Redirige a donde desees después de guardar los cambios
       this.$router.push('/index_publicaciones'); // O la ruta que necesites
     })
     .catch((error) => {
+      Swal.fire({
+              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
+              icon: 'error' ,
+              title: 'error al guardar llenar los campos correctamente',
+              showConfirmButton: true,
+              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+            });
       console.error('Error al guardar los cambios:', error);
     });
   },
+  cargarPublicaciones() {
+      axios.get('http://127.0.0.1/api/v1/publicacion')
+        .then((response) => {
+          console.log(response)
+          this.publicaciones = response.data.publicaciones;
+          console.log(this.publicaciones)
+
+        })
+        .catch((error) => {
+        
+          console.error('Error al cargar las publicaciones:', error);
+        });
+    },
+
+
+  infiniteHandler($state) {
+        if (this.isLoading) {
+          // Evita realizar múltiples solicitudes simultáneas
+          return;
+        }
+  
+        this.isLoading = true;
+  
+        axios.get(api, {
+          params: {
+            page: this.page,
+          },
+        }).then((response) => {
+          if (response.data.publicaciones.length) {
+            this.page += 1;
+            this.list.push(...response.data.publicaciones);
+            this.isLoading = false;
+            console.log("solicitando mas informacion")
+
+            $state.loaded();
+  
+            if (this.list.length >= response.data.total) {
+              // Si has cargado todos los resultados disponibles, completa la paginación
+              this.hasMoreResults = false;
+              $state.complete();
+            }
+          } else {
+            console.log("has llegado al final del contenido")
+            this.isLoading = false;
+            this.hasMoreResults = false;
+            $state.complete();
+          }
+        });
+      },
+
+      formatDate(isoDate) {
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    ///hour: '2-digit',
+    ///minute: '2-digit',
+    timeZone: 'UTC'
+  };
+  return new Date(isoDate).toLocaleString('es-es', options);
+},
+},
 
 
     
-  },
-  
+
  
 
   components: {
@@ -164,16 +315,20 @@ axios.get(url)
       appbar,
     },
 
-  data() {
+    data() {
     return {
-      publicaciones: [], 
+      publicaciones: [],
       publicacionEditando: {
-      titulo: '',
-      descripcion: '',
-      id:'',
-      // Otras propiedades que necesites
-    } // Publicación que se está editando
-
+        titulo: '',
+        descripcion: '',
+        id: '',
+        fecha: '', // Inicializa con la fecha en el formato adecuado (por ejemplo, 'YYYY-MM-DD')
+      },
+      page: 1,
+      list: [], // Define la propiedad list aquí
+      isLoading: false,
+      hasMoreResults: true,
+      currentIndex: 0,
     };
   },
   mounted() {

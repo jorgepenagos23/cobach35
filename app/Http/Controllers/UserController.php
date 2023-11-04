@@ -9,9 +9,11 @@ use Database\Factories\UserFactory;
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\User\CreateRequest;
+use App\Imports\UserImportExcel;
 use App\Models\Alumno;
 use App\Models\Publicacion;
 use Illuminate\Database\Eloquent\Collection;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 
@@ -42,6 +44,15 @@ class UserController extends Controller
         return response()->json($data);
     }
     
+    public function index3(){
+        $users = User::all();
+
+        $data = [
+            'users' => UserResource::collection($users),
+        
+        ];
+        return response()->json($data);
+    }
 
         
     public function createUser()
@@ -87,6 +98,19 @@ class UserController extends Controller
         // Devuelve una respuesta JSON con los datos combinados
         return response()->json($combinedData);
     }
+
+        
+    public function import(Request $request){
+
+        $request->validate([
+        'excel_file' =>'required|mimes:xls,xlsx,csv'
+
+
+        ]);
+        Excel::import(new UserImportExcel, $request->file('excel_file')); ///mandamos el archivo a importar
+        return response()->json(['message' => 'Archivo Excel subido con éxito']);
+    }
+
 
  
 }

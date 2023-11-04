@@ -36,8 +36,7 @@ class AlumnoController extends Controller
 
         ]);
         Excel::import(new AlumnoRGI, $request->file('excel_file')); ///mandamos el archivo a importar
-        return redirect()->back()->with('success', 'Importado todo bien !');
-
+        return response()->json(['message' => 'Archivo Excel subido con éxito']);
     }
 
 

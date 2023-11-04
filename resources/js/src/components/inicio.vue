@@ -15,8 +15,8 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list density="compact" nav color="success">
-        <v-list-item to="/" prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-        <v-list-item to="/login" prepend-icon="mdi-account" title="Sistema" value="account"></v-list-item>
+        <v-list-item to="/" prepend-icon="mdi-home-circle" title="Home" value="home"></v-list-item>
+        <v-list-item to="/login" prepend-icon="mdi-account-circle" title="Sistema" value="account"></v-list-item>
 
       </v-list>
     </v-navigation-drawer>

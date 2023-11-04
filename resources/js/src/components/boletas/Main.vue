@@ -1,52 +1,62 @@
 <template>
-    <header>
-      <navegacion></navegacion>
-    </header>
-    <v-app>
-    
+  <header>
+    <navegacion></navegacion>
+  </header>
+  <v-app>
+  
+    <appbar></appbar>
+      
+      <v-card-item class="bg-red-darken-4">
+        <v-theme-provider theme="dark" with-background class="pa-5">
+            <v-card title="  REPORTES" 
+            prepend-icon="mdi-file-chart-outline"
+            subtitle="Alumnos"></v-card>
+          </v-theme-provider>
+      <template v-slot:append>
+        <div>
+          <p class="inline-block mr-2">Crear reporte</p>
+          <router-link to="/crear-reporte">
+            <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
+              <v-icon>
+                mdi-plus
+              </v-icon>
+            </button>
+          </router-link>
+        </div>
+      </template>
 
-      <appbar></appbar>
-      <v-card max-width="800px" max-height="300" >
-        <v-container class="text-center">
-          <v-autocomplete
-                      label="Buscar Boleta"
-                      theme="dark"
-                  :items="['Boleta']"
-                  ></v-autocomplete>
-             </v-container>
-        <v-card-item class="bg-blue-darken-4">
+
+      </v-card-item>
+
+      <v-card-text class="pt-8">
+    Reportes
+      </v-card-text>
+
+       <v-divider></v-divider>
+
+       <v-row justify="center">
+      <v-col cols="15">
+        <v-card color="#385F73" theme="light" class="mt-4">
+          <v-theme-provider theme="dark" with-background class="pa-5">
+            <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
+          </v-theme-provider>
+          <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
+          <v-sheet width="1000">
           
-          <v-card-title>Boleta</v-card-title>
-        <template v-slot:append>
-          <div>
-            <p class="inline-block mr-2">Crear Boleta</p>
-            <router-link to="/crear-Boleta">
-              <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
-                <v-icon>
-                  mdi-plus
-                </v-icon>
-              </button>
-            </router-link>
-          </div>
-        </template>
+
+            
+            
+          </v-sheet>
+        </v-card>
+      </v-col>
+    </v-row>
 
 
-        </v-card-item>
-
-        <v-card-text class="pt-8">
-       Panel de Administracion de Boletas
-        </v-card-text>
-
-         <v-divider></v-divider>
-
-        
-
-     
-      </v-card>
-    </v-app>
+   
+  </v-app>
 
 
-        
+      
 </template>
 
 

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +24,16 @@ Route::middleware(['web', 'auth'])->group(function () {
 
 Route::get('/', function () { return view('welcome');})->name('welcome');
 Route::get('/listar_alumno',[AlumnoController::class,'index2'])->name('listarAlumno');
-Route::post('/import', [AlumnoController::class, 'import'])->name('import');
+
+
+Route::get('/migrar',function(){ Artisan::call('migrate',["--seed"=>true]);
+});
+
+
+
+//Route::post('/import', [AlumnoController::class, 'import'])->name('import');
+
+
+
 //Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
 
