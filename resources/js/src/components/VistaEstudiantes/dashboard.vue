@@ -67,7 +67,7 @@ export default {
     };
   },
   created() {
-    axios.get('http://127.0.0.1/api/user')
+    axios.get('/api/user')
       .then(response => {
         this.user.fullName = response.data.nombre;
         this.user.matricula = response.data.matricula;
@@ -86,7 +86,6 @@ export default {
         .then(response => {
           if (response) {
             Swal.fire({
-              background: 'rgba(238, 59, 27)',
               icon: 'success',
               title: '¡Hasta pronto!',
               text: 'Has cerrado sesión exitosamente.',

@@ -21,13 +21,14 @@
       <v-sheet class="bg-opacity-0" height="100%">
         <div class="justify-center d-flex fill-height align-center">
           <div class="text-h2">
-            <div class="grid w-4/6 p-8 m-auto text-center bg-gray-200 border rounded-lg hero md:grid-cols-2 bg-opacity-90">
-              <img :src="publicacion.imagen" alt="Imagen" style="width: 500px; height: 300px;" />
+            <div class="grid w-800 p-8 m-auto text-center bg-gray-200 border rounded-lg hero md:grid-cols-2 bg-opacity-90">
+              <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
                 <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
-                <div class="mb-3 text-3xl font-semibold head">{{ publicacion.titulo }}</div>
-                <div class="mb-2 text-2xl font-semibold head">{{ formatDate(publicacion.fecha) }}</div>
+             <h1 class="mt-4 text-3xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"><span class="block text-pink-500">{{ formatDate(publicacion.fecha) }} </span><span class="block text-black">{{ publicacion.titulo }}</span></h1>
 
-                <div class="desc">{{ publicacion.descripcion }}</div>
+                <div class="mb-3 text-3xl font-semibold head"></div>
+                <div class="mb-2 text-2xl font-semibold head"></div>
+
                 <div class="desc">{{ publicacion.nombre }}</div>
               </div>
             </div>
@@ -65,10 +66,10 @@
         </div>
       </div>
       <div class="flex flex-row items-center">
-            <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
+            <p class="ml-2 text-base font-medium">  {{ publicacion.titulo }}</p>
         </div>
       <div class="py-2">
-        <p class="leading-snug">Descripcion: {{ publicacion.descripcion }}</p>
+        <p class="leading-snug"> {{ publicacion.descripcion }}</p>
       </div>
     </div>
   
@@ -112,7 +113,7 @@ main {
 import { VImg } from "vuetify/lib/components/index.mjs";
 import { format } from 'date-fns';
 import es from 'date-fns/locale/es'; // Importa el idioma español
-  const api = 'http://127.0.0.1/api/v1/publicacion';
+  const api = '/api/v1/publicacion';
   
   export default {
     data() {
@@ -173,7 +174,7 @@ import es from 'date-fns/locale/es'; // Importa el idioma español
       },
 
       cargarPublicaciones() {
-      axios.get('http://127.0.0.1/api/v1/publicacion')
+      axios.get('/api/v1/publicacion')
         .then((response) => {
           console.log(response)
           this.publicaciones = response.data.publicaciones;

@@ -24,8 +24,6 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home-city" title=" Inicio " @click="$router.push('/dashboard')"></v-list-item>
-          <v-list-item prepend-icon="mdi-file-excel" title=" subir alumno " @click="$router.push('/subir-excel-alumno')"></v-list-item>
-          <v-list-item prepend-icon="mdi-file-excel-outline" title=" subir usuarios " @click="$router.push('/subir-excel-usuarios')"></v-list-item>
 
           <v-list-item prepend-icon="mdi-location-exit" title="Salir" @click="logout"></v-list-item>
           
@@ -64,7 +62,7 @@ export default {
   },
   created() {
     // Realiza una solicitud GET para obtener los datos del usuario
-    axios.get('http://127.0.0.1/api/user')
+    axios.get('/api/user')
       .then(response => {
         this.userData = response.data;
       })
@@ -78,12 +76,11 @@ export default {
         .then(response => {
           if (response) {
             Swal.fire({
-              background: 'rgba(238, 59, 27)', // Estilo de fondo definido en tu CSS
               icon: 'success',
               title: '¡Hasta pronto!',
               text: 'Has cerrado sesión exitosamente.',
               showConfirmButton: false,
-              timer: 7000 // Cambia el tiempo que deseas que aparezca la alerta
+              timer: 2000 // Cambia el tiempo que deseas que aparezca la alerta
             });
             window.location.reload();
           }

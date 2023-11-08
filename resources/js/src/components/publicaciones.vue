@@ -67,7 +67,7 @@ mounted(){
   },
   methods: {
     cargarPublicaciones() {
-      axios.get('http://127.0.0.1/api/v1/publicacion')
+      axios.get('/api/v1/publicacion')
         .then((response) => {
           console.log(response)
           this.publicaciones = response.data.publicaciones;

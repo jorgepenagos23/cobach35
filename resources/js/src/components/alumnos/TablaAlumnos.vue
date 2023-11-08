@@ -108,7 +108,7 @@ export default {
   mounted() {
     const token = "";
     axios
-      .get("http://127.0.0.1/api/user/index", {
+      .get("/api/user/index", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

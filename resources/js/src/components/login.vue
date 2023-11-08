@@ -127,7 +127,7 @@ export default {
               title: "Bienvenido!",
               text: "Has iniciado sesión exitosamente.",
               showConfirmButton: false,
-              timer: 2000,
+              timer: 1000,
             });
   }
   

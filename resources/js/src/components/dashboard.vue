@@ -17,7 +17,7 @@ export default {
   },
   created() {
     // Realiza una solicitud GET para obtener los datos del usuario
-    axios.get('http://127.0.0.1/api/user')
+    axios.get('/api/user')
       .then(response => {
         this.userData = response.data;
 

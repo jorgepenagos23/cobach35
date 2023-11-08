@@ -92,7 +92,7 @@ export default {
       };
 
       // Hacemos la solicitud POST al servidor
-      axios.post('http://127.0.0.1/api/v1/reporte/subir', publicacionData)
+      axios.post('/api/v1/reporte/subir', publicacionData)
         .then(response => {
           Swal.fire({
             icon: 'success',

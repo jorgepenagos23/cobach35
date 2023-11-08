@@ -14,8 +14,8 @@
             </v-theme-provider>
         <template v-slot:append>
           <div>
-            <p class="inline-block mr-2">Crear reporte</p>
-            <router-link to="/subir-excel-usuarios ">
+            <p class="inline-block mr-2">Subir excel usuarios</p>
+            <router-link to="/subir-excel-usuarios">
               <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
                 <v-icon>
                   mdi-plus
@@ -83,7 +83,7 @@ import axios from 'axios';
 import navegacion from "./barra_navegacion.vue";
 import appbar from "./app_bar.vue";
 
-const url = 'http://127.0.0.1/api/user/index3';
+const url = '/api/user/index3';
 
 export default {
   data() {

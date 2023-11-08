@@ -47,7 +47,7 @@
     },
     created() {
       // Realiza una solicitud GET para obtener los datos combinados de usuarios y alumnos
-      axios.get('http://127.0.0.1/api/user/index2')
+      axios.get('/api/user/index2')
         .then(response => {
           this.combinedData = response.data; // Asigna los datos combinados a combinedData
         })

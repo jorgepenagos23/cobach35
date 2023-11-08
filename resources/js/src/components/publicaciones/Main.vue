@@ -107,12 +107,11 @@
 </v-card>
 <v-row justify="center">
         <v-col cols="15">
-          <v-card color="#385F73" theme="light" class="mt-4">
+          <v-card color="white" theme="light" class="mt-7">
             <v-theme-provider theme="dark" with-background class="pa-5">
               <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
             </v-theme-provider>
             <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
-            <v-sheet width="1000">
               
               <form @submit.prevent="guardarCambios">
             <v-text-field
@@ -157,7 +156,6 @@
               </form>
 
               
-            </v-sheet>
           </v-card>
         </v-col>
       </v-row>
@@ -184,7 +182,7 @@ import appbar from "../app_bar.vue";
 import Swal from "sweetalert2";
 import { format } from 'date-fns';
 import es from 'date-fns/locale/es'; // Importa el idioma español
-const api = 'http://127.0.0.1/api/v1/publicacion';
+const api = '/api/v1/publicacion';
 
 export default {
  
@@ -262,7 +260,7 @@ axios.get(url)
     });
   },
   cargarPublicaciones() {
-      axios.get('http://127.0.0.1/api/v1/publicacion')
+      axios.get('/api/v1/publicacion')
         .then((response) => {
           console.log(response)
           this.publicaciones = response.data.publicaciones;
@@ -355,7 +353,7 @@ axios.get(url)
 
   const token = ''; 
 
-  axios.get('http://127.0.0.1/api/user/index', {
+  axios.get('/api/user/index', {
    
   })
     .then((response) => {

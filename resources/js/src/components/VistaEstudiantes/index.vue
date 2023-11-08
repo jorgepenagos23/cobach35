@@ -92,13 +92,13 @@ export default {
   },
   created() {
     // Realiza una solicitud GET para obtener los datos de usuario y su matrícula desde el servidor
-    axios.get('http://127.0.0.1/api/user/')
+    axios.get('/api/user/')
       .then(response => {
         // Asumiendo que la matrícula del usuario se encuentra en la propiedad "matricula" de la respuesta
         const matriculaDelUsuario = response.data.matricula;
 
         // Ahora puedes usar "matriculaDelUsuario" en tu filtro
-        axios.get('http://127.0.0.1/api/user/index2')
+        axios.get('/api/user/index2')
           .then(response => {
             this.combinedData = response.data; // Asigna los datos combinados a combinedData
 
