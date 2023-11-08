@@ -35,14 +35,18 @@ class PublicacionController extends Controller
             'titulo' => 'required|string',
             'descripcion' => 'required|string',
             'fecha' => 'required|date', // Asegúrate de que fecha sea una fecha válida
-            'nombre' => 'required|string',
+            'publicador' => 'required|string',
+            'imagen' => 'required|string',
+
         ]);
     
         $publicacion = new Publicacion;
         $publicacion->titulo = $validatedData['titulo'];
         $publicacion->descripcion = $validatedData['descripcion'];
         $publicacion->fecha = $validatedData['fecha'];
-        $publicacion->nombre = $validatedData['nombre'];
+        $publicacion->publicador = $validatedData['publicador'];
+        $publicacion->imagen = $validatedData['imagen'];
+
         $publicacion->save();
     
         return response()->json([
@@ -100,6 +104,7 @@ class PublicacionController extends Controller
         $publicacion->titulo = $request->input('titulo');
         $publicacion->descripcion = $request->input('descripcion');
         $publicacion->fecha = $request->input('fecha');
+        $publicacion->imagen = $request->input('imagen');
 
         if ($publicacion->save()) {
             return response()->json([

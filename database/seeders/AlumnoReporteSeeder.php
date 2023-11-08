@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use App\Models\AlumnoReporte;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\Request;
 
 class AlumnoReporteSeeder extends Seeder
 {
@@ -15,4 +16,5 @@ class AlumnoReporteSeeder extends Seeder
         \App\Models\AlumnoReporte::factory(400)->create();
 
     }
+
 }

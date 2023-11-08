@@ -3,68 +3,119 @@
       <navegacion></navegacion>
     </header>
     <v-app>
-    
       <appbar></appbar>
-        
-        <v-card-item class="bg-red-darken-4">
-          <v-theme-provider theme="dark" with-background class="pa-5">
-              <v-card title="  REPORTES" 
-              prepend-icon="mdi-file-chart-outline"
-              subtitle="Alumnos"></v-card>
-            </v-theme-provider>
+      <v-card-item class="bg-green-darken-3">
+          <v-card
+            title="REPORTES"
+            prepend-icon="mdi-account-check"
+            subtitle="Reportes escolares"
+            class="bg-indigo-darken-4"
+          ></v-card>
         <template v-slot:append>
           <div>
-            <p class="inline-block mr-2">Crear reporte</p>
-            <router-link to="/crear-reporte">
-              <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
+            <router-link to= "/crear-reporte">
+              <button class="h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full w-37 min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
+               Crear reporte
                 <v-icon>
                   mdi-plus
                 </v-icon>
               </button>
             </router-link>
           </div>
+    
+    
         </template>
-        </v-card-item>
+      </v-card-item>
 
-        <v-virtual-scroll :items="reportesA" height="300" item-height="50">
+      <v-container class="my-8">
+  <v-row>
+    <v-col cols="12" sm="15">
+      <v-row align="center">
+        <v-col cols="10">
+          <v-text-field v-model="busqueda" label="Buscar por matrícula o nombre" outlined dense variant="solo" prepend-icon="mdi-account-search-outline"></v-text-field>
+        </v-col>
+        <v-col cols="2">
+          <v-btn @click="buscarAlumnos" color="primary" dark block>
+            Buscar
+            <v-icon>
+              mdi-magnify
+            </v-icon>
+          </v-btn>
+          <v-btn @click="limpiarBusqueda" color="error" dark block>
+            <v-icon>
+              mdi-backspace-outline
+             </v-icon>
+            Limpiar Búsqueda
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-row>
+</v-container>
+
+    
+  <divider></divider>
+
+    
+        <divider></divider>
+        <divider></divider>
+
+      <v-virtual-scroll :items="reportesA" height="100" item-height="20" >
     <template v-slot:default="{ item }">
       <v-list-item>
-        <template v-slot:prepend>
-          <v-avatar color="blue" class="text-white" size="40">
-            <!-- Puedes usar cualquier lógica para mostrar las iniciales aquí -->
-            {{ item.matricula.substring(0, 2).toUpperCase() }}
-          </v-avatar>
-        </template>
+                <v-card
+            class="mx-auto"
+             width="900"
+            prepend-icon="mdi-account-alert"
+            label="dark"
+            color="dark"
+            value="indigo-darken-3"
+            variant="tonal"
 
-        <v-list-item-title>{{ item.descripcion }}</v-list-item-title>
+          >
+          <v-card-item>
+            <div>
+              <div class="mb-1 text-overline">{{ variant }}</div>
+              <div class="mb-1 text-h6">      Matricula {{ item.matricula }}
+                </div>
+              <div class="text-caption">
+                {{ item.descripcion }}
+              </div>
+            </div>
+          </v-card-item>
+            <template v-slot:title>
+              Nombre {{ item.usuario_id }}
+            </template>
 
-        <template v-slot:append>
-          <v-btn size="small" variant="tonal" @click="verAlumno(item)">
-            VER REPORTE
-            <v-icon color="orange-darken-4" end>mdi-open-in-new</v-icon>
-          </v-btn>
+            <v-card-text> Descripcion:
+              {{ item.descripcion }}
+            </v-card-text>
+            
+            <template v-slot:append>
+          <v-icon class="bg-primary">mdi-account</v-icon>
+          <v-btn
+        color="orange-darken-2"
+        variant="text">
+        Explorar
+      </v-btn>
         </template>
+          </v-card>
+   
+    
+      
       </v-list-item>
+
+
+
+      
     </template>
   </v-virtual-scroll>
       
         
   
     </v-app>
-
-
-        
+  
 </template>
-
-
-<style>
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-</style>
-
-
 
 <script>
 import axios from 'axios';
@@ -77,6 +128,11 @@ export default {
   data() {
     return {
       reportesA: [], // Arreglo para almacenar los reportes de alumnos
+      headers: [
+        { text: 'Matricula', value: 'matricula' },
+        { text: 'Descripción', value: 'descripcion' },
+        { text: 'Acciones', value: 'actions', sortable: false },
+      ],
     };
   },
 
@@ -91,7 +147,9 @@ export default {
   },
 
   methods: {
-    // Otros métodos si es necesario
+    verAlumno(item) {
+      // Lógica para ver el reporte del alumno
+    },
   },
 
   components: {

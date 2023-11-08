@@ -6,12 +6,15 @@
   
     <appbar></appbar>
       
-    <v-card-item class="bg-blue-darken-4">
-          <v-theme-provider theme="dark" with-background class="pa-5">
+    <v-card-item class="bg-green-darken-4">
               <v-card title="  BUSCAR ALUMNOS" 
-              prepend-icon="mdi-file-chart-outline"
-              subtitle="Alumnos"></v-card>
-            </v-theme-provider>
+              prepend-icon="mdi-account-school"
+              subtitle="Alumnos"
+              class="bg-indigo-darken-4"
+              >
+              
+            </v-card>
+              
         <template v-slot:append>
        
         </template>

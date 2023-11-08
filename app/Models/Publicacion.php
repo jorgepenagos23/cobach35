@@ -16,6 +16,8 @@ class Publicacion extends Model
         'titulo',
         'descripcion',
         'fecha',
+        'nombre',
+        'imagen',
 
    
     ];

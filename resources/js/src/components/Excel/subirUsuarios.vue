@@ -34,7 +34,16 @@
           @csrf
           <div class="mb-4">
             <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file">Excel users </label>
-            <input type="file" class="block w-full mt-1 form-input" ref="excelFile" @change="handleFileChange" accept=".xlsx, .xls">
+
+                  <v-file-input
+                ref="excelFile"  
+                v-model="excelFile"
+                accept=".xlsx, .xls"
+                label="Seleccionar archivo"
+                outlined
+                dense
+              ></v-file-input>
+
           </div>
           <div class="mb-4">
             <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover-bg-blue-700" :disabled="uploading">
@@ -65,6 +74,8 @@ import appbar from "../app_bar.vue";
       return {
         successMessage: '',
         uploading: false,
+        excelFile: null,
+
       };
     },
     methods: {

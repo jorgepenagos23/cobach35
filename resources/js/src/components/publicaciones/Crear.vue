@@ -18,15 +18,28 @@
                   v-model="publicacion.titulo"
                   label="Título"
                   required
+                  variant="solo"
+                  prepend-icon="mdi-format-text-variant-outline"
                 ></v-text-field>
                 <v-text-field
                   v-model="publicacion.descripcion"
                   label="Descripción"
                   required
+                  prepend-icon="mdi-comment-text"
+                   variant="solo"
                 ></v-text-field>
                 <v-text-field
-                  v-model="publicacion.nombre"
+                  v-model="publicacion.publicador"
                   label="Nombre"
+                  required
+                  prepend-icon="mdi-tooltip-account"
+                  variant="solo"
+                ></v-text-field>
+                <v-text-field
+                  v-model="publicacion.imagen"
+                  label="Imagen"
+                  prepend-icon="mdi-image-area"
+                  variant="solo"
                   required
                 ></v-text-field>
                 <label for="datepicker">Selecciona una fecha:</label>
@@ -58,7 +71,8 @@ export default {
         titulo: "",
         descripcion: "",
         fecha: null,
-        nombre: "",
+        publicador: "",
+        imagen: "",
       },
     };
   },
@@ -68,7 +82,9 @@ export default {
     titulo: this.publicacion.titulo,
     descripcion: this.publicacion.descripcion,
     fecha: this.publicacion.fecha,
-    nombre: this.publicacion.nombre,
+    publicador: this.publicacion.publicador,
+    imagen: this.publicacion.imagen,
+
   };
 
   // Hacemos la solicitud POST al servidor
@@ -87,7 +103,7 @@ export default {
     .catch(error => {
       Swal.fire({
         icon: 'error',
-        tittle: 'Error al crear publicacion',
+        title: 'Error al crear publicacion',
         text: 'Ha ocurrido un error al crear la publicación',
 
       })

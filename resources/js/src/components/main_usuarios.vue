@@ -6,8 +6,8 @@
     
       <appbar></appbar>
         
-        <v-card-item class="bg-red-darken-4">
-          <v-theme-provider theme="dark" with-background class="pa-5">
+        <v-card-item class="bg-pink-darken-4">
+          <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title="  USUARIOS " 
               prepend-icon="mdi-file-chart-outline"
               subtitle="Todos los usuarios "></v-card>
@@ -27,21 +27,37 @@
         </v-card-item>
 
         <v-virtual-scroll :items="users" height="300" item-height="50">
-    <template v-slot:default="{ item }">
+        <template v-slot:default="{ item }">
       <v-list-item>
-     
+        <v-card
+            class="mx-auto"
+            width="900"
+            prepend-icon="mdi-account-alert"
+            label="indigo-darken-3"
+            color="dark"
+            value="indigo-darken-3"
+            
+            variant="tonal"
+
+          >
+          <v-list-item-title>ID : {{ item.id }}</v-list-item-title>
         <v-list-item-title>Nombre : {{ item.nombre }}</v-list-item-title>
         <v-list-item-title>Email: {{ item.email }}</v-list-item-title>
         <v-list-item-title>Matricula: {{ item.matricula }}</v-list-item-title>
 
         <template v-slot:append>
-          <v-btn size="small" variant="tonal" @click="verAlumno(item)">
-            EDITAR PERMISOS
-            <v-icon color="orange-darken-4" end>mdi-open-in-new</v-icon>
-          </v-btn>
+          <v-icon class="bg-primary">mdi-account</v-icon>
+          <v-btn
+        color="orange-darken-2"
+        variant="text">
+        Explorar
+      </v-btn>
         </template>
+        
+      </v-card>
       </v-list-item>
     </template>
+    
   </v-virtual-scroll>
       
         

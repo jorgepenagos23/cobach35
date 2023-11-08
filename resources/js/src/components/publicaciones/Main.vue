@@ -120,6 +120,9 @@
                 label="Titulo"
                 id="titulo" 
                 type="text "
+                variant="solo"
+                prepend-icon="mdi-format-text-variant-outline"
+
               ></v-text-field>
               
               <v-text-field
@@ -127,8 +130,21 @@
                 label="Descripcion"
                 id="Descripcion" 
                 type="text "
+                prepend-icon="mdi-comment-text"
+                variant="solo"
               ></v-text-field>
-             
+                 
+              <v-text-field
+                v-model="publicacionEditando.imagen"
+                label="imagen"
+                id="imagen" 
+                type="text "
+                prepend-icon="mdi-image-area"
+                variant="solo"
+
+              ></v-text-field>
+              
+              
               <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
             <input type="date" id="fecha" name="fecha" v-model="publicacionEditando.fecha" class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
 
@@ -205,11 +221,14 @@ axios.get(url)
     console.log("Título:", this.publicacionEditando.titulo);
     console.log("Descripción:", this.publicacionEditando.descripcion);
     console.log("fecha:", this.publicacionEditando.fecha);
+    console.log("imagen:", this.publicacionEditando.imagen);
 
     axios.put(`/api/v1/publicacion/${this.publicacionEditando.id}`, {
       titulo: this.publicacionEditando.titulo,
       descripcion: this.publicacionEditando.descripcion,
       fecha: this.publicacionEditando.fecha,
+      imagen: this.publicacionEditando.imagen,
+
 
     })
     .then((response) => {
@@ -323,6 +342,7 @@ axios.get(url)
         descripcion: '',
         id: '',
         fecha: '', // Inicializa con la fecha en el formato adecuado (por ejemplo, 'YYYY-MM-DD')
+        imagen:'',
       },
       page: 1,
       list: [], // Define la propiedad list aquí

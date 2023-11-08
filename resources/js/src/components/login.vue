@@ -29,15 +29,20 @@
               <v-theme-provider theme="success" with-background class="pa-5">
               <v-card title="Iniciar Sesion" subtitle="Sistema "></v-card>
             </v-theme-provider>
-              <v-text-field v-model="email" label="Correo Electrónico" prepend-icon="mdi-card-account-mail" />
+              <v-text-field v-model="email" label="Usuario "
+              variant="outlined"
+
+              prepend-icon="mdi-card-account-mail" />
               <v-text-field
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
                 label="Contraseña"
+                variant="outlined"
                 prepend-icon="mdi-lock"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off-outline'"
                 @click:append="showPassword = !showPassword"
               />
+
               <button type="submit" class="flex items-center p-2 px-6 text-xl font-thin tracking-widest text-black bg-transparent btn group">
                 <span class="relative pr-4 pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-green-500 after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">Entrar</span>
                 <svg viewBox="0 0 46 16" height="10" width="30" xmlns="http://www.w3.org/2000/svg" id="arrow-horizontal" class="transition-all duration-300 ease-out -translate-x-2 fill-slate-700 group-hover:translate-x-1 group-hover:scale-x-105 group-hover:fill-white">

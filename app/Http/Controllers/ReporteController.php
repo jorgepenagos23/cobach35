@@ -43,6 +43,8 @@ class ReporteController extends Controller
         //
     }
 
+    
+
     /**
      * Display the specified resource.
      */

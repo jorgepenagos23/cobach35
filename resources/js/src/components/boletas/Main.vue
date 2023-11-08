@@ -8,13 +8,13 @@
       
       <v-card-item class="bg-red-darken-4">
         <v-theme-provider theme="dark" with-background class="pa-5">
-            <v-card title="  REPORTES" 
+            <v-card title="  BOLETAS" 
             prepend-icon="mdi-file-chart-outline"
             subtitle="Alumnos"></v-card>
           </v-theme-provider>
       <template v-slot:append>
         <div>
-          <p class="inline-block mr-2">Crear reporte</p>
+          <p class="inline-block mr-2">BOLETAS</p>
           <router-link to="/crear-reporte">
             <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
               <v-icon>
@@ -29,30 +29,14 @@
       </v-card-item>
 
       <v-card-text class="pt-8">
-    Reportes
+    BOLETAS
       </v-card-text>
 
        <v-divider></v-divider>
 
-       <v-row justify="center">
-      <v-col cols="15">
-        <v-card color="#385F73" theme="light" class="mt-4">
-          <v-theme-provider theme="dark" with-background class="pa-5">
-            <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
-          </v-theme-provider>
-          <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
-          <v-sheet width="1000">
-          
-
-            
-            
-          </v-sheet>
-        </v-card>
-      </v-col>
-    </v-row>
 
 
-   
+
   </v-app>
 
 

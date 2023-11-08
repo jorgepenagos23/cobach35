@@ -1,9 +1,10 @@
-<?php
+ <?php
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\AlumnoReporteController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
@@ -59,6 +60,7 @@ Route::delete('v1/publicacion/{id}', [PublicacionController::class, 'destroy'])-
 Route::get('v1/reporte', [ReporteController::class,'index']);
 Route::get('v1/reportes/alumnos', [ReporteController::class,'index2']);
 
+Route::post('v1/reporte/subir', [AlumnoReporteController::class, 'store']);
 
 
 
@@ -69,3 +71,4 @@ Route::post('/logout',[LoginController::class, 'logout']);
 Route::post('/revoke',[LoginController::class, 'revokeAllTokens']);
 Route::post('/subir-excel-alumno', [AlumnoController::class, 'import'])->name('upload-excel-alumno')->middleware('auth:sanctum');;
 Route::post('/subir-excel-users', [UserController::class, 'import'])->name('upload-excel-users')->middleware('auth:sanctum');;
+

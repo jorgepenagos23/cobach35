@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
   
-    \App\Models\User::factory(0)->create();
+    \App\Models\User::factory(100)->create();
     \App\Models\Alumno::factory(0)->create();
     \App\Models\Permiso::factory()->count(5)->create();
-    \App\Models\Publicacion::factory()->count(500)->create();
+    \App\Models\Publicacion::factory()->count(50)->create();
             
 
             $user = new User();
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-            \App\Models\Boleta::factory()->count(10)->create(); 
+            \App\Models\Boleta::factory()->count(100)->create(); 
 
 
 

@@ -1,13 +1,14 @@
 <template>
 
   <header>
-    <navegacion></navegacion>
   </header>
   <v-card class="my-card">
     <v-layout>
       <v-navigation-drawer 
         expand-on-hover
         rail
+      
+        
       >
         <v-list>
           

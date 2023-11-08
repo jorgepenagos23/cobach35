@@ -4,6 +4,8 @@ import { createApp } from "vue";
 import app from "./src/app.vue";
 import vuetify from "./vuetify";
 import CrearPublicaciones from  "./src/components/publicaciones/Crear.vue"
+import CrearReportes from  "./src/components/reportes/Crear.vue"
+
 import { createRouter, createWebHistory } from 'vue-router';
 import 'vuetify/styles';
 import '@mdi/font/css/materialdesignicons.min.css';
@@ -43,7 +45,14 @@ const router = createRouter({
         {path: '/subir-excel-alumno', component:()=>import('./src/components/Excel/SubirAlumno.vue')},
         {path: '/subir-excel-usuarios', component:()=>import('./src/components/Excel/subirUsuarios.vue')},
 
-        {path: '/main-usuarios', component:()=>import('./src/components/main_usuarios.vue')}
+        {path: '/main-usuarios', component:()=>import('./src/components/main_usuarios.vue')},
+        {path: '/main-descargas', component:()=>import('./src/components/main_descargas.vue')},
+        {
+
+            path: '/crear-reporte',
+            name: 'crear-reportes',
+            component: CrearReportes,
+        }
 
 
     ],
