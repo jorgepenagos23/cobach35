@@ -60,50 +60,57 @@
         <divider></divider>
         <divider></divider>
 
-      <v-virtual-scroll :items="reportesA" height="100" item-height="20" >
+      <v-virtual-scroll :items="reportesA" height="100" item-height="40"
+      :style="{ 
+      background: 'linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)'
+    }" >
     <template v-slot:default="{ item }">
       <v-list-item>
                 <v-card
-            class="mx-auto"
-             width="900"
-            prepend-icon="mdi-account-alert"
-            label="dark"
-            color="dark"
-            value="indigo-darken-3"
-            variant="tonal"
-
-          >
-          <v-card-item>
-            <div>
-              <div class="mb-1 text-overline">{{ variant }}</div>
-              <div class="mb-1 text-h6">      Matricula {{ item.matricula }}
+                class="mx-auto text-center"
+  
+                max-width="800"
+                 >
+                <v-card 
                 
-                </div>
-              <div class="text-caption">
-                {{ item.descripcion }}
-              </div>
-            </div>
-          </v-card-item>
-            <template v-slot:title>
-              Numero de Reporte:           
-               {{ item.id }}
+                  :title="item.id"    
+                  subtitle="No Reporte"
+                   class="text-left bg-red-darken-4"
+                   variant="tonal" >
 
-            </template>
+                   
 
-            <v-card-text> Descripcion:
-              {{ item.descripcion }}
-            </v-card-text>
-            
-            <template v-slot:append>
-          <v-icon class="bg-primary">mdi-account</v-icon>
-          <v-btn
-        color="orange-darken-2"
-        variant="text">
-        Explorar
-      </v-btn>
+                   <template v-slot:append>
+          <v-icon class="bg-primary">mdi-file-pdf-box</v-icon>
+              <v-btn
+            color="white"
+            variant="text">
+             PDF
+          </v-btn>
         </template>
+            </v-card>
+        
+            <v-card 
+         
+         prepend-icon="mdi-account-school"
+         :subtitle="item.matricula"   
+         class="bg-white"
+         >
+         <v-theme-provider theme="light">
+         <v-card 
+         
+         :subtitle="item.descripcion"   
+         >
+
+       </v-card>
+       </v-theme-provider>
+       </v-card>
+         
           </v-card>
-   
+          
+          
+
+          
     
       
       </v-list-item>

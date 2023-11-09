@@ -4,16 +4,14 @@
   </header>
   <v-app>
     <appbar></appbar>
-    <!-- Agrega clases de alineación para centrar el formulario -->
     <v-row justify="center">
-      <v-col cols="10">
-        <v-card color="#385F73" theme="light" class="mt-4">
+      <v-col cols="11">
+        <v-card >
           <v-theme-provider theme="dark" with-background class="pa-5">
             <v-card title="Crear Reporte" subtitle="Crear"></v-card>
           </v-theme-provider>
-          <v-card-title class="text-h5 font-weight-regular bg-amber-lighten-1
-"></v-card-title>
-          <v-sheet width="1000">
+          <v-card-title class="text-h5 font-weight-regular bg-amber-lighten-1"></v-card-title>
+          <v-sheet width="1400" >
             <v-form ref="form">
               <v-text-field
                 v-model="publicacion.descripcion"
@@ -21,6 +19,7 @@
                 required
                 variant="solo"
                 prepend-icon="mdi-comment-text"
+                class="w-full px-6 py-4 text-lg"
               ></v-text-field>
               <v-text-field
                 v-model="publicacion.matricula"
@@ -28,6 +27,8 @@
                 required
                 variant="solo"
                 prepend-icon="mdi-account-badge"
+                class="w-full px-6 py-4 text-lg"
+
               ></v-text-field>
               <v-text-field
                 v-model="publicacion.fecha"
@@ -36,28 +37,37 @@
                 type="date"
                 prepend-icon="mdi-calendar"
                 variant="solo"
+                class="w-full px-6 py-4 text-lg"
+
               ></v-text-field>
-              <v-text-field
-                v-model="publicacion.usuario_id"
-                label="ID de Usuario"
-                required
-                variant="solo"
-                prepend-icon="mdi-account"
-              ></v-text-field>
-              <v-select
-                v-model="publicacion.reporte_id"
-                label="Selecciona un Reporte"
-                required
-                class="dark"
-                :items="reporteOptions"
-                item-text="nombre" 
-                item-value="id"
-                prepend-icon="mdi-notebook"
-              ></v-select>
+         
+              
+              <v-sheet height="300"
+              class="w-full px-6 py-4 text-lg"
+
+              >
+                
+                <input
+                  v-model="publicacion.reporte_nombre"
+                  @click="toggleDropdown"
+                  class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                  placeholder="Seleccione un Asunto"
+                />
+                <div v-if="showDropdown" class="w-full px-6 py-4 text-lg bg-white border rounded shadow-lg">
+                  <div v-for="reporte in combinedReporteOptions" :key="reporte.id" @click="selectReporte(reporte)" class="px-4 py-2 cursor-pointer hover:bg-blue-100">
+                    {{ reporte.nombre }}
+                  </div>
+                </div>
+           
+              </v-sheet>
               <div class="div-botones">
                 <v-btn color="success" class="mt-4" block @click="createPublicacion">
-                  Crear Reporte
+                  <v-icon left>mdi-plus</v-icon> Generar reporte
                 </v-btn>
+                
+                <v-btn color="red" class="mt-4" block @click="limpiarReporteBusqueda">
+                <v-icon left>mdi-delete</v-icon> Limpiar
+              </v-btn>
               </div>
             </v-form>
           </v-sheet>
@@ -71,7 +81,7 @@
 import navegacion from "../barra_navegacion.vue";
 import appbar from "../app_bar.vue";
 import Swal from 'sweetalert2';
-import axios from 'axios'; // Asegúrate de importar axios
+import axios from 'axios';
 
 export default {
   data() {
@@ -80,53 +90,61 @@ export default {
         descripcion: "",
         matricula: "",
         fecha: null,
-        usuario_id: "",
-        reporte_id: "",
-
+        reporte_nombre: "", // Usamos reporte_nombre para mostrar el nombre en el combo box
+        reporte_id: "", // Usamos reporte_id para almacenar el ID seleccionado
       },
       reporteOptions: [], // Inicialmente vacío
-
+      reporteOptions2: {},
+      showDropdown: false,
     };
   },
-  created(){
-  // Realiza una solicitud HTTP para obtener las opciones desde el servidor
-  axios.get('/api/v1/reporte') // Ajusta la URL según tu API
+  created() {
+    axios.get('/api/v1/reporte')
       .then(response => {
-        console.log(response);
-        console.log(response.data.reportes); // Verifica la respuesta del servidor
-
         if (Array.isArray(response.data.reportes)) {
-  this.reporteOptions = response.data.reportes;
-} else {
-  console.error('Error en el formato de respuesta del servidor');
-}
+          response.data.reportes.forEach(item => {
+            this.reporteOptions.push({ id: item.id, nombre: item.nombre });
+            this.reporteOptions2[item.nombre] = item.id;
+          });
+        } else {
+          console.error('Error en el formato de respuesta del servidor');
+        }
       })
       .catch(error => {
         console.error('Error al cargar las opciones de reporte', error);
       });
   },
-
+  computed: {
+    combinedReporteOptions() {
+      return this.reporteOptions;
+    },
+  },
   methods: {
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    selectReporte(reporte) {
+      this.publicacion.reporte_nombre = reporte.nombre;
+      this.publicacion.reporte_id = reporte.id;
+      this.showDropdown = false;
+    },
     createPublicacion() {
       const publicacionData = {
         descripcion: this.publicacion.descripcion,
         matricula: this.publicacion.matricula,
         fecha: this.publicacion.fecha,
         usuario_id: this.publicacion.usuario_id,
-        reporte_id: this.publicacion.reporte_id,
+        reporte_id: this.publicacion.reporte_id, // Enviamos el ID al servidor
       };
-
-      // Hacemos la solicitud POST al servidor
       axios.post('/api/v1/reporte/subir', publicacionData)
         .then(response => {
           Swal.fire({
             icon: 'success',
-            title: 'Reporte creado   con éxito',
+            title: 'Reporte creado con éxito',
             showConfirmButton: false,
-            timer: 3500 // Cierra automáticamente después de 1.5 segundos
+            timer: 3500
           });
-          console.log('Reporte  creado  con éxito', response.data);
-          // Aquí puedes realizar cualquier acción adicional después de una creación exitosa
+          console.log('Reporte creado con éxito', response.data);
         })
         .catch(error => {
           Swal.fire({
@@ -135,9 +153,22 @@ export default {
             text: 'Ha ocurrido un error al crear el reporte',
           });
           console.error('Error al crear el reporte', error);
-          // Maneja errores o muestra mensajes de error al usuario
         });
     },
+
+    limpiarReporteBusqueda(){
+
+      this.publicacion = {
+        descripcion: "",
+      matricula: "",
+      fecha: null,
+      reporte_id: "",
+
+        
+      }
+      
+    },
+    
   },
   components: {
     appbar,

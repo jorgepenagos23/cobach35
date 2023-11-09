@@ -13,7 +13,7 @@ class AlumnoReporteSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\AlumnoReporte::factory(400)->create();
+        \App\Models\AlumnoReporte::factory(2)->create();
 
     }
 

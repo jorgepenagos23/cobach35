@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->string('matricula');
             $table->date('fecha');
-            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('usuario_id')->nullable();
             $table->unsignedBigInteger('reporte_id');
             $table->foreign('reporte_id')->references('id')->on('reportes');
             $table->foreign('usuario_id')->references('id')->on('alumnos');

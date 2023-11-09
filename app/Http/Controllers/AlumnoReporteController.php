@@ -25,7 +25,6 @@ class AlumnoReporteController extends Controller
              'descripcion' => 'required|string',
              'matricula' => 'required|string',
              'fecha' => 'required|date', // Asegúrate de que fecha sea una fecha válida
-             'usuario_id' => 'required|integer',
              'reporte_id' => 'required|integer',
  
          ]);
@@ -34,7 +33,6 @@ class AlumnoReporteController extends Controller
          $reporte->descripcion = $validatedData['descripcion'];
          $reporte->matricula = $validatedData['matricula'];
          $reporte->fecha = $validatedData['fecha'];
-         $reporte->usuario_id = $validatedData['usuario_id'];
          $reporte->reporte_id = $validatedData['reporte_id'];
  
  

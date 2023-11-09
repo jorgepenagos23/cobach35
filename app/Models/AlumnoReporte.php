@@ -21,4 +21,9 @@ class AlumnoReporte extends Model
 
     ];
 
+    public function reportes()
+    {
+        return $this->hasMany(AlumnoReporte::class, 'matricula', 'matricula');
+    }
+
 }
