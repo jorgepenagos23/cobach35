@@ -6,7 +6,7 @@
   
     <appbar></appbar>
       
-    <v-card-item class="bg-green-darken-4">
+    <v-card-item  class="bg-lime-accent-4">
               <v-card title="  BUSCAR ALUMNOS" 
               prepend-icon="mdi-account-school"
               subtitle="Alumnos"

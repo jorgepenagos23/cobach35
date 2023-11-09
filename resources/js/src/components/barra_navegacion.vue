@@ -13,7 +13,7 @@
         <v-list>
           
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/lego/1.jpg"
+            prepend-avatar="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
             :title="userData.email" 
             :subtitle="userData.rol"
 

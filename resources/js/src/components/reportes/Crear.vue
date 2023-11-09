@@ -6,13 +6,14 @@
     <appbar></appbar>
     <!-- Agrega clases de alineación para centrar el formulario -->
     <v-row justify="center">
-      <v-col cols="7">
+      <v-col cols="10">
         <v-card color="#385F73" theme="light" class="mt-4">
           <v-theme-provider theme="dark" with-background class="pa-5">
             <v-card title="Crear Reporte" subtitle="Crear"></v-card>
           </v-theme-provider>
-          <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
-          <v-sheet width="900">
+          <v-card-title class="text-h5 font-weight-regular bg-amber-lighten-1
+"></v-card-title>
+          <v-sheet width="1000">
             <v-form ref="form">
               <v-text-field
                 v-model="publicacion.descripcion"
@@ -43,16 +44,19 @@
                 variant="solo"
                 prepend-icon="mdi-account"
               ></v-text-field>
-              <v-text-field
+              <v-select
                 v-model="publicacion.reporte_id"
-                label="ID de Reporte"
+                label="Selecciona un Reporte"
                 required
-                variant="solo"
+                class="dark"
+                :items="reporteOptions"
+                item-text="nombre" 
+                item-value="id"
                 prepend-icon="mdi-notebook"
-              ></v-text-field>
+              ></v-select>
               <div class="div-botones">
                 <v-btn color="success" class="mt-4" block @click="createPublicacion">
-                  Crear Publicación
+                  Crear Reporte
                 </v-btn>
               </div>
             </v-form>
@@ -78,9 +82,30 @@ export default {
         fecha: null,
         usuario_id: "",
         reporte_id: "",
+
       },
+      reporteOptions: [], // Inicialmente vacío
+
     };
   },
+  created(){
+  // Realiza una solicitud HTTP para obtener las opciones desde el servidor
+  axios.get('/api/v1/reporte') // Ajusta la URL según tu API
+      .then(response => {
+        console.log(response);
+        console.log(response.data.reportes); // Verifica la respuesta del servidor
+
+        if (Array.isArray(response.data.reportes)) {
+  this.reporteOptions = response.data.reportes;
+} else {
+  console.error('Error en el formato de respuesta del servidor');
+}
+      })
+      .catch(error => {
+        console.error('Error al cargar las opciones de reporte', error);
+      });
+  },
+
   methods: {
     createPublicacion() {
       const publicacionData = {
@@ -96,20 +121,20 @@ export default {
         .then(response => {
           Swal.fire({
             icon: 'success',
-            title: 'Publicación creada con éxito',
+            title: 'Reporte creado   con éxito',
             showConfirmButton: false,
             timer: 3500 // Cierra automáticamente después de 1.5 segundos
           });
-          console.log('Publicación creada con éxito', response.data);
+          console.log('Reporte  creado  con éxito', response.data);
           // Aquí puedes realizar cualquier acción adicional después de una creación exitosa
         })
         .catch(error => {
           Swal.fire({
             icon: 'error',
-            title: 'Error al crear publicación',
-            text: 'Ha ocurrido un error al crear la publicación',
+            title: 'Error al crear reporte',
+            text: 'Ha ocurrido un error al crear el reporte',
           });
-          console.error('Error al crear la publicación', error);
+          console.error('Error al crear el reporte', error);
           // Maneja errores o muestra mensajes de error al usuario
         });
     },

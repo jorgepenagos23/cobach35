@@ -6,7 +6,7 @@
     
       <appbar></appbar>
         
-        <v-card-item class="bg-pink-darken-4">
+        <v-card-item class="bg-deep-orange">
           <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title="  USUARIOS " 
               prepend-icon="mdi-file-chart-outline"

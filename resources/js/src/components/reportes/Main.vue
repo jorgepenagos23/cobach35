@@ -4,7 +4,7 @@
     </header>
     <v-app>
       <appbar></appbar>
-      <v-card-item class="bg-green-darken-3">
+      <v-card-item class="bg-lime-accent-4">
           <v-card
             title="REPORTES"
             prepend-icon="mdi-account-check"
@@ -77,6 +77,7 @@
             <div>
               <div class="mb-1 text-overline">{{ variant }}</div>
               <div class="mb-1 text-h6">      Matricula {{ item.matricula }}
+                
                 </div>
               <div class="text-caption">
                 {{ item.descripcion }}
@@ -84,7 +85,9 @@
             </div>
           </v-card-item>
             <template v-slot:title>
-              Nombre {{ item.usuario_id }}
+              Numero de Reporte:           
+               {{ item.id }}
+
             </template>
 
             <v-card-text> Descripcion:

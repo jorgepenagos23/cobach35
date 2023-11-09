@@ -5,7 +5,13 @@
     <v-app>
       <appbar></appbar>
   
-  <v-container id="dashboard" fluid tag="section">
+  <v-container id="dashboard" fluid tag="section" class="bg-lime-accent-4
+
+
+
+
+
+">
     <v-row>
       <v-col cols="12" lg="6">
         <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-r from-emerald-400 to-cyan-400">

@@ -18,7 +18,7 @@ class ReporteController extends Controller
 
 
         return response()->json([
-            'reportes '=>$reportes,
+            'reportes'=>$reportes,
                 'message' => 'hallados exitosamente' ]);
     }       
 

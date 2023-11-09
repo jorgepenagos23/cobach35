@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app
         color="teal-darken-4"
-        image="https://picsum.photos/1920/1080?random"
+        image="https://static.wixstatic.com/media/c17ec1_a01ff6549e284a1e804dba7234814694~mv2.jpg/v1/fill/w_978,h_372,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c17ec1_a01ff6549e284a1e804dba7234814694~mv2.jpg"
     
     >
 
