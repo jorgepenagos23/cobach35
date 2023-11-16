@@ -6,35 +6,109 @@
   
     <appbar></appbar>
       
-      <v-card-item class="bg-red-darken-4">
-        <v-theme-provider theme="dark" with-background class="pa-5">
+        <v-theme-provider theme="light" with-background class="pa-5">
             <v-card title="  BOLETAS" 
             prepend-icon="mdi-file-chart-outline"
             subtitle="Alumnos"></v-card>
           </v-theme-provider>
-      <template v-slot:append>
-        <div>
-          <p class="inline-block mr-2">BOLETAS</p>
-          <router-link to="/crear-reporte">
-            <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
-              <v-icon>
-                mdi-plus
-              </v-icon>
-            </button>
-          </router-link>
-        </div>
-      </template>
+   
 
-
-      </v-card-item>
 
       <v-card-text class="pt-8">
-    BOLETAS
-      </v-card-text>
-
-       <v-divider></v-divider>
+    
 
 
+    <div class="text-center">
+      <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('/boletas-primer')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center" color="default">
+      <v-icon size="30" class="mx-2">mdi-numeric-1-circle</v-icon>
+      PRIMER SEMESTRE
+    </v-chip>
+  </v-card>
+
+
+
+
+
+    </div>
+
+
+  <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('/boletas-primer')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center" color="primary">
+      <v-icon size="30" class="mx-2">mdi-numeric-2-circle</v-icon>
+      SEGUNDO  SEMESTRE
+    </v-chip>
+  </v-card>
+  <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('#')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center"  color="teal-darken-4" text-color="white">
+      <v-icon size="30" class="mx-2">mdi-numeric-3-circle</v-icon>
+      TERCER  SEMESTRE
+    </v-chip>
+  </v-card>
+  
+  <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('#')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center"  color="deep-orange-accent-4" text-color="white">
+      <v-icon size="30" class="mx-2">mdi-numeric-4-circle</v-icon>
+      CUARTO  SEMESTRE
+    </v-chip>
+  </v-card>
+  
+  <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('#')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center" color="indigo">
+      <v-icon size="30" class="mx-2">mdi-numeric-5-circle</v-icon>
+      QUINTO  SEMESTRE
+    </v-chip>
+  </v-card>
+
+  
+  <v-card
+    class="mx-auto my-4 d-flex align-start"
+    max-width="500"
+    @click="$router.push('#')"
+    target="_blank"
+    prepend-icon="mdi-file-excel"
+  >
+    <v-chip class="justify-center ma-4 d-flex align-center" color="brown-darken-4">
+      <v-icon size="30" class="mx-2">mdi-numeric-6-circle</v-icon>
+      SEXTO SEMESTRE
+    </v-chip>
+  </v-card>
+  
+     </v-card-text>
+
+
+
+  
 
 
   </v-app>
@@ -52,42 +126,41 @@
 </style>
 
 
-
-
 <script>
-import axios from 'axios';
 import navegacion from "../barra_navegacion.vue";
 import appbar from "../app_bar.vue";
 
 export default {
 
 
-  methods: {
-   
-   
-    
+  data() {
+    return {
+      grupo: '',
+      semestre: '',
+      archivo: null,
+    };
   },
-  
- 
+  methods: {
+    subirBoletas() {
+      // Aquí puedes manejar la lógica para subir el archivo y procesar las boletas
+      console.log('Grupo:', this.grupo);
+      console.log('Semestre:', this.semestre);
+      console.log('Archivo:', this.archivo);
+      // Llama a tu API de Laravel para subir el archivo y procesar las boletas
+    },
+  },
 
   components: {
       navegacion,
       appbar,
     },
+};
+</script>
 
-  data() {
-    return {
- 
-
-    };
-  },
-  mounted() {
+<style scoped>
+  .icono-personalizado {
+    font-size: 2em; /* Ajusta el tamaño según tus necesidades */
 
 
     
-
-
-}
-
-};
-</script> 
+  }</style>

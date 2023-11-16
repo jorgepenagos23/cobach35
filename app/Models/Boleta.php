@@ -25,5 +25,9 @@ class Boleta extends Model
         'observaciones '
 
     ];
-
+    
+    public function alumno()
+    {
+        return $this->belongsTo(Alumno::class);
+    }
 }

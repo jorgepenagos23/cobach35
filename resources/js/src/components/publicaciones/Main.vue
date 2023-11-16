@@ -12,6 +12,17 @@
     
 
       <appbar></appbar>
+      <v-card-item class="bg-lime-accent-4 ">
+          <v-theme-provider theme="dark" with-background class="pa-5">
+              <v-card title=" Administrador de Contenidos Descargables" 
+              prepend-icon="mdi-file-chart-outline"
+              subtitle="Alumnos"></v-card>
+            </v-theme-provider>
+        
+  
+        </v-card-item>
+
+        
       <v-card class="mx-auto" max-width="600">
         <v-container class="text-center">
          
@@ -40,6 +51,8 @@
         </v-card-text>
 
         <v-divider></v-divider>
+
+        
             <!-- Scroll vue infinite para publicaciones -->
             <div v-for="publicacion in list" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
     <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
@@ -105,9 +118,11 @@
   
   
 </v-card>
-<v-row justify="center">
+
+
+
         <v-col cols="15">
-          <v-card color="white" theme="light" class="mt-7">
+          <v-card class="mx-auto" max-width="600">
             <v-theme-provider theme="dark" with-background class="pa-5">
               <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
             </v-theme-provider>
@@ -158,12 +173,9 @@
               
           </v-card>
         </v-col>
-      </v-row>
 
-        
+
 </template>
-
-
 
 <style>
 @import 'tailwindcss/base';
@@ -171,9 +183,6 @@
 @import 'tailwindcss/utilities';
 
 </style>
-
-
-
 
 <script>
 import axios from 'axios';

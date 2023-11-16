@@ -33,11 +33,11 @@
             class="mx-auto"
             width="900"
             prepend-icon="mdi-account-alert"
-            label="indigo-darken-3"
-            color="dark"
+            label="white"
+            color="white"
             value="indigo-darken-3"
             
-            variant="tonal"
+            variant="elevated"
 
           >
           <v-list-item-title>ID : {{ item.id }}</v-list-item-title>

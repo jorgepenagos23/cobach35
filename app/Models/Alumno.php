@@ -38,5 +38,30 @@ class Alumno extends Model
 
 
 
+  
+    public function boletas()
+{
+    return $this->hasMany(BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+
+public function obtenerBoletas($matricula){
+
+    $alumno = $this->where('matricula', $matricula)->first();
+
+    if ($alumno) {
+        return $alumno->boletas;
+    } else {
+        return null;
+    }
+}
+
+  public function grupo()
+    {
+        return $this->belongsTo(Grupo::class);
+    }
 
 }
+
+

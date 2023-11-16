@@ -52,7 +52,11 @@ const router = createRouter({
             path: '/crear-reporte',
             name: 'crear-reportes',
             component: CrearReportes,
-        }
+        },
+
+        {path: '/boletas-primer' , component:()=>import('./src/components/boletas/primer_semestre.vue')}
+
+
 
 
     ],

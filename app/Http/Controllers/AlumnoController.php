@@ -163,4 +163,27 @@ class AlumnoController extends Controller
     {
         //
     }
+
+
+
+    
+    public function obtenerBoletasDelAlumno($matricula)
+    {
+        // Crear una instancia del modelo Alumno
+        $alumno = new Alumno;
+
+        // Llamar al método obtenerBoletas
+        $boletasDelAlumno = $alumno->obtenerBoletas($matricula);
+
+        if ($boletasDelAlumno) {
+            // Hacer algo con las boletas (por ejemplo, pasarlas a la vista)
+
+
+            return response()->json(['boletas' =>$boletasDelAlumno]);
+        } else {
+            // Manejar el caso en el que el alumno no fue encontrado
+            return response()->json(['mensaje' => 'Alumno no encontrado'], 404);        }
+    }
+
+
 }

@@ -33,7 +33,7 @@
       <v-virtual-scroll :items="alumnosFiltrados" style="margin-top: 40px;" item-height="100">
         <template v-slot:default="{ item: alumnos }">
           <v-list-item 
-          variant="tonal"
+          variant="elevated"
 
           >
             <v-list-item-content>
@@ -44,6 +44,8 @@
               <v-list-item-subtitle> Observaciones: {{ alumnos.observaciones }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
+              
+              
               <v-btn @click="editaralumnos(alumnos)" color="teal-darken-4" small>
                 <v-icon>
                   mdi-account-box         
@@ -54,6 +56,8 @@
                   mdi-open-in-new
                 </v-icon>
               </v-btn>
+
+              
             </v-list-item-action>
           </v-list-item>
         </template>

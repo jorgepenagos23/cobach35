@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('alumnos', function (Blueprint $table) {
             $table->id();
             $table->integer('n');
-            $table->integer('grado'); 
+            $table->foreignId('grado')->references('id')->on('grupos'); // 'id' es el nombre de la columna en la tabla de grados
             $table->string('grupo'); 
             $table->string('matricula')->unique();
             $table->string('nombre_completo',255);

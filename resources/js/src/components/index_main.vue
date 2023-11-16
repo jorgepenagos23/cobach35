@@ -5,13 +5,7 @@
     <v-app>
       <appbar></appbar>
   
-  <v-container id="dashboard" fluid tag="section" class="bg-lime-accent-4
-
-
-
-
-
-">
+  <v-container id="dashboard" fluid tag="section" class="bg-white">
     <v-row>
       <v-col cols="12" lg="6">
         <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-r from-emerald-400 to-cyan-400">
@@ -163,7 +157,7 @@
         </div>
       </v-col>
 
-      <v-col cols="23" md="9">
+      <v-col cols="12" md="6">
         <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-tr from-slate-900 to-slate-700">     
          <v-card title=" " theme="light">
             <v-col cols="20" sm="50" md="23" lg="23" rows="2">

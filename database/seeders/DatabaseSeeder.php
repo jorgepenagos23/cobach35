@@ -122,6 +122,11 @@ class DatabaseSeeder extends Seeder
                 $seccion->save();
 
 
+                $this->call([
+                    CalificacionesSeeder::class,
+                    // Otros seeders si los tienes
+                ]);
+
 
     }
 
