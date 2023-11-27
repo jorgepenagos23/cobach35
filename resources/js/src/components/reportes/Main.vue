@@ -36,7 +36,6 @@
         </v-col>
         <v-col cols="2">
           <v-btn @click="buscarAlumnos" color="primary" dark block>
-            Buscar
             <v-icon>
               mdi-magnify
             </v-icon>
@@ -45,7 +44,6 @@
             <v-icon>
               mdi-backspace-outline
              </v-icon>
-            Limpiar Búsqueda
           </v-btn>
         </v-col>
       </v-row>
@@ -62,7 +60,7 @@
 
       <v-virtual-scroll :items="reportesA" height="100" item-height="40"
       :style="{ 
-      background: 'linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)'
+      background: '#fffff'
     }" >
     <template v-slot:default="{ item }">
       <v-list-item>
@@ -97,27 +95,12 @@
          class="bg-white"
          >
          <v-theme-provider theme="light">
-         <v-card 
-         
-         :subtitle="item.descripcion"   
-         >
-
-       </v-card>
+      
        </v-theme-provider>
        </v-card>
          
-          </v-card>
-          
-          
-
-          
-    
-      
+      </v-card>   
       </v-list-item>
-
-
-
-      
     </template>
   </v-virtual-scroll>
       

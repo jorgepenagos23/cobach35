@@ -32,11 +32,11 @@ Route::post('/import', [AlumnoController::class, 'import'])->name('import');
 
 Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->name('index2');
 
+
 Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');
 
 
 Route::get('/obtener-boletas/{matricula}', [AlumnoController::class, 'obtenerBoletasDelAlumno']);
-
 
 
 

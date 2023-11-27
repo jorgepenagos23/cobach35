@@ -13,7 +13,6 @@
         </v-col>
         <v-col cols="2">
           <v-btn @click="buscarAlumnos" color="primary" dark block>
-            Buscar
             <v-icon>
               mdi-magnify
             </v-icon>
@@ -22,7 +21,6 @@
             <v-icon>
               mdi-backspace-outline
              </v-icon>
-            Limpiar Búsqueda
           </v-btn>
         </v-col>
       </v-row>

@@ -7,7 +7,7 @@
     <appbar></appbar>
       
       <v-card-item class="bg-green-darken-4">
-        <v-theme-provider theme="dark" with-background class="pa-5">
+        <v-theme-provider theme="light" with-background class="pa-5">
             <v-card title="  SUBIR ALUMNOS EXCEL" 
             prepend-icon="mdi-microsoft-excel"
             subtitle="Alumnos"></v-card>
@@ -31,7 +31,7 @@
       </div>
 
       <form @submit.prevent="uploadExcel" class="mb-4" enctype="multipart/form-data">
-    @csrf
+   
     <div class="mb-4">
       <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file">Excel Alumno</label>
       <v-file-input

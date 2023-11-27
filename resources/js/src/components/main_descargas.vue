@@ -6,12 +6,11 @@
     
       <appbar></appbar>
         
-        <v-card-item class="bg-lime-accent-4
-">
+        <v-card-item class="bg-lime-accent-4 ">
           <v-theme-provider theme="dark" with-background class="pa-5">
               <v-card title=" Administrador de Contenidos Descargables" 
               prepend-icon="mdi-file-chart-outline"
-              subtitle="Alumnos"></v-card>
+              subtitle="Subir Pdf, Words  "></v-card>
             </v-theme-provider>
         
   
@@ -42,9 +41,10 @@
          <v-divider></v-divider>
   
     
-  
-  
-     
+         <Tabladescargas></Tabladescargas>
+
+
+         
     </v-app>
   
   
@@ -66,6 +66,7 @@
   import axios from 'axios';
   import navegacion from "./barra_navegacion.vue";
   import appbar from "./app_bar.vue";
+  import Tabladescargas from './descargas/Tabladescargas.vue';
   
   export default {
   
@@ -81,6 +82,7 @@
     components: {
         navegacion,
         appbar,
+        Tabladescargas,
       },
   
     data() {

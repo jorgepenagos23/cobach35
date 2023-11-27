@@ -6,11 +6,11 @@
   
     <appbar></appbar>
       
-      <v-card-item class="bg-yellow-darken-2">
-        <v-theme-provider theme="dark" with-background class="pa-5">
+      <v-card-item class="bg-blue-darken-2">
+        <v-theme-provider theme="light" with-background class="pa-5">
             <v-card title="  SUBIR USUARIOS EXCEL" 
             prepend-icon="mdi-microsoft-excel"
-            subtitle="USUARIOS"></v-card>
+           ></v-card>
           </v-theme-provider>
       <template v-slot:append>
     
@@ -31,9 +31,9 @@
         </div>
   
         <form @submit.prevent="uploadExcel" class="mb-4" enctype="multipart/form-data">
-          @csrf
+        
           <div class="mb-4">
-            <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file">Excel users </label>
+            <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file"> </label>
 
                   <v-file-input
                 ref="excelFile"  

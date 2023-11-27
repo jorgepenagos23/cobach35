@@ -5,8 +5,8 @@
   <v-app>
     <appbar></appbar>
 
-    <v-card-item class="bg-yellow-darken-2">
-      <v-theme-provider theme="dark" with-background class="pa-5">
+    <v-card-item class="bg-blue-darken-2">
+      <v-theme-provider theme="light" with-background class="pa-5">
         <v-card
           title="BOLETAS PARCIAL 1"
           prepend-icon="mdi-microsoft-excel"
@@ -26,9 +26,9 @@
         </div>
 
         <form @submit.prevent="uploadExcel" class="mb-4" enctype="multipart/form-data">
-          @csrf
+        
           <div class="mb-4">
-            <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file">Excel users</label>
+            <label class="block mb-2 text-sm font-bold text-gray-700" for="excel_file"></label>
             <v-file-input
               ref="excelFile"
               v-model="excelFile"
@@ -47,8 +47,13 @@
             <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover-bg-blue-700" :disabled="uploading">
               Subir Excel
             </button>
+            
           </div>
         </form>
+        <button type="#" class="px-4 py-2 font-bold text-white bg-red-500 rounded hover-bg-blue-700" :disabled="uploading">
+            generar pdf para alumnos
+            </button>
+        
       </div>
     </div>
   </v-app>

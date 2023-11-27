@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\CalificacionesImport;
 use App\Models\BoletaParcial1;
-use App\Models\BoletaParcial2;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +20,23 @@ class BoletaParcial1Controller extends Controller
         return view('alumnos.index', compact('boletas'));
     }
 
+
+    public function index(){
+
+        $parcial1 = BoletaParcial1::all();
+
+        return response()->json([
+
+            'message' => 'boletas solicitadas correctamente',
+            'data' => $parcial1,
+
+
+        ]);
+
+
+    }
+    
+                                                                                                                                                                                                                                                                                                                                                            
 
     public function import(Request $request)
     {
@@ -61,6 +77,50 @@ class BoletaParcial1Controller extends Controller
             return response()->json(['error' => 'Error al subir el archivo. Consulta los logs para más detalles.'], 422);
         }
     }
+
+    public function generarPdf()
+    {
+        // Obtén todas las boletas parciales 1 en lotes de tamaño 10 (puedes ajustar el tamaño según sea necesario)
+        BoletaParcial1::chunk(20, function ($boletas) {
+            // Verifica si hay boletas antes de continuar
+            if ($boletas->isEmpty()) {
+                return response()->json(['message' => 'No hay boletas disponibles'], 404);
+            }
+    
+            // Crea el directorio 'boletas' si no existe
+            $boletasDirectory = public_path('boletas');
+            
+            if (!is_dir($boletasDirectory)) {
+                mkdir($boletasDirectory, 0755, true);
+            }
+    
+            // Itera sobre cada boleta y genera el PDF
+            foreach ($boletas as $boleta) {
+                try {
+                    $data = ['boleta_parcial1' => $boleta];
+                    $pdf = PDF::loadView('boletaparcial1', $data);
+    
+                    // Guarda el PDF en el directorio 'boletas' con un nombre único
+                    $pdfPath = public_path("boletas/{$boleta->matricula}_boleta.pdf");
+                    $pdf->save($pdfPath);
+    
+                    // Almacenar la ruta del archivo en la base de datos
+                    $boleta->update(['pdf_path' => "boletas/{$boleta->matricula}_boleta.pdf"]);
+    
+                    // Liberar memoria después de procesar cada boleta
+                    unset($data, $pdf);
+    
+                } catch (\Exception $e) {
+                    // Manejar la excepción (puedes loguear el error, enviar un correo electrónico, etc.)
+                    Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                }
+            }
+        });
+    
+        return response()->json(['message' => 'Boletas generadas correctamente'], 200);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

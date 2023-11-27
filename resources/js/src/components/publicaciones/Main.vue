@@ -13,10 +13,10 @@
 
       <appbar></appbar>
       <v-card-item class="bg-lime-accent-4 ">
-          <v-theme-provider theme="dark" with-background class="pa-5">
-              <v-card title=" Administrador de Contenidos Descargables" 
+          <v-theme-provider theme="light" with-background class="pa-5">
+              <v-card title=" Administrador Publicaciones" 
               prepend-icon="mdi-file-chart-outline"
-              subtitle="Alumnos"></v-card>
+              ></v-card>
             </v-theme-provider>
         
   
@@ -32,12 +32,12 @@
           <v-card-title>Publicaciones</v-card-title>
         <template v-slot:append>
           <div>
-            <p class="inline-block mr-2">Crear Publicacion</p>
+            <p class="inline-block mr-2"></p>
             <router-link to="/crear-publicaciones">
               <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
                 <v-icon>
-                  mdi-plus
-                </v-icon>
+                  mdi-post-outline       
+                         </v-icon>
               </button>
             </router-link>
           </div>
@@ -47,7 +47,6 @@
         </v-card-item>
 
         <v-card-text class="pt-8">
-       Panel de Administracion de Publicaciones
         </v-card-text>
 
         <v-divider></v-divider>
@@ -122,7 +121,7 @@
 
 
         <v-col cols="15">
-          <v-card class="mx-auto" max-width="600">
+          <v-card class="mx-auto bg-slate-100" max-width="600">
             <v-theme-provider theme="dark" with-background class="pa-5">
               <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
             </v-theme-provider>

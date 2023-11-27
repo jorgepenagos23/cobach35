@@ -8,7 +8,7 @@
       <v-row justify="center">
         <v-col cols="7">
           <v-card color="#385F73" theme="light" class="mt-4">
-            <v-theme-provider theme="dark" with-background class="pa-5">
+            <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title="Crear Publicación" subtitle="Crear"></v-card>
             </v-theme-provider>
             <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AlumnoReporteController;
 use App\Http\Controllers\BoletaController;
+use App\Http\Controllers\BoletaParcial1Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicacionController;
@@ -44,10 +45,15 @@ Route::get('user/index', [UserController::class, 'index']);
 Route::get('user/index2', [UserController::class, 'index2']);
 Route::get('user/index3', [UserController::class, 'index3']);
 
+///boletas api 
 Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/v1/boleta/parcial1', [BoletaParcial1Controller::class, 'index'])->name('index');
+Route::get('v1/generar/parcial1', [BoletaParcial1Controller::class,'generarPdf']);
 
 
 
+
+//publicaciones api
 Route::get('v1/publicacion', [PublicacionController::class,'index']);
 Route::get('v1/publicacion/create', [PublicacionController::class, 'create'])->middleware('auth:sanctum');
 Route::post('v1/publicacion', [PublicacionController::class, 'store']);
@@ -56,6 +62,7 @@ Route::get('v1/publicacion/{id}/edit', [PublicacionController::class, 'edit'])->
 Route::put('v1/publicacion/{id}', [PublicacionController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('v1/publicacion/{id}', [PublicacionController::class, 'destroy'])->middleware('auth:sanctum');
 
+//reportes api
 
 Route::get('v1/reporte', [ReporteController::class,'index']);
 Route::get('v1/reportes/alumnos', [ReporteController::class,'index2']);

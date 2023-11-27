@@ -1,82 +1,73 @@
 <template>
+  <div>
     <header>
       <navegacion></navegacion>
     </header>
-    <v-app>
-    
-      <appbar></appbar>
-        
-        <v-card-item class="bg-deep-orange">
-          <v-theme-provider theme="light" with-background class="pa-5">
-              <v-card title="  USUARIOS " 
-              prepend-icon="mdi-file-chart-outline"
-              subtitle="Todos los usuarios "></v-card>
-            </v-theme-provider>
-        <template v-slot:append>
-          <div>
-            <p class="inline-block mr-2">Subir excel usuarios</p>
-            <router-link to="/subir-excel-usuarios">
-              <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
-                <v-icon>
-                  mdi-plus
-                </v-icon>
-              </button>
-            </router-link>
-          </div>
-        </template>
-        </v-card-item>
+    <div class="bg-deep-orange">
+      <div class="max-w-screen-xl">
+            <div class="max-w-4xl p-5 mx-auto bg-light">
+          <h2 class="mb-3 text-2xl font-bold">USUARIOS</h2>
+          <p class="mb-5">Todos los usuarios</p>
+          
+        </div>
+        <div class="flex items-center justify-end px-5">
+          <p class="mr-2"></p>
+          <router-link to="/subir-excel-usuarios">
+            <button class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
+              <v-icon>
+                  mdi-microsoft-excel
+                </v-icon>            </button>
+          </router-link>
+        </div>
+      </div>
 
-        <v-virtual-scroll :items="users" height="300" item-height="50">
-        <template v-slot:default="{ item }">
-      <v-list-item>
-        <v-card
-            class="mx-auto"
-            width="900"
-            prepend-icon="mdi-account-alert"
-            label="white"
-            color="white"
-            value="indigo-darken-3"
-            
-            variant="elevated"
-
-          >
-          <v-list-item-title>ID : {{ item.id }}</v-list-item-title>
-        <v-list-item-title>Nombre : {{ item.nombre }}</v-list-item-title>
-        <v-list-item-title>Email: {{ item.email }}</v-list-item-title>
-        <v-list-item-title>Matricula: {{ item.matricula }}</v-list-item-title>
-
-        <template v-slot:append>
-          <v-icon class="bg-primary">mdi-account</v-icon>
-          <v-btn
-        color="orange-darken-2"
-        variant="text">
-        Explorar
-      </v-btn>
-        </template>
-        
-      </v-card>
-      </v-list-item>
-    </template>
-    
-  </v-virtual-scroll>
+    <v-container class="my-8">
+  <v-row>
+    <v-col cols="12" sm="15">
+      <v-row align="center">
+        <v-col cols="10">
+          <v-text-field v-model="busqueda" label="Buscar por matrícula o nombre" outlined dense variant="solo" prepend-icon="mdi-account-search-outline"></v-text-field>
+        </v-col>
+        <v-col cols="2">
+          <v-btn @click="buscarAlumnos" color="primary" dark block>
+            <v-icon>
+              mdi-magnify
+            </v-icon>
+          </v-btn>
+          <v-btn @click="limpiarBusqueda" color="error" dark block>
+            <v-icon>
+              mdi-backspace-outline
+             </v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-row>
+</v-container>
+    </div>
+    <div class="flex items-center justify-center mt-5">
+      <div class="max-w-4xl">
+        <div v-for="user in users" :key="user.id" class="mb-5">
+          <div class="p-5 mx-auto bg-white shadow-md">
+            <div class="flex items-center">
+              <div class="flex items-center justify-center w-16 h-16 mr-5 text-white rounded-full bg-primary">
+                <span class="mdi mdi-account"></span>
+              </div>
+              <div>
+                <div class="text-lg font-bold">ID: {{ user.id }}</div>
+                <div class="text-lg">Nombre: {{ user.nombre }}</div>
+                <div class="text-lg">Email: {{ user.email }}</div>
+                <div class="text-lg">Matricula: {{ user.matricula }}</div>
+              </div>
+            </div>
       
-        
-  
-    </v-app>
-
-
-        
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </template>
-
-
-<style>
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-</style>
-
-
 
 <script>
 import axios from 'axios';
@@ -88,29 +79,31 @@ const url = '/api/user/index3';
 export default {
   data() {
     return {
-      users: [], // Arreglo para almacenar los usuarios
+      users: [],
     };
   },
-
   created() {
-  axios.get(url)
-    .then(response => {
-      this.users = response.data.users; // Cambiar de this.data a this.users
-    })
-    .catch(error => {
-      console.log('Error al obtener los datos de la API:', error);
-    });
-},
+    axios.get(url)
+      .then(response => {
+        this.users = response.data.users;
+      })
+      .catch(error => {
+        console.log('Error al obtener los datos de la API:', error);
+      });
+  },
   methods: {
     verUsuario(usuario) {
       // Lógica para ver el detalle del usuario
       // Puedes usar vue-router para navegar a la página de detalle del usuario
     },
   },
-
   components: {
     navegacion,
     appbar,
   },
 };
 </script>
+
+<style scoped>
+/* Aquí puedes agregar estilos específicos para este componente si es necesario */
+</style>
