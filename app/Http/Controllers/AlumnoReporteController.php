@@ -47,10 +47,27 @@ class AlumnoReporteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AlumnoReporte $alumnoReporte)
+    public function show($id)
     {
-        //
+
+        $reporte_alumno_buscador = AlumnoReporte::find($id);
+
+        if(isset($reporte_alumno_buscador)){
+
+            return response()->json([
+                'data' => $reporte_alumno_buscador,
+                'mensaje' => 'reporte de alumno encontrado con exito'
+            ]);
+
+        }
+
     }
+
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -60,6 +77,7 @@ class AlumnoReporteController extends Controller
         //
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -67,4 +85,33 @@ class AlumnoReporteController extends Controller
     {
         //
     }
+
+
+    public function obtenerReportedelALumno($matricula)
+    {
+
+        //creamos la instancia al modelo  alumno reporte 
+
+        $reporte_alumno_buscador = new AlumnoReporte;
+
+        $reporte_con_alumno = $reporte_alumno_buscador->obtenerReportedelALumno($matricula);
+
+        if($reporte_con_alumno){
+
+            return response()->json([
+
+                'reportes' => $reporte_con_alumno,
+                'message' =>'reporte hallado correctamente'
+
+            ]);
+        }else{
+            return response()->json([
+
+                'mensaje' => 'reporte no hallado '
+            ]);
+        }
+
+    }
+
+
 }

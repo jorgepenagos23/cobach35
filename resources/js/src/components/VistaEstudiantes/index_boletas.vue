@@ -23,7 +23,6 @@ export default {
     barra,
   },
   methods: {
-    // ... (otros métodos)
   },
 };
 </script>

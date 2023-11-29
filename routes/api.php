@@ -7,6 +7,7 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AlumnoReporteController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\BoletaParcial1Controller;
+use App\Http\Controllers\DescargaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicacionController;
@@ -68,6 +69,16 @@ Route::get('v1/reporte', [ReporteController::class,'index']);
 Route::get('v1/reportes/alumnos', [ReporteController::class,'index2']);
 
 Route::post('v1/reporte/subir', [AlumnoReporteController::class, 'store']);
+
+Route::get('v1/reporte/alumno/show/{id}', [AlumnoReporteController::class, 'show'])->middleware('auth:sanctum');
+
+
+
+
+Route::get('/obtener-boletas/{matricula}', [AlumnoController::class, 'obtenerBoletasDelAlumno'])->middleware('auth:sanctum');
+Route::get('/obtener-reporte/{matricula}', [AlumnoReporteController::class, 'obtenerReportedelALumno']);
+
+
 
 
 

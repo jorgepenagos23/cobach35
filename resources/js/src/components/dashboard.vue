@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Bienvenido, {{ userData.nombre }}</h1>
-  </div>
+  
 </template>
 
 <script>
@@ -11,7 +9,7 @@ export default {
       userData: {
         nombre: '',
         rol: '',
-        // Otros campos del usuario según la respuesta del servidor
+    
       },
     };
   },

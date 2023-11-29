@@ -54,27 +54,97 @@
                 <v-expansion-panel-text>Grado: {{ dataItem.alumno.grado }}</v-expansion-panel-text>
                 <v-expansion-panel-text>Curp: {{ dataItem.alumno.curp }}</v-expansion-panel-text>
               </v-expansion-panel>
+              
+              
               <v-expansion-panel>
-                <v-expansion-panel-title>Calificaciones</v-expansion-panel-title>
-                <v-expansion-panel-text> Calificaciones </v-expansion-panel-text>
+
+
+                
+                <v-expansion-panel-title class="primary" theme="dark" color="red-darken-4">Conducta Academica</v-expansion-panel-title>
+                <v-expansion-panel-text>   
+
+                  <v-card>
+                  <div class="overflow-x-auto">
+                        <table class="w-full border-collapse table-auto">
+                          <thead>
+                            <tr>
+                              <th class="px-4 py-2">ID</th>
+                              <th class="px-4 py-2">Descripcion</th>
+                              <th class="px-4 py-2">Fecha</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="reporte in reportes" :key="reporte.id">
+                              <td class="px-4 py-2 border">{{ reporte.id }}</td>
+                              <td class="px-4 py-2 border">{{ reporte.descripcion }}</td>
+                              <td class="px-4 py-2 border">{{ reporte.fecha }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+
+
+                  
+                </v-card>
+                </v-expansion-panel-text>
+
+
+
+              
               </v-expansion-panel>
+                
               <v-expansion-panel>
-                <v-expansion-panel-title>Conducta Academica</v-expansion-panel-title>
-                <v-expansion-panel-text>  Reporte </v-expansion-panel-text>
+                <v-expansion-panel-title class="primary" theme="dark" color="orange-darken-4">Calificaciones Parcial 1</v-expansion-panel-title>
+                <v-expansion-panel-text>   
+
+                  <div class="overflow-x-auto">
+                  <table class="w-full border-collapse table-auto">
+                    <thead>
+                      <tr>
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Nombre del Alumno</th>
+                        <th class="px-4 py-2">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="boleta in boletas" :key="boleta.id">
+                        <td class="px-4 py-2 border">{{ boleta.id }}</td>
+                        <td class="px-4 py-2 border">{{ boleta.nombre_alumno }}</td>
+                        <td class="px-4 py-2 border">{{ boleta.promedio }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                  
+                </v-expansion-panel-text>
+
+              
               </v-expansion-panel>
+         
             </v-expansion-panels>
           </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-card>
+
+</v-expansion-panel>
+</v-expansion-panels>
+</v-card>
+   
+    
+   
+
 
 
 
     
   </v-app>
+
+
+
 </template>
 
 <script>
+import axios, { Axios } from "axios";
 import appbar from "../app_bar.vue";
 import barra from "../VistaEstudiantes/dashboard.vue";
 import Swal from 'sweetalert2';
@@ -85,18 +155,33 @@ export default {
     alumnoYUsuario: [], // Almacena datos combinados de un alumno y su usuario
     panel: [0, 1],
       disabled: false,
+    matricula:null,
+    boletas: [],
+    reportes: [],
+
   }),
+
   components: {
     appbar,
     barra,
   },
+
+
+  
   created() {
     // Realiza una solicitud GET para obtener los datos de usuario y su matrícula desde el servidor
     axios.get('/api/user/')
       .then(response => {
         // Asumiendo que la matrícula del usuario se encuentra en la propiedad "matricula" de la respuesta
         const matriculaDelUsuario = response.data.matricula;
+        console.log(response)
 
+        const matricula = response.data.matricula;
+        console.log('esta es tu matricula',matricula);
+          
+
+
+        
         // Ahora puedes usar "matriculaDelUsuario" en tu filtro
         axios.get('/api/user/index2')
           .then(response => {
@@ -105,6 +190,9 @@ export default {
             // Filtra y muestra solo el usuario cuya matrícula coincide con matriculaDelUsuario
             this.alumnoYUsuario = this.combinedData.filter(dataItem =>
               dataItem.user.matricula === matriculaDelUsuario
+            
+              
+              
             );
 
             // Lógica para obtener las iniciales del nombre completo
@@ -128,6 +216,96 @@ export default {
       .catch(error => {
         console.error('Error al obtener la matrícula del usuario:', error);
       });
-  },
+
+
+
+      this.obtenerMatricula();
+
+      this.obtenerReportes();
+
+          
+        },
+methods: {
+
+
+  obtenerMatricula()
+  {
+          axios.get('/api/user/')
+
+.then(response =>{
+  this.matriculaDelUsuario = response.data.matricula;
+  console.log(response.data);
+  this.boletas = response.data.boletas;
+  this.otraFuncionQueUsaMatricula();
+  this.obtenerReportes();
+
+})
+
+.catch(error =>{
+
+    console.error('error en la solicitud',error);
+}
+)
+
+},
+
+
+otraFuncionQueUsaMatricula(){
+  console.log('Matrícula en funcion segunda llamada de matricula:', this.matriculaDelUsuario);
+
+  axios.get('/api/obtener-boletas/'+this.matriculaDelUsuario)
+
+  .then(response =>{
+    console.log(response.data);
+    this.boletas = response.data.boletas;
+  })
+
+  .catch(error => {
+
+    console.error('error', error)
+    
+  })
+  
+},
+
+
+obtenerReportes(){
+  console.log('Matrícula en funcion reporte:', this.matriculaDelUsuario);
+
+axios.get('/api/obtener-reporte/'+this.matriculaDelUsuario)
+.then(response => {
+  this.reportes = response.data.reportes;
+
+  console.log('reportes hallados',response.data)
+   // Ejemplo de condición para mostrar una notificación
+   if (this.reportes.length > 0) {
+            // Muestra una notificación utilizando SweetAlert2
+            Swal.fire({
+              icon: 'info',
+              title: 'Información',
+              text: 'Tienes un reporte  Notfifica a tus tutores para presentarse ',
+            });
+          }
+
+
+  
+  
+})
+
+
+.catch(error =>{
+console.error('error al obtener el reporte',error)
+
+}
+)
+  
+},
+
+
+
+}
+
+
+  
 };
 </script>
