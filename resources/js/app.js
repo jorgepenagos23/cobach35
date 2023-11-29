@@ -55,7 +55,9 @@ const router = createRouter({
         },
 
         {path: '/boletas-primer' , component:()=>import('./src/components/boletas/primer_semestre.vue')},
-        {path: '/descargas-tabla',component:()=>('./src/components/descargas/Tabladescargas.vue')}
+        {path: '/descargas-tabla',component:()=>import('./src/components/descargas/Tabladescargas.vue')},
+        {path: '/main-parciales-primer-semestre',component:()=>import('./src/components/boletas/PRIMER SEMESTRE/main.vue')}
+
 
 
 

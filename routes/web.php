@@ -71,5 +71,5 @@ Route::get('/migrar',function(){ Artisan::call('migrate',["--seed"=>true]);
 
 
 
-//Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
+Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
 

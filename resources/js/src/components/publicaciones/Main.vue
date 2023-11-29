@@ -122,7 +122,7 @@
 
         <v-col cols="15">
           <v-card class="mx-auto bg-slate-100" max-width="600">
-            <v-theme-provider theme="dark" with-background class="pa-5">
+            <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
             </v-theme-provider>
             <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>

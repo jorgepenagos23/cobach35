@@ -1,54 +1,45 @@
 <template>
   <v-app>
-    <v-app-bar app
-        color="teal-darken-4"
-        image="https://static.wixstatic.com/media/c17ec1_a01ff6549e284a1e804dba7234814694~mv2.jpg/v1/fill/w_978,h_372,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c17ec1_a01ff6549e284a1e804dba7234814694~mv2.jpg"
-    
-    >
-
+    <v-app-bar app color="teal darken-4">
       <v-btn icon @click="toggleDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
-     
-
 
       <v-app-bar-title>Estudiantes</v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon @click="logout">
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
     </v-app-bar>
-    <v-navigation-drawer
-        v-model="drawer"
-        :rail="rail"
-        permanent
-        @click="rail = false"
-      >     
-     
-      <v-divider></v-divider>
-      <v-list density="compact" nav>
+
+    <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
+      <v-list dense nav>
         <v-list-item
-          prepend-icon="mdi-home"
-          title="Inicio"
-          link @click="$router.push('/index-alumnos')"
-          value="myfiles"
+          v-for="(item, index) in items"
+          :key="index"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          link
+          @click="$router.push(item.route)"
         ></v-list-item>
+
+        <v-divider></v-divider> <!-- Agregar un divisor antes de la opción "Salir" -->
+
         <v-list-item
-          prepend-icon="mdi-file"
-          title="Calificaciones"
-          value="myfiles"
-          link @click="$router.push('/index-boletas')"
+          prepend-icon="mdi-logout"
+          title="Salir"
+          link
+          @click="logout"
         ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-file-download"
-          title="Descargas"
-          value="myfiles"
-          link @click="$router.push('/index-descargas')"
-        ></v-list-item>
-        <v-list-item prepend-icon="mdi-close" title="Salir" @click="logout"></v-list-item>
       </v-list>
     </v-navigation-drawer>
   </v-app>
 </template>
 
-<style>
-/* Aquí puedes agregar estilos CSS personalizados si es necesario */
+<style scoped>
+/* Puedes agregar estilos CSS personalizados aquí */
 </style>
 
 <script>
@@ -62,8 +53,13 @@ export default {
         email: '',
         matricula: '',
       },
-      drawer: false, // Inicialmente, el cajón está cerrado
+      drawer: false,
       rail: false,
+      items: [
+        { title: 'Inicio', icon: 'mdi-home', route: '/index-alumnos' },
+        { title: 'Calificaciones', icon: 'mdi-file', route: '/index-boletas' },
+        { title: 'Descargas', icon: 'mdi-file-download', route: '/index-descargas' },
+      ],
     };
   },
   created() {
@@ -79,7 +75,7 @@ export default {
   },
   methods: {
     toggleDrawer() {
-      this.drawer = !this.drawer; // Abre o cierra el cajón al hacer clic en el botón
+      this.drawer = !this.drawer;
     },
     logout() {
       axios.post('/api/logout')

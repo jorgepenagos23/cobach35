@@ -19,17 +19,20 @@
 
 
     <div class="text-center">
+
+      
       <v-card
     class="mx-auto my-4 d-flex align-start"
     max-width="500"
-    @click="$router.push('/boletas-primer')"
+    @click="$router.push('/main-parciales-primer-semestre')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="default">
       <v-icon size="30" class="mx-2">mdi-numeric-1-circle</v-icon>
       PRIMER SEMESTRE
     </v-chip>
+
+    
   </v-card>
 
 
@@ -44,7 +47,6 @@
     max-width="500"
     @click="$router.push('/boletas-primer')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="primary">
       <v-icon size="30" class="mx-2">mdi-numeric-2-circle</v-icon>
@@ -56,7 +58,6 @@
     max-width="500"
     @click="$router.push('#')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center"  color="teal-darken-4" text-color="white">
       <v-icon size="30" class="mx-2">mdi-numeric-3-circle</v-icon>
@@ -69,7 +70,6 @@
     max-width="500"
     @click="$router.push('#')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center"  color="deep-orange-accent-4" text-color="white">
       <v-icon size="30" class="mx-2">mdi-numeric-4-circle</v-icon>
@@ -82,7 +82,6 @@
     max-width="500"
     @click="$router.push('#')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="indigo">
       <v-icon size="30" class="mx-2">mdi-numeric-5-circle</v-icon>
@@ -96,7 +95,6 @@
     max-width="500"
     @click="$router.push('#')"
     target="_blank"
-    prepend-icon="mdi-file-excel"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="brown-darken-4">
       <v-icon size="30" class="mx-2">mdi-numeric-6-circle</v-icon>

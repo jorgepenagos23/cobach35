@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class BoletaParcial1Controller extends Controller
 {
     /**
@@ -82,38 +83,50 @@ class BoletaParcial1Controller extends Controller
 
     public function generarPdf()
     {
-        BoletaParcial1::chunk(20, function ($boletas) {
-            if ($boletas->isEmpty()) {
-                return response()->json(['message' => 'No hay boletas disponibles'], 404);
-            }
+        $totalBoletas = BoletaParcial1::count();
     
-            foreach ($boletas as $boleta) {
-                try {
-                    $data = ['boleta_parcial1' => $boleta];
-                    $pdf = PDF::loadView('boletaparcial1', $data);
+        // Verificar si hay boletas para procesar
+        if ($totalBoletas === 0) {
+            return response()->json(['message' => 'No hay boletas disponibles'], 404);
+        }
     
-                    // Limpiar y formatear la matrícula para ser usada como nombre de archivo
-                    $matriculaSlug = Str::slug($boleta->matricula, '_');
-                    
-                    // Guarda el PDF en la carpeta 'boletas' en storage con un nombre único
-                    $pdfPath = "boletas/{$matriculaSlug}_boleta.pdf";
-                    Storage::put($pdfPath, $pdf->output());
+        $counter = 0;
     
-                    // Almacena la ruta del archivo en la base de datos
-                    $boleta->update(['pdf_path' => $pdfPath]);
+        return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+            BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                foreach ($boletas as $boleta) {
+                    try {
+                        $data = ['boleta_parcial1' => $boleta];
+                        $pdf = PDF::loadView('boletaparcial1', $data);
     
-                    // Libera memoria después de procesar cada boleta
-                    unset($data, $pdf);
+                        $matriculaSlug = Str::slug($boleta->matricula, '_');
+                        $pdfPath = "boletas/{$matriculaSlug}_boleta.pdf";
+                        Storage::put($pdfPath, $pdf->output());
     
-                } catch (\Exception $e) {
-                    Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                        $boleta->update(['pdf_path' => $pdfPath]);
+    
+                        unset($data, $pdf);
+    
+                    } catch (\Exception $e) {
+                        Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                    }
+    
+                    // Incrementar el contador de boletas procesadas
+                    $counter++;
+    
+                    // Calcular y enviar el progreso actual
+                    $progress = ($counter / $totalBoletas) * 100;
+                    echo "data: {\"progress\": $progress}\n\n";
+                    ob_flush();
+                    flush();
                 }
-            }
-        });
-    
-        return response()->json(['message' => 'Boletas generadas correctamente en la carpeta simbólica storage'], 200);
+            });
+        }, 200, [
+            'Content-Type' => 'text/event-stream',
+            'Cache-Control' => 'no-cache',
+            'Connection' => 'keep-alive',
+        ]);
     }
-    
 
     /**
      * Show the form for creating a new resource.

@@ -21,7 +21,7 @@
       <v-sheet class="bg-opacity-0" height="100%">
         <div class="justify-center d-flex fill-height align-center">
           <div class="text-h2">
-            <div class="grid w-800 p-8 m-auto text-center bg-gray-200 border rounded-lg hero md:grid-cols-2 bg-opacity-90">
+            <div class="grid p-8 m-auto text-center bg-gray-200 border rounded-lg w-800 hero md:grid-cols-2 bg-opacity-90">
               <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
                 <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
              <h1 class="mt-4 text-3xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"><span class="block text-pink-500">{{ formatDate(publicacion.fecha) }} </span><span class="block text-black">{{ publicacion.titulo }}</span></h1>
@@ -139,53 +139,58 @@ import es from 'date-fns/locale/es'; // Importa el idioma español
   },
     methods: {
       infiniteHandler($state) {
-        if (this.isLoading) {
-          // Evita realizar múltiples solicitudes simultáneas
-          return;
-        }
-  
-        this.isLoading = true;
-  
-        axios.get(api, {
-          params: {
-            page: this.page,
-          },
-        }).then((response) => {
-          if (response.data.publicaciones.length) {
-            this.page += 1;
-            this.list.push(...response.data.publicaciones);
-            this.isLoading = false;
-            console.log("solicitando mas informacion")
+  if (this.isLoading) {
+    // Evita realizar múltiples solicitudes simultáneas
+    return;
+  }
 
-            $state.loaded();
-  
-            if (this.list.length >= response.data.total) {
-              // Si has cargado todos los resultados disponibles, completa la paginación
-              this.hasMoreResults = false;
-              $state.complete();
-            }
-          } else {
-            console.log("has llegado al final del contenido")
-            this.isLoading = false;
-            this.hasMoreResults = false;
-            $state.complete();
-          }
-        });
-      },
+  this.isLoading = true;
+
+  axios.get(api, {
+    params: {
+      page: this.page,
+    },
+  }).then((response) => {
+    if (response.data.publicaciones.length) {
+      this.page += 1;
+      // Ordena las publicaciones por fecha en orden descendente antes de agregarlas a la lista existente
+      const newPublicaciones = response.data.publicaciones.sort((a, b) => {
+        return new Date(b.fecha) - new Date(a.fecha);
+      });
+      this.list.push(...newPublicaciones);
+      this.isLoading = false;
+      console.log("solicitando más información");
+
+      $state.loaded();
+
+      if (this.list.length >= response.data.total) {
+        // Si has cargado todos los resultados disponibles, completa la paginación
+        this.hasMoreResults = false;
+        $state.complete();
+      }
+    } else {
+      console.log("has llegado al final del contenido");
+      this.isLoading = false;
+      this.hasMoreResults = false;
+      $state.complete();
+    }
+  });
+},
 
       cargarPublicaciones() {
-      axios.get('/api/v1/publicacion')
-        .then((response) => {
-          console.log(response)
-          this.publicaciones = response.data.publicaciones;
-          console.log(this.publicaciones)
-
-        })
-        .catch((error) => {
-          console.error('Error al cargar las publicaciones:', error);
-        });
-    },
-
+  axios.get('/api/v1/publicacion')
+    .then((response) => {
+      console.log(response);
+      this.publicaciones = response.data.publicaciones.sort((a, b) => {
+        // Ordenar por fecha en orden descendente (más reciente primero)
+        return new Date(b.fecha) - new Date(a.fecha);
+      });
+      console.log(this.publicaciones);
+    })
+    .catch((error) => {
+      console.error('Error al cargar las publicaciones:', error);
+    });
+},
     formatDate(isoDate) {
       const options = {
         year: 'numeric',

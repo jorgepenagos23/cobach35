@@ -5,13 +5,13 @@
   <v-app>
     <appbar></appbar>
     <v-row justify="center">
-      <v-col cols="11">
-        <v-card >
-          <v-theme-provider theme="dark" with-background class="pa-5">
+      <v-col cols="12" md="8" lg="6"> <!-- Tamaño ajustado para dispositivos medianos y grandes -->
+        <v-card>
+          <v-theme-provider theme="light" with-background class="pa-5">
             <v-card title="Crear Reporte" subtitle="Crear"></v-card>
           </v-theme-provider>
-          <v-card-title class="text-h5 font-weight-regular bg-amber-lighten-1"></v-card-title>
-          <v-sheet width="1400" >
+          <v-card-title class="text-h5 font-weight-regular bg-indigo-darken-3"></v-card-title>
+          <v-sheet>
             <v-form ref="form">
               <v-text-field
                 v-model="publicacion.descripcion"
@@ -19,7 +19,7 @@
                 required
                 variant="solo"
                 prepend-icon="mdi-comment-text"
-                class="w-full px-6 py-4 text-lg"
+                class="w-full px-4 py-2"
               ></v-text-field>
               <v-text-field
                 v-model="publicacion.matricula"
@@ -27,8 +27,7 @@
                 required
                 variant="solo"
                 prepend-icon="mdi-account-badge"
-                class="w-full px-6 py-4 text-lg"
-
+                class="w-full px-4 py-2"
               ></v-text-field>
               <v-text-field
                 v-model="publicacion.fecha"
@@ -37,37 +36,28 @@
                 type="date"
                 prepend-icon="mdi-calendar"
                 variant="solo"
-                class="w-full px-6 py-4 text-lg"
-
+                class="w-full px-4 py-2"
               ></v-text-field>
-         
-              
-              <v-sheet height="300"
-              class="w-full px-6 py-4 text-lg"
-
-              >
-                
+              <v-sheet class="w-full px-4 py-2">
                 <input
                   v-model="publicacion.reporte_nombre"
                   @click="toggleDropdown"
                   class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
                   placeholder="Seleccione un Asunto"
                 />
-                <div v-if="showDropdown" class="w-full px-6 py-4 text-lg bg-white border rounded shadow-lg">
-                  <div v-for="reporte in combinedReporteOptions" :key="reporte.id" @click="selectReporte(reporte)" class="px-4 py-2 cursor-pointer hover:bg-blue-100">
+                <div v-if="showDropdown" class="w-full px-4 py-2 bg-white border rounded shadow-lg">
+                  <div v-for="reporte in combinedReporteOptions" :key="reporte.id" @click="selectReporte(reporte)" class="px-2 py-1 cursor-pointer hover:bg-blue-100">
                     {{ reporte.nombre }}
                   </div>
                 </div>
-           
               </v-sheet>
-              <div class="div-botones">
-                <v-btn color="success" class="mt-4" block @click="createPublicacion">
+              <div class="mt-4">
+                <v-btn color="success" block @click="createPublicacion">
                   <v-icon left>mdi-plus</v-icon> Generar reporte
                 </v-btn>
-                
-                <v-btn color="red" class="mt-4" block @click="limpiarReporteBusqueda">
-                <v-icon left>mdi-delete</v-icon> Limpiar
-              </v-btn>
+                <v-btn color="red" block @click="limpiarReporteBusqueda">
+                  <v-icon left>mdi-delete</v-icon> Limpiar
+                </v-btn>
               </div>
             </v-form>
           </v-sheet>

@@ -17,7 +17,7 @@
                   <v-menu min-width="200px" rounded>
                     <template v-slot:activator="{ props }">
                       <v-btn icon v-bind="props">
-                        <v-avatar color="brown" size="large">
+                        <v-avatar color="blue" size="large">
                           <span class="text-h5">{{ dataItem.initials }}</span>
                         </v-avatar>
                       </v-btn>
@@ -25,22 +25,22 @@
                     <v-card>
                       <v-card-text>
                         <div class="mx-auto text-center">
-                          <v-avatar color="brown">
+                          <v-avatar color="blue">
                             <span class="text-h5">{{ dataItem.initials }}</span>
                           </v-avatar>
                           <h3>{{ dataItem.alumno.nombre_completo }}</h3>
                           <p class="mt-1 text-caption">{{ dataItem.user.email }}</p>
                           <v-divider class="my-3"></v-divider>
-                          <v-btn rounded variant="text"> Edit Account </v-btn>
                           <v-divider class="my-3"></v-divider>
-                          <v-btn rounded variant="text"> Disconnect </v-btn>
                         </div>
+                        
                       </v-card-text>
                     </v-card>
                   </v-menu>
                 </v-row>
               </v-container>
             </v-extension-panels>
+            
             <v-expansion-panels v-model="panel" :disabled="disabled" multiple >
               <v-expansion-panel >
                 <v-expansion-panel-title class="primary" theme="dark" color="indigo-darken-4">Datos Escolares</v-expansion-panel-title>
@@ -64,24 +64,25 @@
                 <v-expansion-panel-text>   
 
                   <v-card>
-                  <div class="overflow-x-auto">
-                        <table class="w-full border-collapse table-auto">
-                          <thead>
-                            <tr>
-                              <th class="px-4 py-2">ID</th>
-                              <th class="px-4 py-2">Descripcion</th>
-                              <th class="px-4 py-2">Fecha</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="reporte in reportes" :key="reporte.id">
-                              <td class="px-4 py-2 border">{{ reporte.id }}</td>
-                              <td class="px-4 py-2 border">{{ reporte.descripcion }}</td>
-                              <td class="px-4 py-2 border">{{ reporte.fecha }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                    <div class="overflow-x-auto">
+              <table class="w-full overflow-hidden bg-white divide-y divide-gray-200 rounded-md shadow-md">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">ID</th>
+                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">Descripción</th>
+                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="reporte in reportes" :key="reporte.id" class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.descripcion }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.fecha }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
 
 
 
@@ -95,8 +96,13 @@
               </v-expansion-panel>
                 
               <v-expansion-panel>
-                <v-expansion-panel-title class="primary" theme="dark" color="orange-darken-4">Calificaciones Parcial 1</v-expansion-panel-title>
-                <v-expansion-panel-text>   
+
+
+ <v-expansion-panel-title class="primary" theme="dark" color="blue-darken-4">
+      <v-icon left>mdi-star</v-icon> Calificaciones Parcial 1
+    </v-expansion-panel-title>   
+    
+    <v-expansion-panel-text>   
 
                   <div class="overflow-x-auto">
                   <table class="w-full border-collapse table-auto">
@@ -104,6 +110,9 @@
                       <tr>
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Nombre del Alumno</th>
+                        <th class="px-4 py-2">Espanol</th>
+
+                        
                         <th class="px-4 py-2">Promedio</th>
                       </tr>
                     </thead>
@@ -111,8 +120,12 @@
                       <tr v-for="boleta in boletas" :key="boleta.id">
                         <td class="px-4 py-2 border">{{ boleta.id }}</td>
                         <td class="px-4 py-2 border">{{ boleta.nombre_alumno }}</td>
+                        <td class="px-4 py-2 border">{{ boleta.espanol1 }}</td>
                         <td class="px-4 py-2 border">{{ boleta.promedio }}</td>
                       </tr>
+
+
+                      
                     </tbody>
                   </table>
                 </div>
@@ -122,6 +135,111 @@
 
               
               </v-expansion-panel>
+              <v-expansion-panel>
+
+
+                <v-expansion-panel-title class="primary" theme="dark" color="orange-darken-4">
+      <v-icon left>mdi-star</v-icon> Calificaciones Parcial 2
+    </v-expansion-panel-title><v-expansion-panel-text>   
+
+  <div class="overflow-x-auto">
+  <table class="w-full border-collapse table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">Nombre del Alumno</th>
+        <th class="px-4 py-2">Espanol</th>
+
+        
+        <th class="px-4 py-2">Promedio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="boleta in boletas" :key="boleta.id">
+        <td class="px-4 py-2 border">{{ boleta.id }}</td>
+        <td class="px-4 py-2 border">{{ boleta.nombre_alumno }}</td>
+        <td class="px-4 py-2 border">{{ boleta.espanol1 }}</td>
+        <td class="px-4 py-2 border">{{ boleta.promedio }}</td>
+      </tr>
+
+
+      
+    </tbody>
+  </table>
+</div>
+
+  
+</v-expansion-panel-text>
+
+
+</v-expansion-panel>
+
+
+<v-expansion-panel>
+
+
+  <v-expansion-panel-title class="primary" theme="dark" color="teal-darken-4">
+      <v-icon left>mdi-star</v-icon> Calificaciones Parcial 3
+    </v-expansion-panel-title><v-expansion-panel-text>   
+
+  <div class="overflow-x-auto">
+  <table class="w-full border-collapse table-auto">
+    <thead>
+      <tr>
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">Nombre del Alumno</th>
+        <th class="px-4 py-2">Espanol</th>
+
+        
+        <th class="px-4 py-2">Promedio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="boleta in boletas" :key="boleta.id">
+        <td class="px-4 py-2 border">{{ boleta.id }}</td>
+        <td class="px-4 py-2 border">{{ boleta.nombre_alumno }}</td>
+        <td class="px-4 py-2 border">{{ boleta.espanol1 }}</td>
+        <td class="px-4 py-2 border">{{ boleta.promedio }}</td>
+      </tr>
+
+
+      
+    </tbody>
+  </table>
+</div>
+
+  
+</v-expansion-panel-text>
+
+
+</v-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+
          
             </v-expansion-panels>
           </v-expansion-panel-content>
@@ -283,7 +401,7 @@ axios.get('/api/obtener-reporte/'+this.matriculaDelUsuario)
             Swal.fire({
               icon: 'info',
               title: 'Información',
-              text: 'Tienes un reporte  Notfifica a tus tutores para presentarse ',
+              text: 'Tienes un reporte  Notifica a tus tutores ',
             });
           }
 

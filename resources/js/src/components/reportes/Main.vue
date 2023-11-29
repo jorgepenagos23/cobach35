@@ -88,14 +88,15 @@
         </template>
             </v-card>
         
-            <v-card 
-         
-         prepend-icon="mdi-account-school"
-         :subtitle="item.matricula"   
+            <v-card   prepend-icon="mdi-account-school"
+            :title= "item.matricula"    
+            :subtitle="item.descripcion"   
+            :text="item.fecha"
          class="bg-white"
          >
+            
+         
          <v-theme-provider theme="light">
-      
        </v-theme-provider>
        </v-card>
          
