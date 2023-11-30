@@ -1,4 +1,3 @@
-
 <script setup>
   import InfiniteLoading from "v3-infinite-loading";
   import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
@@ -53,6 +52,7 @@
 
         
             <!-- Scroll vue infinite para publicaciones -->
+           
             <div v-for="publicacion in list" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
     <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
       <div class="flex flex-row items-center justify-between py-2">
@@ -77,6 +77,7 @@
          
         </div>
       </div>
+      
       <div class="flex flex-row items-center">
             <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
         </div>
@@ -121,11 +122,11 @@
 
 
         <v-col cols="15">
-          <v-card class="mx-auto bg-slate-100" max-width="600">
+          <v-card  v-if="mostrarFormularioEdicion" class="mx-auto bg-white" max-width="600">
             <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
             </v-theme-provider>
-            <v-card-title class="text-h5 font-weight-regular bg-blue-grey"></v-card-title>
+            <v-card-title   class="bg-white text-h5 font-weight-regular"></v-card-title>
               
               <form @submit.prevent="guardarCambios">
             <v-text-field
@@ -193,8 +194,13 @@ import es from 'date-fns/locale/es'; // Importa el idioma español
 const api = '/api/v1/publicacion';
 
 export default {
- 
+  beforeRouteUpdate(to, from, next) {
+    this.cargarPublicaciones();
 
+    // Llama a next() para continuar con la actualización de la ruta
+    next();
+  },
+  
   created() {
     this.cargarPublicaciones();
   },
@@ -214,7 +220,7 @@ axios.get(url)
     console.log("Título:", this.publicacionEditando.titulo);
     console.log("Descripción:", this.publicacionEditando.descripcion);
     console.log("fecha:", this.publicacionEditando.fecha);
-
+    this.mostrarFormularioEdicion = true;
       })
   .catch((error) => {
     console.error('Error al obtener la publicación:', error);
@@ -235,34 +241,30 @@ axios.get(url)
       fecha: this.publicacionEditando.fecha,
       imagen: this.publicacionEditando.imagen,
 
-
     })
     .then((response) => {
 
       if(response){
         Swal.fire({
-              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
               icon: 'success' ,
               title: 'Se ha actualizado exitosamente',
               showConfirmButton: true,
-              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+              timer: 3000 
               
             });
-                
+            this.mostrarFormularioEdicion = false; 
         console.log('Cambios guardados con éxito', response);
-        this.cargarPublicaciones();
+
+        
       }
       
-      // Redirige a donde desees después de guardar los cambios
-      this.$router.push('/index_publicaciones'); // O la ruta que necesites
-    })
+        })
     .catch((error) => {
       Swal.fire({
-              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
               icon: 'error' ,
-              title: 'error al guardar llenar los campos correctamente',
+              title: ' llenar los campos correctamente',
               showConfirmButton: true,
-              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+              timer: 3000 
             });
       console.error('Error al guardar los cambios:', error);
     });
@@ -300,7 +302,6 @@ axios.get(url)
             this.list.push(...response.data.publicaciones);
             this.isLoading = false;
             console.log("solicitando mas informacion")
-
             $state.loaded();
   
             if (this.list.length >= response.data.total) {
@@ -350,6 +351,8 @@ axios.get(url)
         fecha: '', // Inicializa con la fecha en el formato adecuado (por ejemplo, 'YYYY-MM-DD')
         imagen:'',
       },
+
+      mostrarFormularioEdicion: false,
       page: 1,
       list: [], // Define la propiedad list aquí
       isLoading: false,

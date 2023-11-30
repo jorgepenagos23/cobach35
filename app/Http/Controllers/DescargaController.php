@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class DescargaController extends Controller
 {
     public function descargapdf($nombreArchivo){
@@ -110,20 +111,21 @@ class DescargaController extends Controller
             return response()->json(['message' => 'Archivo no encontrado'], 404);
         }
     }
-
-    public function subirPdf(Request $request)
+    public function subirPDF(Request $request)
     {
+        // Validar la solicitud
         $request->validate([
-            'archivo' => 'required|mimes:pdf|max:10240',
-        ]);
-    
-        // Manejo del archivo
-        $archivo = $request->file('archivo');
-    
-        // Almacenar el archivo en la carpeta 'pdf' dentro de 'storage/app'
-        $ruta = $archivo->storeAs('pdf', $archivo->getClientOriginalName());
-    
-        return response()->json(['ruta' => $ruta], 200);
-    }
+            'archivo' => 'required|mimes:pdf|max:2048',        ]);
 
+        // Guarda el archivo en la carpeta de almacenamiento
+        $archivo = $request->file('archivo');
+        $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+        $archivo->storeAs('pdf/', $nombreArchivo);
+
+        // Puedes guardar el nombre del archivo en la base de datos si es necesario
+
+        return response()->json(['mensaje' => 'Archivo subido correctamente']);
+    }
+    
+    
 }

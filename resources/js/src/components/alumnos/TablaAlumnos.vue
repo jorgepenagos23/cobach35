@@ -1,75 +1,50 @@
 <template>
- 
   <v-app>
-  
-      
-
     <v-container class="my-8">
-  <v-row>
-    <v-col cols="12" sm="15">
-      <v-row align="center">
-        <v-col cols="10">
-          <v-text-field v-model="busqueda" label="Buscar por matrícula o nombre" outlined dense variant="solo" prepend-icon="mdi-account-search-outline"></v-text-field>
-        </v-col>
-        <v-col cols="2">
-          <v-btn @click="buscarAlumnos" color="primary" dark block>
-            <v-icon>
-              mdi-magnify
-            </v-icon>
-          </v-btn>
-          <v-btn @click="limpiarBusqueda" color="error" dark block>
-            <v-icon>
-              mdi-backspace-outline
-             </v-icon>
-          </v-btn>
+      <v-row>
+        <v-col cols="12" sm="15">
+          <v-row align="center">
+            <v-col cols="10">
+              <v-text-field v-model="busqueda" label="Buscar por matrícula o nombre" outlined dense variant="solo" prepend-icon="mdi-account-search-outline"></v-text-field>
+            </v-col>
+            <v-col cols="2">
+              <v-btn @click="buscarAlumnos" color="primary" dark block>
+                <v-icon>
+                  mdi-magnify
+                </v-icon>
+              </v-btn>
+              <v-btn @click="limpiarBusqueda" color="error" dark block>
+                <v-icon>
+                  mdi-backspace-outline
+                </v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
-    </v-col>
-  </v-row>
-</v-container>
+    </v-container>
+
     <v-card class="mx-auto" max-width="800">
       <v-virtual-scroll :items="alumnosFiltrados" style="margin-top: 40px;" item-height="100">
         <template v-slot:default="{ item: alumnos }">
-          <v-list-item 
-          variant="elevated"
-
-          >
+          <v-list-item variant="elevated">
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold">Matricula
-                {{ alumnos.matricula }}
-              </v-list-item-title>
-              <v-list-item-subtitle>Nombre Completo : {{ alumnos.nombre_completo }}</v-list-item-subtitle>
-              <v-list-item-subtitle> Observaciones: {{ alumnos.observaciones }}</v-list-item-subtitle>
+              <v-list-item-title class="font-weight-bold">Matricula {{ alumnos.matricula }}</v-list-item-title>
+              <v-list-item-subtitle>Nombre Completo: {{ alumnos.nombre_completo }}</v-list-item-subtitle>
+              <v-list-item-subtitle>Observaciones: {{ alumnos.observaciones }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              
-              
-              <v-btn @click="editaralumnos(alumnos)" color="teal-darken-4" small>
-                <v-icon>
-                  mdi-account-box         
-             
-                </v-icon>
+              <v-btn @click="editarAlumnos(alumnos)" color="teal-darken-4" small>
+                <v-icon>mdi-account-box</v-icon>
                 Ver Alumno
-                <v-icon align-center>
-                  mdi-open-in-new
-                </v-icon>
+                <v-icon align-center>mdi-open-in-new</v-icon>
               </v-btn>
-
-              
             </v-list-item-action>
           </v-list-item>
         </template>
       </v-virtual-scroll>
     </v-card>
-  
-  
-
-
-   
   </v-app>
-
-
-      
 </template>
 
 <script>
@@ -80,10 +55,6 @@ import appbar from "../app_bar.vue";
 export default {
   methods: {
     buscarAlumnos() {
-      // Limpia la lista de alumnos filtrados antes de realizar la búsqueda.
-      this.alumnosFiltrados = [];
-      
-      // Busca el alumno según la matrícula o el nombre.
       this.alumnosFiltrados = this.alumnos.filter((alumno) =>
         alumno.matricula.includes(this.busqueda) || alumno.nombre_completo.toLowerCase().includes(this.busqueda.toLowerCase())
       );
@@ -92,7 +63,7 @@ export default {
       this.busqueda = "";
       this.alumnosFiltrados = [];
     },
-    editaralumnos(alumnos) {
+    editarAlumnos(alumnos) {
       // Lógica para editar la publicación
     },
   },
@@ -104,7 +75,7 @@ export default {
     return {
       busqueda: "",
       alumnos: [], // Tu lista completa de alumnos
-      alumnosFiltrados: [], // Aquí almacenaremos los alumnos filtrados
+      alumnosFiltrados: [], // Almacenará los alumnos filtrados
     };
   },
   mounted() {

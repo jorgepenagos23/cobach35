@@ -10,7 +10,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import 'vuetify/styles';
 import '@mdi/font/css/materialdesignicons.min.css';
 import InfiniteLoading from "v3-infinite-loading";
-
 const router = createRouter({
     history: createWebHistory(),
     routes: [
