@@ -11,13 +11,25 @@
     
 
       <appbar></appbar>
-      <v-card-item class="bg-lime-accent-4 ">
+      <v-card-item class="bg-white">
           <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title=" Administrador Publicaciones" 
               prepend-icon="mdi-file-chart-outline"
               ></v-card>
             </v-theme-provider>
-        
+        <template v-slot:activator="{ props }">
+          <v-btn
+            class="text-none"
+            color="blue-darken-4"
+            rounded="0"
+            variant="outlined"
+            v-bind="props"
+          >
+              
+     </v-btn>
+        </template>
+
+       
   
         </v-card-item>
 
@@ -82,7 +94,7 @@
             <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
         </div>
       <div class="py-2">
-        <p class="leading-snug">Descripcion: {{ publicacion.descripcion }}</p>
+        <p class="leading-snug text-justify">Descripcion: {{ publicacion.descripcion }}</p>
       </div>
     </div>
     <v-btn @click="editarPublicacion(publicacion.id)" size="small" color="green">
@@ -118,61 +130,65 @@
   
   
 </v-card>
-
-
-
-        <v-col cols="15">
-          <v-card  v-if="mostrarFormularioEdicion" class="mx-auto bg-white" max-width="600">
-            <v-theme-provider theme="light" with-background class="pa-5">
-              <v-card title="Editar  Publicación" subtitle="Editar"></v-card>
-            </v-theme-provider>
-            <v-card-title   class="bg-white text-h5 font-weight-regular"></v-card-title>
-              
-              <form @submit.prevent="guardarCambios">
-            <v-text-field
-                v-model="publicacionEditando.titulo"
-                label="Titulo"
-                id="titulo" 
-                type="text "
-                variant="solo"
-                prepend-icon="mdi-format-text-variant-outline"
-
-              ></v-text-field>
-              
-              <v-text-field
-                v-model="publicacionEditando.descripcion"
-                label="Descripcion"
-                id="Descripcion" 
-                type="text "
-                prepend-icon="mdi-comment-text"
-                variant="solo"
-              ></v-text-field>
-                 
-              <v-text-field
-                v-model="publicacionEditando.imagen"
-                label="imagen"
-                id="imagen" 
-                type="text "
-                prepend-icon="mdi-image-area"
-                variant="solo"
-
-              ></v-text-field>
-              
-              
-              <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
-            <input type="date" id="fecha" name="fecha" v-model="publicacionEditando.fecha" class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-
-            
+<v-dialog v-model="mostrarFormularioEdicion" max-width="700">
+    <template v-slot:activator="{ props }">
+      <!-- Este botón activará el diálogo -->
+      <v-btn class="text-none" color="white" rounded="0" variant="outlined" v-bind="props">
         
-                <button  type="submit"
-              class="relative w-40 h-12 overflow-hidden text-white transition-all bg-green-500 border border-green-500 shadow-2xl before:ease before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-green-500 hover:before:-translate-x-40">
-                  <span relative="relative z-10">Guardar Cambios</span>
-                </button>
-              </form>
+      </v-btn>
+    </template>
 
-              
-          </v-card>
-        </v-col>
+    <v-card title="Editar Publicación">
+      <v-card-text>
+        <form @submit.prevent="guardarCambios">
+       
+
+          <v-text-field
+            v-model="publicacionEditando.titulo"
+            label="Titulo"
+            id="titulo"
+            type="text"
+            variant="solo"
+            prepend-icon="mdi-format-text-variant-outline"
+          ></v-text-field>
+
+          <v-text-field
+            v-model="publicacionEditando.descripcion"
+            label="Descripcion"
+            id="Descripcion"
+            type="text"
+            prepend-icon="mdi-comment-text"
+            variant="solo"
+          ></v-text-field>
+
+          <v-text-field
+            v-model="publicacionEditando.imagen"
+            label="imagen"
+            id="imagen"
+            type="text"
+            prepend-icon="mdi-image-area"
+            variant="solo"
+          ></v-text-field>
+
+          <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
+          <input
+            type="date"
+            id="fecha"
+            name="fecha"
+            v-model="publicacionEditando.fecha"
+            class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          >
+
+          <button
+            type="submit"
+            class="relative w-40 h-12 overflow-hidden text-white transition-all bg-green-500 border border-green-500 shadow-2xl before:ease before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-green-500 hover:before:-translate-x-40"
+          >
+            <span relative="relative z-10">Guardar Cambios</span>
+          </button>
+        </form>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 
 
 </template>
@@ -262,7 +278,7 @@ axios.get(url)
     .catch((error) => {
       Swal.fire({
               icon: 'error' ,
-              title: ' llenar los campos correctamente',
+              title: 'Debes llenar todos los campos',
               showConfirmButton: true,
               timer: 3000 
             });
@@ -343,6 +359,9 @@ axios.get(url)
 
     data() {
     return {
+      dialog: false,
+      advertising: true,
+      performance: true,
       publicaciones: [],
       publicacionEditando: {
         titulo: '',

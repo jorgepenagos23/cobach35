@@ -2,7 +2,7 @@
   <div id="app">
     <header>
     </header>
-    <main>
+        <main>
       <transition name="fade" mode="out-in">
         <router-view>
           <ListComponent v-if="$route.path === '/'" />
@@ -10,13 +10,14 @@
       </transition>
     </main>
     <body>
-      <div class="centered-content"> <!-- Agrega una clase al contenedor del contenido -->
+      <div class="centered-content"> 
 
-      <router-view></router-view>
-      </div>
+      <router-view></router-view>      </div>
+
   
     </body>
-  </div>
+      </div>
+    
 </template>
 
 <style scoped>
@@ -40,10 +41,10 @@ main {
 }
 .centered-content {
   display: flex;
- justify-content: center;
-  height: auto; /* Elimina la altura fija para que el contenido se ajuste automáticamente */
+  justify-content: center;
+  text-align: center;
+  height: auto;
 }
-
 /* Estilo para el contenido debajo del banner en dispositivos móviles */
 @media (max-width: 768px) {
   main {

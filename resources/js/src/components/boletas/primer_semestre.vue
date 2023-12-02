@@ -98,7 +98,6 @@ export default {
           .then(response => {
             this.successMessage = response.data.message;
             Swal.fire({
-              background: 'rgba( 167, 242, 162 )',
               icon: 'success',
               title: 'Se ha subido exitosamente',
               showConfirmButton: true,

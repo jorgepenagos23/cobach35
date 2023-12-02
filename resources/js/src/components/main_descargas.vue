@@ -8,9 +8,9 @@
     <v-card-item class="bg-white">
       <v-theme-provider theme="light" with-background class="pa-5">
         <v-card
-          title=" Administrador de Contenidos Descargables"
+          title=" Administrador  PDF"
           prepend-icon="mdi-file-chart-outline"
-          subtitle="Subir Pdf, Words "
+          subtitle="Subir Pdf "
         ></v-card>
       </v-theme-provider>
     </v-card-item>

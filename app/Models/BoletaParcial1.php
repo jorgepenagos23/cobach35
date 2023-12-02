@@ -27,7 +27,6 @@ class BoletaParcial1 extends Model
         'literatura1', 
         'literatura2' ,
         'literatura3' ,
-        'materia6' ,
         'orientacion1' ,
         'orientacion2' ,
         'orientacion3', 

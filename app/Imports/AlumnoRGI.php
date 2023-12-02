@@ -7,15 +7,22 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 class AlumnoRGI implements ToModel
 {
-    /**
-     * @param array $row
-     *
-     * @return Alumno|null
-     */
+    private $primeraColumna = true;
+
     public function model(array $row)
     {
-        // Verificar si la matrícula no está en blanco
+
+        
+        
+
         if (!empty($row[3])) {
+            if($this->primeraColumna){
+                $this->primeraColumna =false;
+                return null;
+            }
+
+
+
             return new Alumno([
                 'n' => $row[0],
                 'grado' => $row[1],
@@ -26,7 +33,8 @@ class AlumnoRGI implements ToModel
                 'observaciones' => $row[6],
             ]);
         }
-        return null; // Retorna null si la matrícula está en blanco
+        return null; 
+
     }
     
 }

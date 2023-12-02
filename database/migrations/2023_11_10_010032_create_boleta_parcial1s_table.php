@@ -26,7 +26,6 @@ return new class extends Migration
         $table->integer('literatura1');
         $table->integer('literatura2');
         $table->integer('literatura3');
-        $table->integer('materia6');
         $table->integer('orientacion1');
         $table->integer('orientacion2');
         $table->integer('orientacion3');

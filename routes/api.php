@@ -44,7 +44,7 @@ Route::apiResource('v1/alumnos', AlumnoController::class, [ 'parameters' => ['v1
 
 Route::get('user/index', [UserController::class, 'index']);
 Route::get('user/index2', [UserController::class, 'index2']);
-Route::get('user/index3', [UserController::class, 'index3']);
+Route::get('user/index3', [UserController::class, 'index3'])->middleware('auth:sanctum');
 
 ///boletas api 
 Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sanctum');

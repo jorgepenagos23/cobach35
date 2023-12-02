@@ -8,9 +8,9 @@
       <v-col cols="12" md="8" lg="6"> <!-- Tamaño ajustado para dispositivos medianos y grandes -->
         <v-card>
           <v-theme-provider theme="light" with-background class="pa-5">
-            <v-card title="Crear Reporte" subtitle="Crear"></v-card>
+            <v-card title="Crear Reporte" ></v-card>
           </v-theme-provider>
-          <v-card-title class="text-h5 font-weight-regular bg-indigo-darken-3"></v-card-title>
+          <v-card-title class="bg-white text-h5 font-weight-regular"></v-card-title>
           <v-sheet>
             <v-form ref="form">
               <v-text-field

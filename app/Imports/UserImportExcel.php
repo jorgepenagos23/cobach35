@@ -12,20 +12,25 @@ class UserImportExcel implements ToModel
      *
      * @return User|null
      */
+
+    private $columnaPrimera = true;
     public function model(array $row)
     {
-        // Verificar si la matrícula no está en blanco
+        if ($this->columnaPrimera) {
+            $this->columnaPrimera = false;
+            return null; 
+        }
+    
         if (!empty($row[3])) {
             return new User([
                 'nombre' => $row[0],
                 'email' => $row[1],
                 'matricula' => $row[2],
-                'rol' => $row[3],
-                'password' => $row[4],
-
+                'password' => $row[3],
+                'rol' => $row[4],
             ]);
         }
-        return null; // Retorna null si la matrícula está en blanco
-    }
     
+        return null;
+    }
 }

@@ -6,16 +6,13 @@
   
     <appbar></appbar>
       
-    <v-card-item  class="bg-lime-accent-4">
-              <v-card title="  BUSCAR ALUMNOS" 
-              prepend-icon="mdi-account-school"
-              subtitle="Alumnos"
-              class="bg-indigo-darken-4"
-              >
-              
-            </v-card>
-              
-         <template v-slot:append>
+    <v-card-item class="bg-white">
+        <v-theme-provider theme="light" with-background class="pa-5">
+            <v-card title=" Subir alumnos " 
+            prepend-icon="mdi-microsoft-excel"
+            subtitle="Alumnos"></v-card>
+          </v-theme-provider>
+          <template v-slot:append>
           <div>
             <p class="inline-block mr-2"></p>
             <router-link to="/subir-excel-alumno">
@@ -28,7 +25,9 @@
           </div>
         </template>
 
-        </v-card-item>
+
+      </v-card-item>
+    
 
       
         <v-card>

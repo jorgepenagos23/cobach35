@@ -18,10 +18,18 @@
             <td class="p-3 px-5">
               <img src="/storage/app/imagenes/PDF_file_icon.svg.png" alt="Logo PDF" class="w-10 h-10 ml-4" />
             </td>
-            <td class="flex justify-end p-3 px-5">
-              <a :href="`/download-pdf/${encodeURIComponent(pdf)}`" target="_blank" class="btn-primary">Descargar</a>
-              <a :href="`/delete-pdf/${encodeURIComponent(pdf)}`" target="_blank" class="btn-danger">Eliminar</a>
+            <td class="p-3 text-red-400 border cursor-pointer border-grey-light hover:bg-gray-100 hover:text-red-600 hover:font-medium">
+
+              <a :href="`/eliminar-pdf/${encodeURIComponent(pdf)}`" target="_blank" class="btn-primary">Eliminar</a>
             </td>
+            <td
+                           class="font-medium text-center text-dark"
+                        
+                          >
+                          <a href="#" class="p-2 text-xs font-thin text-white bg-blue-500 hover:shadow-lg">Descargar</a>
+
+            </td>
+            
           </tr>
         </tbody>
       </table>

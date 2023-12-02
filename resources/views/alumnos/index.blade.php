@@ -88,7 +88,6 @@
                     <td>{{ $boleta->literatura1 }}</td>
                     <td>{{ $boleta->literatura2 }}</td>
                     <td>{{ $boleta->literatura3 }}</td>
-                    <td>{{ $boleta->materia6 }}</td>
                     <td>{{ $boleta->orientacion1 }}</td>
                     <td>{{ $boleta->orientacion2 }}</td>
                     <td>{{ $boleta->orientacion3 }}</td>

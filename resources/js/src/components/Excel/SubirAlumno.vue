@@ -6,9 +6,9 @@
   
     <appbar></appbar>
       
-      <v-card-item class="bg-green-darken-4">
+      <v-card-item class="bg-white">
         <v-theme-provider theme="light" with-background class="pa-5">
-            <v-card title="  SUBIR ALUMNOS EXCEL" 
+            <v-card title=" Subir alumnos " 
             prepend-icon="mdi-microsoft-excel"
             subtitle="Alumnos"></v-card>
           </v-theme-provider>
@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     handleFileChange() {
-      // Puedes manejar aquí la lógica de cambio de archivo si es necesario
     },
     uploadExcel() {
       this.uploading = true;
@@ -89,26 +88,23 @@ export default {
       formData.append('excel_file', this.$refs.excelFile.files[0]);
       
       
-      // Ejemplo con axios:
       axios.post('/api/subir-excel-alumno', formData)
               .then(response => {       
                 this.successMessage = response.data.message;
                 Swal.fire({
-              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
               icon: 'success' ,
               title: 'Se ha subido exitosamente',
               showConfirmButton: true,
-              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+              timer: 3000 
             });
         })
         .catch(error => {
          
           Swal.fire({
-              background: 'rgba( 167, 242, 162 )', // Estilo de fondo definido en tu CSS
               icon: 'error' ,
               title: 'Archivo no permitido ',
               showConfirmButton: true,
-              timer: 3000 // Cambia el tiempo que deseas que aparezca la alerta
+              timer: 3000 
             });
         })
         .finally(() => {

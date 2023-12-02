@@ -17,63 +17,68 @@
     show-arrows="hover"
     v-model="currentIndex"
   >
-    <v-carousel-item v-for="publicacion in publicaciones" :key="publicacion.id">
-      <v-sheet class="bg-opacity-0" height="100%">
-        <div class="justify-center d-flex fill-height align-center">
-          <div class="text-h2">
-            <div class="grid p-8 m-auto text-center bg-gray-200 border rounded-lg w-800 hero md:grid-cols-2 bg-opacity-90">
-              <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
+      <v-carousel-item v-for="publicacion in publicaciones" :key="publicacion.id">
+        <v-sheet class="bg-opacity-0" height="100%">
+          <div class="justify-center d-flex fill-height align-center">
+            <div class="text-h2">
+              <div class="grid p-8 m-auto text-center bg-white border rounded-lg w-800 hero md:grid-cols-2 bg-opacity-90">
+                <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
                 <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
-             <h1 class="mt-4 text-3xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"><span class="block text-pink-500">{{ formatDate(publicacion.fecha) }} </span><span class="block text-black">{{ publicacion.titulo }}</span></h1>
+                  <h1 class="mt-4 text-3xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                    <span class="block text-black">{{ publicacion.titulo }}</span>
+                  </h1>
 
-                <div class="mb-3 text-3xl font-semibold head"></div>
-                <div class="mb-2 text-2xl font-semibold head"></div>
+                  <div class="mb-2 text-xl font-semibold text-green-600">{{ formatDate(publicacion.fecha) }}</div>
 
-                <div class="desc">{{ publicacion.nombre }}</div>
+                  <div class="text-gray-700 desc">{{ publicacion.nombre }}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
-          
+        </v-sheet>
+      </v-carousel-item>
+    </v-carousel>
       
       
         </div>
     </header>
 
-    <div v-for="publicacion in list" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
-    <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
-      <div class="flex flex-row items-center justify-between py-2">
-        <div class="flex flex-row items-center">
-          <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-            <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
-            <p class="ml-2 text-base font-medium">{{ publicacion.publicador }}</p>
-          </a>
-        </div>
-      
-        <div class="flex flex-row items-center">
-        
-          <div class="mb-2 text-2xl font-light head">{{ formatDate(publicacion.fecha) }}</div>
-        </div>
-      </div>
-
-      <div class="mt-2">
-        <img :src="publicacion.imagen" alt="Imagen" style="width: 500px; height: 300px;" />
-        <div class="flex flex-row items-center py-2">
-         
-        </div>
-      </div>
+    <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+  <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
+    <div class="flex flex-row items-center justify-between py-2">
       <div class="flex flex-row items-center">
-            <p class="ml-2 text-base font-medium">  {{ publicacion.titulo }}</p>
-        </div>
-      <div class="py-2">
-        <p class="leading-snug"> {{ publicacion.descripcion }}</p>
+        <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
+          <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
+          <v-chip color="primary"> 
+            {{ publicacion.publicador }}
+          </v-chip>
+        </a>
+      </div>
+    
+      <div class="flex flex-row items-center">
+        <v-chip  color="red">
+          {{ formatDate(publicacion.fecha) }}
+        </v-chip>
       </div>
     </div>
-  
+
+    <div class="mt-2">
+      <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full h-48 rounded">
+      <div class="flex flex-row items-center py-2"></div>
+    </div>
+
+    <div class="flex flex-row items-center">
+      <v-chip  color="secondary">
+                {{ publicacion.titulo }}
+      </v-chip>
+    </div>
+
+    <div class="py-2">
+      <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
+    </div>
   </div>
+</div>
+
   
       <infinite-loading @infinite="infiniteHandler" class="my-4">
         <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
@@ -106,6 +111,11 @@ main {
 }
 
 
+.text-h2 {
+
+font-family: 'Mifuente',sans-serif;
+  
+}
 
 </style>
   <script>

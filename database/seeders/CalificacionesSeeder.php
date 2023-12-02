@@ -30,7 +30,6 @@ class CalificacionesSeeder extends Seeder
                 'LITERATURA1' => 93,
                 'LITERATURA2' => 86,
                 'LITERATURA3' => 88,
-                'MATERIA6' => 90,
                 'ORIENTACION1' => 85,
                 'ORIENTACION2' => 87,
                 'ORIENTACION3' => 91,

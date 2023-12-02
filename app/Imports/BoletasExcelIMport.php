@@ -14,7 +14,7 @@ class BoletasExcelIMport implements ToModel
      */
     public function model(array $row)
     {
-        // Verificar si la matrícula no está en blanco
+
         if (!empty($row[3])) {
             return new BoletaExcel([
                 'n' => $row[0],
@@ -23,7 +23,7 @@ class BoletasExcelIMport implements ToModel
                 'matricula' => $row[3],
                 'nombre_completo' => $row[4],
                 'curp' => $row[5],
-                'observaciones' => $row[6],
+                'promedio' => $row[6],
             ]);
         }
         return null; // Retorna null si la matrícula está en blanco

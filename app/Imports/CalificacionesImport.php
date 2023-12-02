@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Imports;
 
 use App\Models\BoletaParcial1;
@@ -8,8 +7,17 @@ use App\Models\Calificacion;
 
 class CalificacionesImport implements ToModel
 {
+
+    private $primeraColumnaUsada = true;
     public function model(array $row)
     {
+
+        if ($this->primeraColumnaUsada) {
+
+            $this->primeraColumnaUsada = false;
+            return null;
+        }
+
         return new BoletaParcial1([
             'matricula' => $row[0],
             'nombre_alumno' => $row[1],
@@ -28,24 +36,23 @@ class CalificacionesImport implements ToModel
             'literatura1' => $row[14],
             'literatura2' => $row[15],
             'literatura3' => $row[16],
-            'materia6' => $row[17],
-            'orientacion1' => $row[18],
-            'orientacion2' => $row[19],
-            'orientacion3' => $row[20],
-            'fisica1' => $row[21],
-            'fisica2' => $row[22],
-            'fisica3' => $row[23],
-            'biologia1' => $row[24],
-            'biologia2' => $row[25],
-            'biologia3' => $row[26],
-            'civico1' => $row[27],
-            'civico2' => $row[28],
-            'civico3' => $row[29],
-            'sistema1' => $row[30],
-            'sistema2' => $row[31],
-            'sistema3' => $row[32],
-            'promedio' => $row[33],
-            'observaciones' => $row[34],
+            'orientacion1' => $row[17],  // Ajuste aquí
+            'orientacion2' => $row[18],
+            'orientacion3' => $row[19],
+            'fisica1' => $row[20],
+            'fisica2' => $row[21],
+            'fisica3' => $row[22],
+            'biologia1' => $row[23],
+            'biologia2' => $row[24],
+            'biologia3' => $row[25],
+            'civico1' => $row[26],
+            'civico2' => $row[27],
+            'civico3' => $row[28],
+            'sistema1' => $row[29],
+            'sistema2' => $row[30],
+            'sistema3' => $row[31],
+            'promedio' => $row[32],
+            'observaciones' => $row[33],
         ]);
     }
 }

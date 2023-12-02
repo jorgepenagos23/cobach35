@@ -10,7 +10,7 @@
         title="REPORTES"
         prepend-icon="mdi-account-check"
         subtitle="Reportes escolares"
-        class="bg-indigo-darken-4"
+        class="bg-white"
       ></v-card>
       <template v-slot:append>
         <div>
