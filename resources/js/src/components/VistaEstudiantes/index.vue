@@ -55,46 +55,45 @@
                 <v-expansion-panel-text>Curp: {{ dataItem.alumno.curp }}</v-expansion-panel-text>
               </v-expansion-panel>
               
-              
               <v-expansion-panel>
+    <v-expansion-panel-title class="primary" theme="dark" color="red-darken-4">Conducta Academica</v-expansion-panel-title>
+    <v-expansion-panel-text>
+      <div>
+        <div v-if="response && response.reportes">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Usuario ID</th>
+                <th>Usuario Nombre</th>
+                <th>Reporte ID</th>
+                <th>Reporte Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ response.reportes.id }}</td>
+                <td>{{ response.reportes.descripcion }}</td>
+                <td>{{ response.reportes.fecha }}</td>
+                <td>{{ response.reportes.usuario.id }}</td>
+                <td>{{ response.reportes.usuario.nombre }}</td>
+                <td>{{ response.reportes.reporte.id }}</td>
+                <td>{{ response.reportes.reporte.nombre }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else>
+          <p>No hay datos de reportes disponibles.</p>
+        </div>
+      </div>
+    </v-expansion-panel-text>
+  </v-expansion-panel>
 
 
-                
-                <v-expansion-panel-title class="primary" theme="dark" color="red-darken-4">Conducta Academica</v-expansion-panel-title>
-                <v-expansion-panel-text>   
 
-                  <v-card>
-                    <div class="overflow-x-auto">
-              <table class="w-full overflow-hidden bg-white divide-y divide-gray-200 rounded-md shadow-md">
-                <thead class="bg-gray-100">
-                  <tr>
-                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">ID</th>
-                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">Descripción</th>
-                    <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-600 uppercase">Fecha</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="reporte in reportes" :key="reporte.id" class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.id }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.descripcion }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ reporte.fecha }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-
-
-
-                  
-                </v-card>
-                </v-expansion-panel-text>
-
-
-
-              
-              </v-expansion-panel>
-                
               <v-expansion-panel>
 
 
@@ -213,69 +212,34 @@
 
 
 </v-expansion-panel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-
-         
-            </v-expansion-panels>
-          </v-expansion-panel-content>
-
+ </v-expansion-panels>
+ </v-expansion-panel-content>
 </v-expansion-panel>
 </v-expansion-panels>
 </v-card>
    
-    
-   
 
-
-
-
-    
   </v-app>
 
 
 
 </template>
-
 <script>
-import axios, { Axios } from "axios";
-import appbar from "../app_bar.vue";
-import barra from "../VistaEstudiantes/dashboard.vue";
+import axios from 'axios';
+import appbar from '../app_bar.vue';
+import barra from '../VistaEstudiantes/dashboard.vue';
 import Swal from 'sweetalert2';
 
 export default {
   data: () => ({
-    combinedData: [], // Almacena datos combinados de usuarios y alumnos
-    alumnoYUsuario: [], // Almacena datos combinados de un alumno y su usuario
+    combinedData: [],
+    alumnoYUsuario: [],
     panel: [0, 1],
-      disabled: false,
-    matricula:null,
+    disabled: false,
+    matriculaDelUsuario: null,
     boletas: [],
-    reportes: [],
+    reportesA: [],
+    response: {},
 
   }),
 
@@ -285,68 +249,46 @@ export default {
   },
 
 
+
   
-  created() {
-    // Realiza una solicitud GET para obtener los datos de usuario y su matrícula desde el servidor
-    axios.get('/api/user/')
-      .then(response => {
-        // Asumiendo que la matrícula del usuario se encuentra en la propiedad "matricula" de la respuesta
-        const matriculaDelUsuario = response.data.matricula;
-        console.log(response)
+  async created() {
+    try {
+      // Obtener datos de usuario y su matrícula
+      const userDataResponse = await axios.get('/api/user/');
+      const matriculaDelUsuario = userDataResponse.data.matricula;
 
-        const matricula = response.data.matricula;
-        console.log('esta es tu matricula',matricula);
-          
+      // Obtener datos combinados
+      const combinedDataResponse = await axios.get('/api/user/index2');
+      this.combinedData = combinedDataResponse.data;
 
+      // Filtrar y mostrar solo el usuario cuya matrícula coincide con matriculaDelUsuario
+      this.alumnoYUsuario = this.combinedData.filter(dataItem => dataItem.user.matricula === matriculaDelUsuario);
 
-        
-        // Ahora puedes usar "matriculaDelUsuario" en tu filtro
-        axios.get('/api/user/index2')
-          .then(response => {
-            this.combinedData = response.data; // Asigna los datos combinados a combinedData
-
-            // Filtra y muestra solo el usuario cuya matrícula coincide con matriculaDelUsuario
-            this.alumnoYUsuario = this.combinedData.filter(dataItem =>
-              dataItem.user.matricula === matriculaDelUsuario
-            
-              
-              
-            );
-
-            // Lógica para obtener las iniciales del nombre completo
-            this.alumnoYUsuario = this.alumnoYUsuario.map(dataItem => {
-              // Separa el nombre completo en palabras
-              const palabras = dataItem.alumno.nombre_completo.split(' ');
-
-              // Obtiene la primera letra de cada palabra y las une en un string
-              const iniciales = palabras.map(palabra => palabra.charAt(0)).join('');
-
-              // Actualiza el objeto dataItem con las iniciales
-              dataItem.initials = iniciales;
-
-              return dataItem;
-            });
-          })
-          .catch(error => {
-            console.error('Error al obtener los datos combinados:', error);
-          });
-      })
-      .catch(error => {
-        console.error('Error al obtener la matrícula del usuario:', error);
+      // Lógica para obtener las iniciales del nombre completo
+      this.alumnoYUsuario = this.alumnoYUsuario.map(dataItem => {
+        const palabras = dataItem.alumno.nombre_completo.split(' ');
+        const iniciales = palabras.map(palabra => palabra.charAt(0)).join('');
+        dataItem.initials = iniciales;
+        return dataItem;
       });
 
 
-
+      this.obteneReporte();
       this.obtenerMatricula();
 
-      this.obtenerReportes();
+      
+     
+      // Aquí puedes manejar la respuesta, por ejemplo, mostrar en la consola o actualizar tu vista con los datos obtenidos
+    } 
+    catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
 
-          
-        },
-methods: {
 
-
-  obtenerMatricula()
+    
+  },
+  methods: {
+obtenerMatricula()
   {
           axios.get('/api/user/')
 
@@ -386,44 +328,54 @@ otraFuncionQueUsaMatricula(){
   
 },
 
+    
+    
+    async obteneReporte() {
+  try {
+    // Obtener datos de usuario y su matrícula
+    const userDataResponse = await axios.get('/api/user/');
+    const matriculaDelUsuario = userDataResponse.data.matricula;
 
-obtenerReportes(){
-  console.log('Matrícula en funcion reporte:', this.matriculaDelUsuario);
+    // Obtener el reporte
+    const response = await axios.get('/api/obtener-reporte/' + matriculaDelUsuario);
 
-axios.get('/api/obtener-reporte/'+this.matriculaDelUsuario)
-.then(response => {
-  this.reportes = response.data.reportes;
+    console.log('Respuesta completa del servidor:', response);
 
-  console.log('reportes hallados',response.data)
-   // Ejemplo de condición para mostrar una notificación
-   if (this.reportes.length > 0) {
-            // Muestra una notificación utilizando SweetAlert2
-            Swal.fire({
-              icon: 'info',
-              title: 'Información',
-              text: 'Tienes un reporte  Notifica a tus tutores ',
-            });
-          }
+    // Verifica si 'data' está presente en la respuesta
+    if (response.data) {
+      console.log('Datos de la respuesta:', response.data);
 
+      // Si 'reportes' está presente en la respuesta
+      if (response.data.reportes) {
+        console.log('Reportes presentes en la respuesta:', response.data.reportes);
 
-  
-  
-})
+        // Asigna la respuesta a tu variable 'response'
+        this.response = response.data;
 
-
-.catch(error =>{
-console.error('error al obtener el reporte',error)
-
+        // Ahora intenta acceder a otras propiedades, como 'message', 'reportes', etc.
+        console.log('ID del reporte:', response.data.reportes.id);
+        console.log('Descripción del reporte:', response.data.reportes.descripcion);
+        console.log('Fecha del reporte:', response.data.reportes.fecha);
+        console.log('Usuario del reporte:', response.data.reportes.usuario);
+        console.log('Nombre del usuario:', response.data.reportes.usuario.nombre);
+        console.log('Reporte en sí:', response.data.reportes.reporte);
+        console.log('Nombre del reporte:', response.data.reportes.reporte.nombre);
+      } else {
+        console.error('La respuesta del servidor no contiene datos de reportes.');
+      }
+    } else {
+      console.error('La respuesta del servidor no contiene datos.');
+    }
+  } catch (error) {
+    console.error('Error al obtener la respuesta del servidor:', error);
+  }
 }
-)
-  
 },
 
 
 
-}
 
 
-  
+
 };
 </script>

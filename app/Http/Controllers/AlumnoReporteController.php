@@ -111,7 +111,6 @@ class AlumnoReporteController extends Controller
                         'id' => $reporte->id,
                         'nombre' => $reporte->nombre,
                       
-                        // Agrega más campos según sea necesario
                     ],
                 ],
                 'message' => 'reporte hallado correctamente'

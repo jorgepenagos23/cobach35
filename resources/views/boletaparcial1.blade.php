@@ -1,4 +1,3 @@
-<!-- Vista del PDF -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,34 +8,69 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4c2;
             color: #333;
+            font-size: 8px; /* Ajusta el tamaño de fuente según tus necesidades */
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            position: relative;
+            page-break-before: auto;
+        }
+
+        .formulario {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 600px;
+            position: relative;
+            margin: 0 auto;
+            page-break-inside: avoid;
         }
 
         h1 {
-            color: #0066cc;
+            color: #0058cc;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .boleta-container {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+        .marca-agua {
+            content: "Sin validez oficial";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 20%;
+            height: auto;
+            width: 8%;
         }
 
         .datos-alumno {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .datos-alumno p {
             font-weight: bold;
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .materia table {
             width: 100%;
             margin-bottom: 10px;
+            border-collapse: collapse;
         }
 
         .materia th, .materia td {
@@ -47,98 +81,116 @@
 
         .nota {
             font-weight: bold;
-            color: #0066cc;
+            color: #93d391;
+            text-align: center;
         }
 
-        .logo {
-            margin-bottom: 10px;
+        .fecha-generacion {
+            text-align: right;
+            margin-top: 20px;
         }
 
-        /* Regla de estilo de Tailwind incluida directamente */
-        .bg-blue-500 {
+        .formulario button {
+            padding: 0.75rem 1.5rem;
             background-color: #3490dc;
+            color: #fff;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .formulario button:hover {
+            background-color: #2779bd;
         }
     </style>
 </head>
 <body>
-    <!-- Contenido del PDF -->
-    <div class="boleta-container">
-        <div class="bg-blue-500">
-            <h1>Boleta Parcial 1</h1>       
-        </div>
+    <div class="formulario">
+        <h1>Boletas de Calificaciones del 1er Parcial</h1>
+        <div class="marca-agua"></div>
         <div class="logo">
-            <img src="{{ asset('images/cobachlogo.png') }}" alt="Logo" style="max-width: 50%; height: auto;">
+            <img src="{{ asset('/public/imagenes/cobachlogo.png') }}" alt="Logo" >
         </div>
         <div class="datos-alumno">
-            <p>PRIMER SEMESTRE </p>
-            <p>PARCIAL 1</p>
+            <p class="p-1 border rounded">NOMBRE: {{ $alumno->nombre_completo }}</p>
+            <p class="p-1 border rounded">CURP: {{ $alumno->curp }}</p>
+            <p class="p-1 border rounded">SEMESTRE: {{ $alumno->grado }}</p>
+            <p class="p-1 border rounded">GRUPO: {{ $alumno->grupo }}</p>
+            <p class="p-1 border rounded">MATRICULA: {{ $boleta_parcial1->matricula }}</p>
+            <p class="p-1 border rounded">STATUS: {{ $alumno->observaciones }}</p>
+            <p class="p-1 border rounded">FECHA :{{ now()->format('d/m/Y H:i:s') }}</p>
 
-            <p>Matrícula: {{ $boleta_parcial1->matricula }}</p>
-            <p>Nombre del Alumno: {{ $boleta_parcial1->nombre_alumno }}</p>
         </div>
 
         <div class="materia">
-            <table class="table-primary">                   
-                    <thead>
+            <table class="table-primary">
+                <thead>
                     <tr>
-                        <th>Materia</th>
-                        <th>Calificación</th>
+                        <th scope="col" class="px-1 py-1 text-sm font-medium text-left text-gray-900">
+                            Asignatura</th>
+                            <th scope="col" class="px-1 py-1 text-sm font-medium text-left text-gray-900">
+                                Calificación</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Español y Literatura</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Español y Literatura</td>
                         <td>{{ $boleta_parcial1->espanol1 }}</td>
                     </tr>
                     <tr>
-                        <td>Matemáticas Diferenciales</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Matemáticas Diferenciales</td>
                         <td>{{ $boleta_parcial1->matematicas1 }}</td>
                     </tr>
                     <tr>
-                        <td class="pt-3-half" contenteditable="true">Inglés</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Inglés</td>
                         <td>{{ $boleta_parcial1->ingles1 }}</td>
                     </tr>
                     <tr>
-                        <td>Historia</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Historia</td>
                         <td>{{ $boleta_parcial1->historia1 }}</td>
                     </tr>
                     <tr>
-                        <td>Fisica</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Física</td>
                         <td>{{ $boleta_parcial1->fisica1 }}</td>
                     </tr>
                     <tr>
-                        <td>Biologia</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Biología</td>
                         <td>{{ $boleta_parcial1->biologia1 }}</td>
                     </tr>
                     <tr>
-                        <td>Orientacion Educativa</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Orientación Educativa</td>
                         <td>{{ $boleta_parcial1->orientacion1 }}</td>
                     </tr>
                     <tr>
-                        <td>Formacion Civica y Etica</td>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Cívica y Ética</td>
                         <td>{{ $boleta_parcial1->civico1 }}</td>
                     </tr>
-
-     <tr>
-                        <td>Sistema Digital</td>
+                    <tr>
+                        <td class="px-1 py-2 text-sm font-light text-gray-900 whitespace-nowrap">
+                            Sistema Digital</td>
                         <td>{{ $boleta_parcial1->sistema1 }}</td>
-     </tr>
-
-                    
-                    <!-- Agrega más materias según tu estructura de datos -->
+                    </tr>
+                 
                 </tbody>
             </table>
         </div>
-
         <div class="nota">
             <p><strong>Promedio:</strong> {{ $boleta_parcial1->promedio }}</p>
         </div>
-       
-        <!-- Puedes agregar más información de la boleta según tu estructura de datos -->
-    </div>
-  
-    <!-- Sección con la regla de estilo de Tailwind incluida directamente -->
-    <div class="bg-blue-500">
+        
+
+      
     </div>
 
     <!-- Bootstrap JS (opcional, dependiendo de tus necesidades) -->

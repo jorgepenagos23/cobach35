@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\CalificacionesImport;
+use App\Models\Alumno;
 use App\Models\BoletaParcial1;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -81,53 +82,70 @@ class BoletaParcial1Controller extends Controller
         }
     }
 
-    public function generarPdf()
-    {
-        $totalBoletas = BoletaParcial1::count();
-    
-        // Verificar si hay boletas para procesar
-        if ($totalBoletas === 0) {
-            return response()->json(['message' => 'No hay boletas disponibles'], 404);
-        }
-    
-        $counter = 0;
-    
-        return new StreamedResponse(function () use ($totalBoletas, &$counter) {
-            BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
-                foreach ($boletas as $boleta) {
-                    try {
-                        $data = ['boleta_parcial1' => $boleta];
-                        $pdf = PDF::loadView('boletaparcial1', $data);
-    
+  
+public function generarPdf()
+{
+    $totalBoletas = BoletaParcial1::count();
+
+    if ($totalBoletas === 0) {
+        return response()->json(['message' => 'No hay boletas disponibles'], 404);
+    }
+
+    $counter = 0;
+
+    return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+        BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+            foreach ($boletas as $boleta) {
+                try {
+                    // Obtener datos del alumno
+                    $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+
+                    // Verificar si el alumno existe
+                    if ($alumno) {
+                        $data = [
+                            'boleta_parcial1' => $boleta,
+                            'alumno' => $alumno,
+                        ];
+
+                        $pdf = PDF::loadView('boletaparcial1', $data)->setPaper('letter', 'landscape');
+
                         $matriculaSlug = Str::slug($boleta->matricula, '_');
                         $pdfPath = "boletas/{$matriculaSlug}_boleta.pdf";
                         Storage::put($pdfPath, $pdf->output());
-    
-                        $boleta->update(['pdf_path' => $pdfPath]);
-    
-                        unset($data, $pdf);
-    
-                    } catch (\Exception $e) {
-                        Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
-                    }
-    
-                    // Incrementar el contador de boletas procesadas
-                    $counter++;
-    
-                    // Calcular y enviar el progreso actual
-                    $progress = ($counter / $totalBoletas) * 100;
-                    echo "data: {\"progress\": $progress}\n\n";
-                    ob_flush();
-                    flush();
-                }
-            });
-        }, 200, [
-            'Content-Type' => 'text/event-stream',
-            'Cache-Control' => 'no-cache',
-            'Connection' => 'keep-alive',
-        ]);
-    }
 
+                        $boleta->update(['pdf_path' => $pdfPath]);
+
+                        unset($data, $pdf);
+                    } else {
+                        Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                    }
+                } catch (\Exception $e) {
+                    Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                }
+
+                // Incrementar el contador de boletas procesadas
+                $counter++;
+
+                // Calcular y enviar el progreso actual
+                $progress = ($counter / $totalBoletas) * 100;
+                echo "data: {\"progress\": $progress}\n\n";
+                ob_flush();
+                flush();
+            }
+        });
+    }, 200, [
+        'Content-Type' => 'text/event-stream',
+        'Cache-Control' => 'no-cache',
+        'Connection' => 'keep-alive',
+    ]);
+}
+
+public function alumnosparaboletas()
+{
+    $alumnosparaboletas = Alumno::all();
+
+    return view('boletaparcial1', ['alumnosparaboletas' => $alumnosparaboletas]);
+}
     /**
      * Show the form for creating a new resource.
      */

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Storage;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/boletas_formato', [BoletaParcial1Controller::class, 'alumnosparaboletas']);
+
+
+
 
 Route::middleware(['web', 'auth'])->group(function () {
 });
@@ -42,7 +46,7 @@ Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->nam
 Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');
 
 // En el archivo de rutas (web.php o api.php)
-Route::get('/descargar-pdf/{nombreArchivo}', function ($nombreArchivo) {
+Route::get('/descargar-pdf/primer-semestre-/a/parcial1/{nombreArchivo}', function ($nombreArchivo) {
     // Asegúrate de que el nombre del archivo es seguro para evitar posibles problemas de seguridad
 
     // Define la ruta completa al archivo PDF en el sistema de archivos de Laravel

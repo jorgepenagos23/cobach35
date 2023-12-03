@@ -2,7 +2,8 @@
   <div>
     <banner></banner>
   </div>
-
+<v-app>
+  
   <div class="group relative w-200 overflow-hidden rounded-[16px] bg-gradient-to-bl from-blue-800 to-sky-900 p-[1px] transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:via-blue-700 hover:to-green-500">
     <v-container >
 
@@ -51,7 +52,6 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <!-- ... (botón de Entrar) ... -->
           </v-card-actions>
         </v-card>
       </v-card>
@@ -64,7 +64,7 @@
             <v-row>
               <v-col>
                 <!-- Contenido del footer -->
-                <p class="text-center">© 2023 Tu Empresa. Todos los derechos reservados.</p>
+                <p class="text-center">© Cobach 35. Todos los derechos reservados.</p>
               </v-col>
             </v-row>
           </v-col>
@@ -72,6 +72,8 @@
       </v-container>
     </v-footer>
   </div>
+</v-app>
+
 </template>
 
 <style>
@@ -146,6 +148,10 @@ export default {
 })
 .catch((error) => {
     console.error("Error al iniciar sesión:", error);
+    Swal.fire({
+    icon: "info",
+    text: "Por favor, verifica tus credenciales e intenta nuevamente.",
+  });
 });
     },
   },
