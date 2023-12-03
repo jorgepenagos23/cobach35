@@ -36,7 +36,7 @@ class CalificacionesImport implements ToModel
             'literatura1' => $row[14],
             'literatura2' => $row[15],
             'literatura3' => $row[16],
-            'orientacion1' => $row[17],  // Ajuste aquí
+            'orientacion1' => $row[17], 
             'orientacion2' => $row[18],
             'orientacion3' => $row[19],
             'fisica1' => $row[20],

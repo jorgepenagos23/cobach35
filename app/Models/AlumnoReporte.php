@@ -21,12 +21,19 @@ class AlumnoReporte extends Model
 
     ];
 
+    public function reporte()
+    {
+        return $this->belongsTo(Reporte::class, 'reporte_id');
+    }
     public function reportes()
     {
         return $this->hasMany(AlumnoReporte::class, 'matricula', 'matricula');
     }
 
-
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
 
     public function obtenerReportedelALumno($matricula)
     {

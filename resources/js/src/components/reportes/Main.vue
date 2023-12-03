@@ -7,8 +7,7 @@
     <appbar></appbar>
     <v-card-item class="bg-white">
       <v-card
-        title="REPORTES"
-        prepend-icon="mdi-account-check"
+        title="Reportes Escolares"
         subtitle="Reportes escolares"
         class="bg-white"
       ></v-card>
@@ -55,22 +54,78 @@
     <divider></divider>
 
     <v-virtual-scroll :items="reportesA" height="100" item-height="40" :style="{ background: '#fffff' }">
-      <template v-slot:default="{ item }">
-        <v-list-item>
-          <v-card class="mx-auto text-center" max-width="800">
-            <v-card :title="item.id" subtitle="No Reporte" class="text-left bg-red-darken-4" variant="tonal">
-              <template v-slot:append>
-                <v-icon class="bg-primary">mdi-file-pdf-box</v-icon>
-                <v-btn color="white" variant="text">PDF</v-btn>
-              </template>
-            </v-card>
-            <v-card prepend-icon="mdi-account-school" :title="item.matricula" :subtitle="item.descripcion" :text="item.fecha" class="bg-white">
-              <v-theme-provider theme="light"></v-theme-provider>
-            </v-card>
-          </v-card>
-        </v-list-item>
+  <template v-slot:default="{ item }">
+    <v-list-item>
+      <v-card class="mx-auto text-center" max-width="800">
+        <v-alert border="end" border-color="blue" elevation="2">
+          <v-alert border="start" border-color="deep-purple accent-4" elevation="2">
+            Matricula: {{ item.matricula }}
+            <!-- v-chip para activar el v-dialog -->
+            <v-chip class="ma-2" color="red" @click="verReporte(item)">
+              <v-icon start icon="mdi-label"></v-icon>
+              Detalles
+            </v-chip>
+          </v-alert>
+        </v-alert>
+      </v-card>
+    </v-list-item>
+    
+  </template>
+</v-virtual-scroll>
+ 
+<v-dialog v-model="dialog" max-width="600">
+      <v-card 
+      class="mx-auto"
+        max-width="344"
+        title="Detalles del Reporte"
+      > <template v-slot:prepend>
+          <v-icon icon="mdi-account" color="primary"></v-icon>
+        </template>
+        <template v-slot:append>
+          <v-icon icon="mdi-check" color="success"></v-icon>
+        </template>
+    
+        <v-card-text>
+
+          <v-col cols="12">
+              <strong>Matrícula:</strong>      {{ reporteSeleccionado.matricula }}
+            </v-col>
+
+            <v-col cols="12">
+              <strong>Descripcion:</strong>      {{ reporteSeleccionado.descripcion }}
+            </v-col>
+            
+            <v-col cols="12">
+              <strong>Fecha:</strong>        {{ reporteSeleccionado.fecha }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Nombre :</strong>                  {{ reporteSeleccionado.usuario.nombre }}
+
+            </v-col>
+            
+            <v-col cols="12">
+              <strong>Tipo de Reporte:</strong>                  {{ reporteSeleccionado.reporte.nombre }}
+
+            </v-col>
+        </v-card-text>
+        <v-card-actions>
+          
+          <v-btn
+            prepend-icon="mdi-close"
+            @click="cerrarDialog"
+          >
+            <template v-slot:prepend>
+              <v-icon color="warning"></v-icon>
+            </template>
+
+      Cerrar
+      <template v-slot:append>
+        <v-icon color="warning"></v-icon>
       </template>
-    </v-virtual-scroll>
+    </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -85,6 +140,10 @@ export default {
   data() {
     return {
       reportesA: [], // Arreglo para almacenar los reportes de alumnos
+
+      dialog: false,
+      reporteSeleccionado: null,
+
       busqueda: "",
       headers: [
         { text: 'Matricula', value: 'matricula' },
@@ -99,10 +158,14 @@ export default {
   },
 
   methods: {
+
+
+    
     obtenerReportes() {
       axios.get(url)
         .then(response => {
           this.reportesA = response.data.reportesA;
+          console.log(response)
         })
         .catch(error => {
           console.log('Error al obtener los datos de la API:', error);
@@ -121,7 +184,46 @@ export default {
     },
 
     verAlumno(item) {
-      // Lógica para ver el reporte del alumno
+    },
+    verReporte(item) {
+  try {
+    // Hacer la solicitud a la nueva ruta
+    const urlReporte = `api/obtener-reporte/${item.matricula}`;
+
+    axios.get(urlReporte)
+      .then(response => {
+        const reporteDetalles = response.data.reportes;
+
+        this.reporteSeleccionado = {
+          id: reporteDetalles.id,
+          descripcion: reporteDetalles.descripcion,
+          matricula: reporteDetalles.matricula,
+          fecha: reporteDetalles.fecha,
+          usuario: {
+            id: reporteDetalles.usuario.id,
+            nombre: reporteDetalles.usuario.nombre
+          },
+            
+          reporte:{
+            
+            id: reporteDetalles.reporte.id,
+            nombre: reporteDetalles.reporte.nombre,
+
+          }
+
+        };
+
+        this.dialog = true;
+      })
+      .catch(error => {
+        console.error('Error al obtener detalles del reporte:', error);
+      });
+  } catch (error) {
+    console.error('Error en verReporte:', error);
+  }
+},
+    cerrarDialog() {
+      this.dialog = false;
     },
   },
 

@@ -25,27 +25,81 @@
     </v-container>
 
     <v-card class="mx-auto" max-width="800">
-    <v-virtual-scroll :items="alumnosFiltrados" style="margin-top: 60px;" item-height="200">
-      <template v-slot:default="{ item: alumnos }">
-        <v-list-item class="custom-list-item" elevation="16">
-          <v-list-item-content class="custom-list-content">
-            <v-list-item-title class="font-weight-bold">Matricula {{ alumnos.matricula }}</v-list-item-title>
-            <v-list-item-subtitle>Nombre Completo: {{ alumnos.nombre_completo }}</v-list-item-subtitle>
-            <v-list-item-subtitle>Observaciones: {{ alumnos.observaciones }}</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-btn @click="verAlumno(alumnos)" class="custom-btn" small>
-              <v-icon>mdi-account-box</v-icon>
-              Ver Alumno
-              <v-icon align-center>mdi-open-in-new</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-      </template>
-    </v-virtual-scroll>
+      <v-virtual-scroll :items="alumnosFiltrados" style="margin-top: 60px;" item-height="200">
+        <template v-slot:default="{ item: alumnos }">
+          <v-list-item class="custom-list-item" elevation="16">
+            <v-list-item-content class="custom-list-content">
+              <v-list-item-title class="font-weight-bold">Matricula {{ alumnos.matricula }}</v-list-item-title>
+              <v-list-item-title class="font-weight-bold">Nombre {{ alumnos.nombre_completo }}</v-list-item-title>
+
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn @click="verAlumno(alumnos)" class="custom-btn" small>
+                <v-icon>mdi-account-box</v-icon>
+                Ver Alumno
+                <v-icon align-center>mdi-open-in-new</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </template>
+      </v-virtual-scroll>
+    </v-card>
+
+    <v-dialog v-model="dialog" max-width="700">
+      <v-card 
+      class="mx-auto"
+        max-width="600"
+        title="Detalles del Alumno"
+      > 
+    
+      <template v-slot:prepend>
+          <v-icon icon="mdi-account" color="primary"></v-icon>
+        </template>
+        <template v-slot:append>
+          <v-btn 
+          size="small"
+        color="deep-purple-darken-2"
+          icon @click="cerrarDialogo">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+        </template>    
+  
+    <v-card-text>
+      <v-row>
+        <v-col>
+          <v-row>
+            <v-col cols="12">
+              <strong>Matrícula:</strong> {{ alumnoSeleccionado.data.matricula }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Nombre Completo:</strong> {{ alumnoSeleccionado.data.nombre_completo }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Semestre:</strong> {{ alumnoSeleccionado.data.grado }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Grupo:</strong> {{ alumnoSeleccionado.data.grado }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Observaciones:</strong> {{ alumnoSeleccionado.data.observaciones }}
+            </v-col>
+            <v-col cols="12">
+              <strong>Curp:</strong> {{ alumnoSeleccionado.data.curp }}
+            </v-col>
+          </v-row>
+          
+          <v-expansion-panels variant="inset" class="my-4">
+            <v-expansion-panel
+              title="Calificaciones Parcial 1"
+              ></v-expansion-panel>
+          </v-expansion-panels>
+          
+        </v-col>
+      </v-row>
+    </v-card-text>
   </v-card>
-
-
+</v-dialog>
+  
   </v-app>
 </template>
 
@@ -98,8 +152,16 @@ export default {
       this.busqueda = "";
       this.alumnosFiltrados = [];
     },
-    verAlumno(alumnos) {
-    },
+    verAlumno(alumno) {
+  const url = `/api/v1/alumno/show/${alumno.id}`;
+  axios.get(url)
+    .then((response) => {
+      console.log("Respuesta de la API:", response.data);
+      this.alumnoSeleccionado = response.data;
+      this.dialog = true;
+    })
+   
+},
 
     mostrarAlertaNoresultados(){
       Swal.fire({
@@ -111,7 +173,11 @@ export default {
 
         
       })
-    }
+    },
+    cerrarDialogo() {
+      this.dialog = false;
+      this.alumnoSeleccionado = {};
+    },
 
   },
   components: {
@@ -123,6 +189,9 @@ export default {
       busqueda: "",
       alumnos: [], 
       alumnosFiltrados: [], 
+      dialog: false, 
+      alumnoSeleccionado:[],
+
     };
   },
   mounted() {

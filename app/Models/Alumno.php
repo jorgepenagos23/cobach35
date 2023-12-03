@@ -62,6 +62,10 @@ public function obtenerBoletas($matricula){
         return $this->belongsTo(Grupo::class);
     }
 
+    public function rol()
+    {
+        return $this->rol; 
+    }
 }
 
 

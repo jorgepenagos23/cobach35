@@ -8,7 +8,7 @@
       
     <v-card-item class="bg-white">
         <v-theme-provider theme="light" with-background class="pa-5">
-            <v-card title=" Subir alumnos " 
+            <v-card title=" Base de Datos de alumnos " 
             prepend-icon="mdi-microsoft-excel"
             subtitle="Alumnos"></v-card>
           </v-theme-provider>
@@ -47,6 +47,29 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.custom-list-item {
+  border-radius: 8px; 
+  margin: 10px; 
+}
+
+.custom-list-content {
+  padding: 10px; /* Espaciado interno */
+}
+
+.custom-btn {
+  background-color: teal; /* Color de fondo personalizado */
+  color: white; /* Color del texto personalizado */
+text-align: left; 
+justify-content: left;
+ border: 1px solid teal; /* Borde personalizado */
+}
+
+.custom-btn:hover {
+  background-color: #00796b; /* Cambiar color al pasar el ratón sobre el botón */
+}
+
+
 
 </style>
 

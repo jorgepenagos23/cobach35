@@ -53,6 +53,10 @@ Route::get('v1/generar/parcial1', [BoletaParcial1Controller::class,'generarPdf']
 
 
 
+//alunos rutas api
+
+Route::get('v1/alumno/show/{id}',[AlumnoController::class,'show'])->middleware('auth:sanctum');
+
 
 //publicaciones api
 Route::get('v1/publicacion', [PublicacionController::class,'index']);
@@ -69,14 +73,14 @@ Route::get('v1/reporte', [ReporteController::class,'index']);
 Route::get('v1/reportes/alumnos', [ReporteController::class,'index2']);
 
 Route::post('v1/reporte/subir', [AlumnoReporteController::class, 'store']);
-
 Route::get('v1/reporte/alumno/show/{id}', [AlumnoReporteController::class, 'show'])->middleware('auth:sanctum');
 
+
+Route::get('/obtener-reporte/{matricula}', [AlumnoReporteController::class, 'obtenerReportedelALumno']);
 
 
 
 Route::get('/obtener-boletas/{matricula}', [AlumnoController::class, 'obtenerBoletasDelAlumno'])->middleware('auth:sanctum');
-Route::get('/obtener-reporte/{matricula}', [AlumnoReporteController::class, 'obtenerReportedelALumno']);
 
 
 

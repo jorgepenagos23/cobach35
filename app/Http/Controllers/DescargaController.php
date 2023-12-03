@@ -115,7 +115,9 @@ class DescargaController extends Controller
     {
         // Validar la solicitud
         $request->validate([
-            'archivo' => 'required|mimes:pdf|max:2048',        ]);
+            'archivo' => 'required|mimes:pdf|max:2048',       
+        
+        ]);
 
         // Guarda el archivo en la carpeta de almacenamiento
         $archivo = $request->file('archivo');
@@ -126,6 +128,8 @@ class DescargaController extends Controller
 
         return response()->json(['mensaje' => 'Archivo subido correctamente']);
     }
+
+    
     
     
 }

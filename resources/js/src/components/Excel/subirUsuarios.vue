@@ -6,9 +6,9 @@
   
     <appbar></appbar>
       
-      <v-card-item class="bg-blue-darken-2">
+      <v-card-item class="bg-white">
         <v-theme-provider theme="light" with-background class="pa-5">
-            <v-card title="  SUBIR USUARIOS EXCEL" 
+            <v-card title="  Subir usuarios " 
             prepend-icon="mdi-microsoft-excel"
            ></v-card>
           </v-theme-provider>

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Primero_A_BoletaParcial2 extends Model
 {
     use HasFactory;
+
+
+
+    
 }

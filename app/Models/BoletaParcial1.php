@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BoletaParcial1 extends Model
 {
-    protected $table = 'boletas_parcial1';
+    protected $table = 'primero__a__boleta_parcial1s';
 
     protected $fillable = [
         'matricula',

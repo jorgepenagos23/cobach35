@@ -24,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class,
 
     ];
+   
 
     /**
      * The application's route middleware groups.

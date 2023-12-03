@@ -4,10 +4,17 @@ namespace App\Policies;
 
 use App\Models\Alumno;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AlumnoPolicy
 {
+
+    public function ver(User $user, Alumno $alumno)
+    {
+
+        $rolesPermitidosVerALumnos = ['administrador','director','subdirector'];
+        return  in_array($user->rol,$rolesPermitidosVerALumnos);
+    }
+
     /**
      * Determine whether the user can view any models.
      */

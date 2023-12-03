@@ -87,31 +87,40 @@ class AlumnoReporteController extends Controller
     }
 
 
-    public function obtenerReportedelALumno($matricula)
+    public function obtenerReportedelAlumno($matricula)
     {
-
-        //creamos la instancia al modelo  alumno reporte 
-
-        $reporte_alumno_buscador = new AlumnoReporte;
-
-        $reporte_con_alumno = $reporte_alumno_buscador->obtenerReportedelALumno($matricula);
-
-        if($reporte_con_alumno){
-
+        // Obtener el reporte del alumno con las relaciones cargadas
+        $reporte_con_alumno = AlumnoReporte::with('usuario', 'reporte')->where('matricula', $matricula)->first();
+    
+        if ($reporte_con_alumno) {
+            // Acceder a las relaciones de usuario y reporte
+            $usuario = $reporte_con_alumno->usuario;
+            $reporte = $reporte_con_alumno->reporte;
+    
             return response()->json([
-
-                'reportes' => $reporte_con_alumno,
-                'message' =>'reporte hallado correctamente'
-
+                'reportes' => [
+                    'id' => $reporte_con_alumno->id,
+                    'descripcion' => $reporte_con_alumno->descripcion,
+                    'matricula' => $reporte_con_alumno->matricula,
+                    'fecha' => $reporte_con_alumno->fecha,
+                    'usuario' => [
+                        'id' => $usuario->id,
+                        'nombre' => $usuario->nombre,
+                    ],
+                    'reporte' => [
+                        'id' => $reporte->id,
+                        'nombre' => $reporte->nombre,
+                      
+                        // Agrega más campos según sea necesario
+                    ],
+                ],
+                'message' => 'reporte hallado correctamente'
             ]);
-        }else{
+        } else {
             return response()->json([
-
                 'mensaje' => 'reporte no hallado '
             ]);
         }
-
     }
-
 
 }

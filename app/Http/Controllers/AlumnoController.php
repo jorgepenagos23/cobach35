@@ -66,31 +66,23 @@ class AlumnoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
-        $seccion = Alumno::find($id);
-
-        if(isset($seccion)){
-
+        $alumno = Alumno::find($id);
+    
+        if (!$alumno) {
             return response()->json([
-
-            'data' => $seccion,
-            'mensaje' => " encontrada con exito  "
-
-            ]);
-        }else{
-
-
-            return response()->json([
-
-                'error'=>true,
-                'mesnsaje'=>"No existe esa ",
-
+                'error' => true,
+                'mensaje' => 'No existe esa alumno',
             ]);
         }
-
-
-
+    
+        $this->authorize('ver', $alumno);
+    
+        return response()->json([
+            'data' => $alumno,
+            'mensaje' => 'Encontrada con éxito',
+        ]);
     }
 
     /**
