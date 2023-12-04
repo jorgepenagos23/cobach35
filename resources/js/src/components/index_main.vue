@@ -158,30 +158,7 @@
       </v-col>
 
 
-      <v-col cols="12" md="6">
-        <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-r from-emerald-400 to-cyan-400">
-          <v-card title=" " theme="light">
-            <v-col cols="20" sm="50" md="23" lg="23" rows="2">
-              <v-card color="#0d1b2a" theme="light">
-                <div class="flex-no-wrap d-flex justify-space-between">
-                  <div>
-                    <v-card-title class="text-h5">Mensajes</v-card-title>
-                    <v-card-subtitle>Mensajeria</v-card-subtitle>
-                    <v-card-actions>
-                      <button @click="$router.push('/main-mensajes')" class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
-                        ENTRAR
-                      </button>
-                    </v-card-actions>
-                  </div>
-                  <v-avatar class="ma-3" size="125" rounded="0">
-                    <v-img src="https://cdn-icons-png.flaticon.com/128/9554/9554398.png"></v-img>
-                  </v-avatar>
-                </div>
-              </v-card>
-            </v-col>
-          </v-card>
-        </div>
-      </v-col>
+ 
 
       <v-col cols="12" md="6">
         <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-tr from-slate-900 to-slate-700">     

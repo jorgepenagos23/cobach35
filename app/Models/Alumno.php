@@ -31,12 +31,11 @@ class Alumno extends Model
     }
 
     
-    public function Reportes()
+  
+    public function reportes()
     {
-        return $this->belongsTo(Reporte::class, 'reporte_id');
+        return $this->hasMany(AlumnoReporte::class);
     }
-
-
 
   
     public function boletas()

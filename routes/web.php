@@ -50,7 +50,7 @@ Route::get('/descargar-pdf/primer-semestre-/a/parcial1/{nombreArchivo}', functio
     // Asegúrate de que el nombre del archivo es seguro para evitar posibles problemas de seguridad
 
     // Define la ruta completa al archivo PDF en el sistema de archivos de Laravel
-    $pdfPath = "boletas/{$nombreArchivo}";
+    $pdfPath = "boletas/primer_semestre/grupoA/parcial1/{$nombreArchivo}";
 
     // Verifica si el archivo existe en el sistema de archivos de Laravel
     if (Storage::exists($pdfPath)) {

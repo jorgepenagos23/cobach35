@@ -82,20 +82,25 @@ class DescargaController extends Controller
 
         return response()->json(['pdfs' => $pdfFiles], 200);
     }
-
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:pdf|max:10240', // Validar que es un archivo PDF y no excede los 10MB
+            'file' => [
+                'required',
+                'mimes:pdf',
+                'max:10240',
+                'regex:/^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/u', // Asegura que solo contiene letras en español sin espacios
+            ],
         ]);
-
+    
         $file = $request->file('file');
-        
+    
         // Almacenar el archivo PDF en la carpeta 'pdf' en storage con un nombre único
         $filePath = $file->storeAs('pdf', $file->getClientOriginalName(), 'public');
-
+    
         return response()->json(['message' => 'PDF subido correctamente', 'path' => $filePath], 200);
     }
+
 
     public function download($filename)
     {

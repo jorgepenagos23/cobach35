@@ -56,24 +56,24 @@
               </v-expansion-panel>
               
               <v-expansion-panel>
-    <v-expansion-panel-title class="primary" theme="dark" color="red-darken-4">Conducta Academica</v-expansion-panel-title>
-    <v-expansion-panel-text>
-      <div>
-        <div v-if="response && response.reportes">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Usuario ID</th>
-                <th>Usuario Nombre</th>
-                <th>Reporte ID</th>
-                <th>Reporte Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
+          <v-expansion-panel-title class="primary" theme="dark" color="red-darken-4">Conducta Academica</v-expansion-panel-title>
+          <v-expansion-panel-text>
+            <div>
+              <div v-if="response && response.reportes">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Descripción</th>
+                      <th>Fecha</th>
+                      <th>Usuario ID</th>
+                      <th>Usuario Nombre</th>
+                      <th>Reporte ID</th>
+                      <th>Reporte Nombre</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
                 <td>{{ response.reportes.id }}</td>
                 <td>{{ response.reportes.descripcion }}</td>
                 <td>{{ response.reportes.fecha }}</td>
@@ -257,14 +257,11 @@ export default {
       const userDataResponse = await axios.get('/api/user/');
       const matriculaDelUsuario = userDataResponse.data.matricula;
 
-      // Obtener datos combinados
       const combinedDataResponse = await axios.get('/api/user/index2');
       this.combinedData = combinedDataResponse.data;
 
-      // Filtrar y mostrar solo el usuario cuya matrícula coincide con matriculaDelUsuario
       this.alumnoYUsuario = this.combinedData.filter(dataItem => dataItem.user.matricula === matriculaDelUsuario);
 
-      // Lógica para obtener las iniciales del nombre completo
       this.alumnoYUsuario = this.alumnoYUsuario.map(dataItem => {
         const palabras = dataItem.alumno.nombre_completo.split(' ');
         const iniciales = palabras.map(palabra => palabra.charAt(0)).join('');
@@ -278,7 +275,6 @@ export default {
 
       
      
-      // Aquí puedes manejar la respuesta, por ejemplo, mostrar en la consola o actualizar tu vista con los datos obtenidos
     } 
     catch (error) {
       console.error('Error en la solicitud:', error);
@@ -332,27 +328,21 @@ otraFuncionQueUsaMatricula(){
     
     async obteneReporte() {
   try {
-    // Obtener datos de usuario y su matrícula
     const userDataResponse = await axios.get('/api/user/');
     const matriculaDelUsuario = userDataResponse.data.matricula;
 
-    // Obtener el reporte
     const response = await axios.get('/api/obtener-reporte/' + matriculaDelUsuario);
 
     console.log('Respuesta completa del servidor:', response);
 
-    // Verifica si 'data' está presente en la respuesta
     if (response.data) {
       console.log('Datos de la respuesta:', response.data);
 
-      // Si 'reportes' está presente en la respuesta
       if (response.data.reportes) {
         console.log('Reportes presentes en la respuesta:', response.data.reportes);
 
-        // Asigna la respuesta a tu variable 'response'
         this.response = response.data;
 
-        // Ahora intenta acceder a otras propiedades, como 'message', 'reportes', etc.
         console.log('ID del reporte:', response.data.reportes.id);
         console.log('Descripción del reporte:', response.data.reportes.descripcion);
         console.log('Fecha del reporte:', response.data.reportes.fecha);

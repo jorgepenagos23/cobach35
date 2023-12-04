@@ -110,7 +110,7 @@ public function generarPdf()
                         $pdf = PDF::loadView('boletaparcial1', $data)->setPaper('letter', 'landscape');
 
                         $matriculaSlug = Str::slug($boleta->matricula, '_');
-                        $pdfPath = "boletas/{$matriculaSlug}_boleta.pdf";
+                        $pdfPath = "boletas/primer_semestre/grupoA/parcial1/{$matriculaSlug}_boleta.pdf";
                         Storage::put($pdfPath, $pdf->output());
 
                         $boleta->update(['pdf_path' => $pdfPath]);

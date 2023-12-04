@@ -10,7 +10,7 @@
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
                 <a
-                  :href="'/descargar-pdf/' + '22a0710035m0092_boleta.pdf'"
+                  :href="'/descargar-pdf/primer-semestre-/grupoA/parcial1/' + '22a0710035m0092_boleta.pdf'"
                   target="_blank"
                   class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full"
                 >
@@ -57,6 +57,7 @@
                       stroke-width="2"
                       d="M9 5l7 7-7 7"
                     />
+                    Descargar Boleta Final Parcial 1
                   </svg>
                 </v-btn>
               </div>
@@ -120,7 +121,7 @@ export default {
       const nombreArchivo = '22a0710035m0092_boleta.pdf';
 
       // Construir la URL del PDF
-      const pdfUrl = `/descargar-pdf/${nombreArchivo}`;
+      const pdfUrl = `/descargar-pdf/primer-semestre-/a/parcial1/${nombreArchivo}`;
 
       // Abrir la URL en una nueva ventana para descargar el archivo
       window.open(pdfUrl, '_blank');

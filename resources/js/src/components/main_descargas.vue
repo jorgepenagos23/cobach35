@@ -112,6 +112,7 @@ import axios from "axios";
 import navegacion from "./barra_navegacion.vue";
 import appbar from "./app_bar.vue";
 import Tabladescargas from "./descargas/Tabladescargas.vue";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -127,33 +128,55 @@ export default {
       this.selectedFile = event.target.files[0];
     },
     subirPDF() {
-      // Validar si hay un archivo seleccionado
-      if (!this.selectedFile) {
-        console.error("No se ha seleccionado ningún archivo");
-        return;
-      }
+  // Validar si hay un archivo seleccionado
+  if (!this.selectedFile) {
+    Swal.fire({
+              icon: 'error' ,
+              title: 'Selecciona un archivo .PDF',
+              showConfirmButton: true,
+              timer: 3000 
+              
+            });    return;
+  }
 
-      // Crear un objeto FormData
-      const formData = new FormData();
+  // Crear un objeto FormData
+  const formData = new FormData();
 
-      // Adjuntar el archivo al FormData
-      formData.append("archivo", this.selectedFile);
+  // Adjuntar el archivo al FormData
+  formData.append("archivo", this.selectedFile);
 
-      // Habilitar la bandera de carga
-      this.uploading = true;
+  // Habilitar la bandera de carga
+  this.uploading = true;
 
-      // Enviar la solicitud al servidor
-      axios
-        .post("/subir-pdf", formData, {})
-        .then((response) => {
-          console.log(response);
-          this.uploadSuccess = true;
-        })
-        .catch((error) => console.error(error.response.data))
-        .finally(() => {
-          this.uploading = false;
-        });
-    },
+  // Enviar la solicitud al servidor
+  axios
+    .post("/subir-pdf", formData, {})
+    .then((response) => {
+      console.log(response);
+      Swal.fire({
+              icon: 'success' ,
+              title: 'Se ha subido  exitosamente',
+              showConfirmButton: true,
+              timer: 3000 
+              
+            });
+      this.uploadSuccess = true;
+    })
+    .catch((error) => {
+      console.error(error.response.data);
+      // Mostrar mensaje de error con SweetAlert
+      Swal.fire({
+              icon: 'error' ,
+              title: 'Verifica el nombre sin espacios y que sea PDF ',
+              showConfirmButton: true,
+              timer: 3000 
+              
+            });
+    })
+    .finally(() => {
+      this.uploading = false;
+    });
+},
   },
   components: {
     navegacion,

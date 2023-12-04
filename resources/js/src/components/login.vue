@@ -4,10 +4,8 @@
   </div>
 <v-app>
   
-  <div class="group relative w-200 overflow-hidden rounded-[16px] bg-gradient-to-bl from-blue-800 to-sky-900 p-[1px] transition-all duration-300 ease-in-out hover:bg-gradient-to-r hover:via-blue-700 hover:to-green-500">
     <v-container >
 
-      <v-card theme="light" max-width="800" class="mx-auto ">
         <v-card width="320" theme="light" class="mx-auto mt-5">
           <v-card-title class="pb-0">
             <v-img
@@ -54,7 +52,6 @@
           <v-card-actions>
           </v-card-actions>
         </v-card>
-      </v-card>
     </v-container>
 
     <v-footer app>
@@ -64,14 +61,13 @@
             <v-row>
               <v-col>
                 <!-- Contenido del footer -->
-                <p class="text-center">© Cobach 35. Todos los derechos reservados.</p>
+                <p class="text-center">© Cobach 35</p>
               </v-col>
             </v-row>
           </v-col>
         </v-row>
       </v-container>
     </v-footer>
-  </div>
 </v-app>
 
 </template>

@@ -21,14 +21,22 @@
                 prepend-icon="mdi-comment-text"
                 class="w-full px-4 py-2"
               ></v-text-field>
-              <v-text-field
-                v-model="publicacion.matricula"
-                label="Matrícula"
-                required
-                variant="solo"
-                prepend-icon="mdi-account-badge"
-                class="w-full px-4 py-2"
-              ></v-text-field>
+
+              <div class="form-group">
+  <label for="matricula">Matrícula</label>
+  <input
+    type="text"
+    v-model="publicacion.matricula"
+    id="matricula"
+    @input="autocompletarMatricula"
+    required
+  />
+  <div v-if="alumnosOptions.length > 0" class="autocomplete">
+    <div v-for="alumno in alumnosOptions" :key="alumno.value" @click="selectAlumno(alumno)">
+      {{ alumno.text }}
+    </div>
+  </div>
+</div>
               <v-text-field
                 v-model="publicacion.fecha"
                 label="Fecha"
@@ -66,7 +74,6 @@
     </v-row>
   </v-app>
 </template>
-
 <script>
 import navegacion from "../barra_navegacion.vue";
 import appbar from "../app_bar.vue";
@@ -74,21 +81,28 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 export default {
+  
   data() {
+    
     return {
       publicacion: {
         descripcion: "",
         matricula: "",
+
         fecha: null,
         reporte_nombre: "", // Usamos reporte_nombre para mostrar el nombre en el combo box
         reporte_id: "", // Usamos reporte_id para almacenar el ID seleccionado
       },
+      alumnosOptions: [],
+
       reporteOptions: [], // Inicialmente vacío
       reporteOptions2: {},
       showDropdown: false,
+      alumnos: [], // Lista para almacenar resultados de autocompletarMatricula
     };
   },
   created() {
+    
     axios.get('/api/v1/reporte')
       .then(response => {
         if (Array.isArray(response.data.reportes)) {
@@ -110,6 +124,26 @@ export default {
     },
   },
   methods: {
+    async obtenerIdUsuarioPorMatricula(matricula) {
+    try {
+      const response = await axios.get('/api/user/index3');
+      const usuarios = response.data.users;
+
+      const usuarioEncontrado = usuarios.find(usuario => usuario.matricula === matricula);
+
+      if (usuarioEncontrado) {
+        return usuarioEncontrado.id;
+      } else {
+        console.error('No se encontró un usuario con la matrícula especificada');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener el id del usuario', error);
+      return null;
+    }
+  },
+
+
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
@@ -145,19 +179,45 @@ export default {
           console.error('Error al crear el reporte', error);
         });
     },
+    async autocompletarMatricula() {
+  const inputMatricula = this.publicacion.matricula.toLowerCase();
 
+  if (inputMatricula.trim() === "") {
+    this.alumnosOptions = [];
+    return;
+  }
+
+  try {
+    const response = await axios.get('/api/user/index3');
+    const usuarios = response.data.users;
+
+    // Filtra las opciones según la entrada del usuario
+    this.alumnosOptions = usuarios
+      .filter(usuario => usuario.matricula.toLowerCase().includes(inputMatricula))
+      .map(usuario => ({ text: usuario.matricula, value: usuario.id }));
+
+  } catch (error) {
+    console.error('Error al autocompletar la matrícula', error);
+    this.alumnosOptions = [];
+  }
+},
+    
     limpiarReporteBusqueda(){
-
       this.publicacion = {
         descripcion: "",
-      matricula: "",
-      fecha: null,
-      reporte_id: "",
-
-        
+        matricula: "",
+        fecha: null,
+        reporte_id: "",
       }
-      
     },
+    
+
+    selectAlumno(alumno) {
+      this.publicacion.matricula = alumno.text;
+      this.alumnosOptions = [];
+    },
+
+
     
   },
   components: {
@@ -166,3 +226,55 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+/* Estilos para el ejemplo básico */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.autocomplete {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+</style>

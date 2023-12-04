@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlumnoReporte;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AlumnoReporteController extends Controller
 {
@@ -20,50 +21,56 @@ class AlumnoReporteController extends Controller
      */
   
      public function store(Request $request)
-     {
-         $validatedData = $request->validate([
-             'descripcion' => 'required|string',
-             'matricula' => 'required|string',
-             'fecha' => 'required|date', // Asegúrate de que fecha sea una fecha válida
-             'reporte_id' => 'required|integer',
- 
-         ]);
-     
-         $reporte = new AlumnoReporte();
-         $reporte->descripcion = $validatedData['descripcion'];
-         $reporte->matricula = $validatedData['matricula'];
-         $reporte->fecha = $validatedData['fecha'];
-         $reporte->reporte_id = $validatedData['reporte_id'];
- 
- 
-         $reporte->save();
-     
-         return response()->json([
-             'data' => $reporte,
-             'message' => 'reporte creada correctamente',
-         ], 201); // El código 201 indica que la publicación se ha creado con éxito
-     }
+{
+    $validatedData = $request->validate([
+        'descripcion' => 'required|string',
+        'matricula' => 'required|string',
+        'fecha' => 'required|date',
+        'reporte_id' => 'required|integer',
+    ]);
+
+    // Obtén el usuario_id del request
+    $usuario = User::where('matricula', $validatedData['matricula'])->first();
+    $usuario_id = $usuario ? $usuario->id : null;
+
+    // Crea el objeto AlumnoReporte
+    $reporte = new AlumnoReporte();
+    $reporte->descripcion = $validatedData['descripcion'];
+    $reporte->matricula = $validatedData['matricula'];
+    $reporte->fecha = $validatedData['fecha'];
+    $reporte->reporte_id = $validatedData['reporte_id'];
+    $reporte->usuario_id = $usuario_id; // Asigna el usuario_id
+
+    $reporte->save();
+
+    return response()->json([
+        'data' => $reporte,
+        'message' => 'Reporte creado correctamente',
+    ], 201);
+}
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
+ public function show($id)
+{
+    $reporte_alumno_buscador = AlumnoReporte::find($id);
 
-        $reporte_alumno_buscador = AlumnoReporte::find($id);
+    if(isset($reporte_alumno_buscador)){
 
-        if(isset($reporte_alumno_buscador)){
+        return response()->json([
+            'reportes' => $reporte_alumno_buscador, // Cambiado a un array llamado 'reportes'
+            'message' => 'reporte de alumno encontrado con exito'
+        ]);
 
-            return response()->json([
-                'data' => $reporte_alumno_buscador,
-                'mensaje' => 'reporte de alumno encontrado con exito'
-            ]);
-
-        }
-
+    } else {
+        // Si no se encuentra el reporte, puedes devolver un mensaje indicando que no se encontró.
+        return response()->json([
+            'reportes' => null,
+            'message' => 'No se encontró el reporte de alumno con el ID proporcionado.'
+        ], 404); // 404 es el código de respuesta HTTP para "No encontrado".
     }
-
-
+}
 
 
 
@@ -87,18 +94,20 @@ class AlumnoReporteController extends Controller
     }
 
 
-    public function obtenerReportedelAlumno($matricula)
+    public function obtenerReportedelALumno($matricula)
     {
-        // Obtener el reporte del alumno con las relaciones cargadas
-        $reporte_con_alumno = AlumnoReporte::with('usuario', 'reporte')->where('matricula', $matricula)->first();
+        // Obtener todos los reportes del alumno con las relaciones cargadas
+        $reportes_del_alumno = AlumnoReporte::with('usuario', 'reporte')
+            ->where('matricula', $matricula)
+            ->get(); // Utiliza `get` en lugar de `first` para obtener una colección de resultados
+        
+        if ($reportes_del_alumno->isNotEmpty()) {
+            // Mapear los resultados para construir la respuesta
+            $reportes = $reportes_del_alumno->map(function ($reporte_con_alumno) {
+                $usuario = $reporte_con_alumno->usuario;
+                $reporte = $reporte_con_alumno->reporte;
     
-        if ($reporte_con_alumno) {
-            // Acceder a las relaciones de usuario y reporte
-            $usuario = $reporte_con_alumno->usuario;
-            $reporte = $reporte_con_alumno->reporte;
-    
-            return response()->json([
-                'reportes' => [
+                return [
                     'id' => $reporte_con_alumno->id,
                     'descripcion' => $reporte_con_alumno->descripcion,
                     'matricula' => $reporte_con_alumno->matricula,
@@ -110,16 +119,20 @@ class AlumnoReporteController extends Controller
                     'reporte' => [
                         'id' => $reporte->id,
                         'nombre' => $reporte->nombre,
-                      
                     ],
-                ],
-                'message' => 'reporte hallado correctamente'
+                ];
+            });
+    
+            return response()->json([
+                'reportes' => $reportes,
+                'message' => 'Reportes del alumno encontrados correctamente'
             ]);
         } else {
             return response()->json([
-                'mensaje' => 'reporte no hallado '
+                'mensaje' => 'No se encontraron reportes para la matrícula proporcionada'
             ]);
         }
     }
+    
 
 }

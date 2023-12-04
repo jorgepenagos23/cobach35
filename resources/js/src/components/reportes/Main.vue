@@ -192,28 +192,30 @@ export default {
 
     axios.get(urlReporte)
       .then(response => {
-        const reporteDetalles = response.data.reportes;
+        const reportes = response.data.reportes;
+        console.log('ver reporte',response)
+        if (reportes.length > 0) {
+          const primerReporte = reportes[0];
 
-        this.reporteSeleccionado = {
-          id: reporteDetalles.id,
-          descripcion: reporteDetalles.descripcion,
-          matricula: reporteDetalles.matricula,
-          fecha: reporteDetalles.fecha,
-          usuario: {
-            id: reporteDetalles.usuario.id,
-            nombre: reporteDetalles.usuario.nombre
-          },
-            
-          reporte:{
-            
-            id: reporteDetalles.reporte.id,
-            nombre: reporteDetalles.reporte.nombre,
+          this.reporteSeleccionado = {
+            id: primerReporte.id,
+            descripcion: primerReporte.descripcion,
+            matricula: primerReporte.matricula,
+            fecha: primerReporte.fecha,
+            usuario: {
+              id: primerReporte.usuario.id,
+              nombre: primerReporte.usuario.nombre
+            },
+            reporte: {
+              id: primerReporte.reporte.id,
+              nombre: primerReporte.reporte.nombre,
+            }
+          };
 
-          }
-
-        };
-
-        this.dialog = true;
+          this.dialog = true;
+        } else {
+          console.error('Error: No se encontraron detalles del reporte.');
+        }
       })
       .catch(error => {
         console.error('Error al obtener detalles del reporte:', error);
