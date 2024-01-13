@@ -61,7 +61,6 @@
             <v-row>
               <v-col>
                 <!-- Contenido del footer -->
-                <p class="text-center">© Cobach 35</p>
               </v-col>
             </v-row>
           </v-col>

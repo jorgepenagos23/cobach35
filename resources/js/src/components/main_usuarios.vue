@@ -109,8 +109,7 @@ export default {
       this.busqueda = '';
     },
     verUsuario(usuario) {
-      // Lógica para ver el detalle del usuario
-      // Puedes usar vue-router para navegar a la página de detalle del usuario
+     
     },
   },
   components: {

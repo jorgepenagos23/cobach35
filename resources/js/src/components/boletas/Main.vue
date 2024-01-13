@@ -45,7 +45,7 @@
   <v-card
     class="mx-auto my-4 d-flex align-start"
     max-width="500"
-    @click="$router.push('/boletas-primer')"
+    @click="$router.push('/main-parciales-segundo-semestre')"
     target="_blank"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="primary">
@@ -56,7 +56,7 @@
   <v-card
     class="mx-auto my-4 d-flex align-start"
     max-width="500"
-    @click="$router.push('#')"
+    @click="$router.push('/main-parciales-tercer-semestre')"
     target="_blank"
   >
     <v-chip class="justify-center ma-4 d-flex align-center"  color="teal-darken-4" text-color="white">
@@ -68,7 +68,7 @@
   <v-card
     class="mx-auto my-4 d-flex align-start"
     max-width="500"
-    @click="$router.push('#')"
+    @click="$router.push('/main-parciales-cuarto-semestre')"
     target="_blank"
   >
     <v-chip class="justify-center ma-4 d-flex align-center"  color="deep-orange-accent-4" text-color="white">
@@ -80,7 +80,7 @@
   <v-card
     class="mx-auto my-4 d-flex align-start"
     max-width="500"
-    @click="$router.push('#')"
+    @click="$router.push('')"
     target="_blank"
   >
     <v-chip class="justify-center ma-4 d-flex align-center" color="indigo">

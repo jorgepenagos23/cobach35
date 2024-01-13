@@ -330,7 +330,7 @@ otraFuncionQueUsaMatricula(){
   try {
     const userDataResponse = await axios.get('/api/user/');
     const matriculaDelUsuario = userDataResponse.data.matricula;
-
+console.log('haz obtenido la matricula del usuario',matriculaDelUsuario);
     const response = await axios.get('/api/obtener-reporte/' + matriculaDelUsuario);
 
     console.log('Respuesta completa del servidor:', response);

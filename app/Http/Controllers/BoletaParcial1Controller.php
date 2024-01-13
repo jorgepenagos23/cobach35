@@ -82,7 +82,10 @@ class BoletaParcial1Controller extends Controller
         }
     }
 
-  
+    
+
+    
+/// generar pdf primer semestre parcial 1
 public function generarPdf()
 {
     $totalBoletas = BoletaParcial1::count();
@@ -139,6 +142,12 @@ public function generarPdf()
         'Connection' => 'keep-alive',
     ]);
 }
+
+
+
+
+
+
 
 public function alumnosparaboletas()
 {

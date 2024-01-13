@@ -53,9 +53,56 @@ const router = createRouter({
             component: CrearReportes,
         },
 
-        {path: '/boletas-primer' , component:()=>import('./src/components/boletas/primer_semestre.vue')},
-        {path: '/descargas-tabla',component:()=>import('./src/components/descargas/Tabladescargas.vue')},
-        {path: '/main-parciales-primer-semestre',component:()=>import('./src/components/boletas/PRIMER SEMESTRE/main.vue')}
+                ////////// BOLETAS  1 PRIMER  SEMESTRE 
+
+        {path: '/main-parciales-primer-semestre',component:()=>import('./src/components/boletas/PRIMER/main.vue')}, ///  MAIN BOLETAS PRIMER SEMESTRE
+        {path: '/boletas-primer' , component:()=>import('./src/components/boletas/primer_semestre.vue')},   // PRIMER SEMESTRE  PARCIAL 1 
+        {path: '/boletas-primer-parcial2', component:()=>import('./src/components/boletas/PRIMER/parcial2.vue')}, //  PRIMER SEMESTRE PARCIAL 2
+        {path: '/boletas-primer-parcial3', component:()=>import('./src/components/boletas/PRIMER/parcial3.vue')}, //  PRIMER SEMESTRE PARCIAL 3
+
+
+
+        
+        ////////// BOLETAS  2  SEGUNDO SEMESTRE 
+
+        {path: '/main-parciales-segundo-semestre',component:()=>import('./src/components/boletas/SEGUNDO SEMESTRE/main.vue')}, //MAIN BOLETAS SEGUNDO SEMESTRE
+        {path:'/boletas-segundo-parcial1',component:()=>import('./src/components/boletas/SEGUNDO SEMESTRE/parcial1.vue')},
+        {path:'/boletas-segundo-parcial2',component:()=>import('./src/components/boletas/SEGUNDO SEMESTRE/parcial2.vue')},
+        {path:'/boletas-segundo-parcial3',component:()=>import('./src/components/boletas/SEGUNDO SEMESTRE/parcial3.vue')},
+    
+        ////////// BOLETAS  3  TERCER  SEMESTRE 
+
+        {path: '/main-parciales-tercer-semestre', component:()=>import('./src/components/boletas/TERCER SEMESTRE/main.vue')},
+        {path: '/boletas-tercero-parcial1', component:()=>import('./src/components/boletas/TERCER SEMESTRE/parcial1.vue')},
+        {path: '/boletas-tercero-parcial2', component:()=>import('./src/components/boletas/TERCER SEMESTRE/parcial2.vue')},
+        {path: '/boletas-tercero-parcial3', component:()=>import('./src/components/boletas/TERCER SEMESTRE/parcial3.vue')},
+
+
+
+             ////////// BOLETAS  4  CUARTO  SEMESTRE 
+
+             {path: '/main-parciales-cuarto-semestre', component:()=>import('./src/components/boletas/CUARTO SEMESTRE/main.vue')},
+             {path: '/boletas-cuarto-parcial1', component:()=>import('./src/components/boletas/CUARTO SEMESTRE/parcial1.vue')},
+             {path: '/boletas-cuarto-parcial2', component:()=>import('./src/components/boletas/CUARTO SEMESTRE/parcial2.vue')},
+             {path: '/boletas-cuarto-parcial3', component:()=>import('./src/components/boletas/CUARTO SEMESTRE/parcial3.vue')},
+
+
+            ////////// BOLETAS  5  CUARTO  SEMESTRE 
+
+    
+        
+
+              
+
+                
+
+
+
+
+
+
+        {path: '/descargas-tabla',component:()=>import('./src/components/descargas/Tabladescargas.vue')}
+
 
 
 

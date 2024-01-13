@@ -124,6 +124,7 @@ export default {
     },
   },
   methods: {
+  
     async obtenerIdUsuarioPorMatricula(matricula) {
     try {
       const response = await axios.get('/api/user/index3');

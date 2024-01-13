@@ -2,9 +2,14 @@
 
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\BoletaParcial1Controller;
+use App\Http\Controllers\PrimeroBoletaParcial2Controller;
+
 use App\Http\Controllers\DescargaController;
 use App\Http\Controllers\LoginController;
+
+use App\Http\Controllers\PrimeroABoletaParcial2Controller;
 use App\Http\Controllers\UserController;
+use App\Models\Primero_A_BoletaParcial2;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -40,10 +45,33 @@ Route::post('/pdfs', [DescargaController::class, 'store']);
 
 
 
+
+//rutas import PRIMER SEMESTRE 
+Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');  /// PARCIAL 1 
+
+
+
+
+Route::post('/import_primero_A_parcial2', [PrimeroABoletaParcial2Controller::class, 'import'])->name('/import_primero_A_parcial2');  /// PARCIAL 1 
+
+
+
+
+
+
+
+
 Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->name('index2');
 
 
-Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');
+
+
+
+
+
+
+
+
 
 // En el archivo de rutas (web.php o api.php)
 Route::get('/descargar-pdf/primer-semestre-/a/parcial1/{nombreArchivo}', function ($nombreArchivo) {

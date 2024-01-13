@@ -42,7 +42,10 @@ class Alumno extends Model
 {
     return $this->hasMany(BoletaParcial1::class, 'matricula', 'matricula');
 }
-
+public function boletas2()
+{
+    return $this->hasMany(Primero_A_BoletaParcial2::class, 'matricula', 'matricula');
+}
 
 
 public function obtenerBoletas($matricula){

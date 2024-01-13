@@ -24,12 +24,7 @@
             </router-link>
           </div>
         </template>
-
-
       </v-card-item>
-    
-
-      
         <v-card>
                 <tablaAlumnos></tablaAlumnos>
 
