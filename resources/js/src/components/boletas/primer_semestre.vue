@@ -129,9 +129,9 @@ export default {
     generarPDF() {
     this.generatingPDF = true;
     this.pdfGenerationProgress = 0;
-
+    console.log('Selected Group:', this.selectedGroup); // Agrega este console.log
     // Realizar la solicitud GET para iniciar la generación del PDF
-    axios.get('/api/v1/generar/parcial1', {
+    axios.get(`/api/v1/generar/parcial1/${this.selectedGroup}`, {
       onDownloadProgress: progressEvent => {
         // Calcular el progreso en base a los datos de progreso del evento
         this.pdfGenerationProgress = Math.round((progressEvent.loaded / progressEvent.total) * 100);

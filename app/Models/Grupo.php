@@ -14,5 +14,6 @@ class Grupo extends Model
     public function alumnos()
     {
         return $this->hasMany(Alumno::class);
+        
     }
 }

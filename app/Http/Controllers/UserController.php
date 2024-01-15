@@ -43,6 +43,9 @@ class UserController extends Controller
         // Devuelve una respuesta JSON con el arreglo
         return response()->json($data);
     }
+
+
+    
     
     public function index3(){
         $users = User::all();

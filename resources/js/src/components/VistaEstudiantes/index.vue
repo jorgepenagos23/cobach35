@@ -360,6 +360,7 @@ console.log('haz obtenido la matricula del usuario',matriculaDelUsuario);
     console.error('Error al obtener la respuesta del servidor:', error);
   }
 }
+
 },
 
 

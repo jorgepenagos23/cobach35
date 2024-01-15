@@ -38,6 +38,8 @@ class Alumno extends Model
     }
 
   
+
+    ///metodos relaciones PRIMER SEMESTRE
     public function boletas()
 {
     return $this->hasMany(BoletaParcial1::class, 'matricula', 'matricula');
@@ -46,6 +48,36 @@ public function boletas2()
 {
     return $this->hasMany(Primero_A_BoletaParcial2::class, 'matricula', 'matricula');
 }
+
+public function boletas3()
+{
+    return $this->hasMany(Primero_A_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas4()
+{
+    return $this->hasMany(Primero_B_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+public function boletas5()
+{
+    return $this->hasMany(Primero_C__BoletaParcial1::class, 'matricula', 'matricula');
+}
+public function boletas6()
+{
+    return $this->hasMany(Primero_E__BoletaParcial1::class, 'matricula', 'matricula');
+}
+public function boletas7()
+{
+    return $this->hasMany(Primero_F__BoletaParcial1::class, 'matricula', 'matricula');
+}
+public function boletas8()
+{
+    return $this->hasMany(Primero_G__BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+//// METODOS RELACIONES SEGUNDO SEMESTRE
+
 
 
 public function obtenerBoletas($matricula){
@@ -63,6 +95,7 @@ public function obtenerBoletas($matricula){
     {
         return $this->belongsTo(Grupo::class);
     }
+
 
     public function rol()
     {

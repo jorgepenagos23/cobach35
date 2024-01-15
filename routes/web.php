@@ -8,6 +8,7 @@ use App\Http\Controllers\DescargaController;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\PrimeroABoletaParcial2Controller;
+use App\Http\Controllers\PrimeroABoletaParcial3Controller;
 use App\Http\Controllers\UserController;
 use App\Models\Primero_A_BoletaParcial2;
 use Illuminate\Support\Facades\Artisan;
@@ -48,11 +49,8 @@ Route::post('/pdfs', [DescargaController::class, 'store']);
 
 //rutas import PRIMER SEMESTRE 
 Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');  /// PARCIAL 1 
-
-
-
-
 Route::post('/import_primero_A_parcial2', [PrimeroABoletaParcial2Controller::class, 'import'])->name('/import_primero_A_parcial2');  /// PARCIAL 1 
+Route::post('/import_primero_A_parcial3', [PrimeroABoletaParcial3Controller::class, 'import'])->name('/import_primero_A_parcial3');  /// PARCIAL 3 
 
 
 

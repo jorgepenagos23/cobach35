@@ -12,6 +12,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\PrimeroABoletaParcial2Controller;
+use App\Http\Controllers\PrimeroABoletaParcial3Controller;
+
 ;
 
 
@@ -36,9 +38,10 @@ Route::get('/v1/boleta/parcial1', [BoletaParcial1Controller::class, 'index'])->n
 
 
 /// PRIMER SEMESTRE 
-Route::get('v1/generar/parcial1', [BoletaParcial1Controller::class,'generarPdf']);
-
+Route::get('v1/generar/parcial1/{grupo}', [BoletaParcial1Controller::class, 'generarPdf']);
 Route::get('v1/generar/primersemestre_A_parcial2', [PrimeroABoletaParcial2Controller::class,'generarPdf']);
+Route::get('v1/generar/primersemestre_A_parcial3', [PrimeroABoletaParcial3Controller::class,'generarPdf']);
+
 
 
 

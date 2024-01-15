@@ -8,6 +8,8 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\Primero_A_BoletaParcial2;
 
 class CalificacionesImportPrimeroAPARCIAL1 implements ToModel
+
+// primeer semestre A parcial 2 
 {
     private $primeraColumnaUsada = true;
     public function model(array $row)

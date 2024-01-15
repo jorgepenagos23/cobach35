@@ -94,7 +94,7 @@
   
           this.uploading = true;
   
-          axios.post('/import_parcial1', formData)
+          axios.post('/import_primero_A_parcial3', formData)
             .then(response => {
               this.successMessage = response.data.message;
               Swal.fire({
@@ -131,7 +131,7 @@
       this.pdfGenerationProgress = 0;
   
       // Realizar la solicitud GET para iniciar la generación del PDF
-      axios.get('/api/v1/generar/parcial1', {
+      axios.get('api/v1/generar/primersemestre_A_parcial3', {
         onDownloadProgress: progressEvent => {
           // Calcular el progreso en base a los datos de progreso del evento
           this.pdfGenerationProgress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
