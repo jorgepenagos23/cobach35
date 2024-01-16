@@ -59,6 +59,12 @@ public function boletas4()
     return $this->hasMany(Primero_B_BoletaParcial1::class, 'matricula', 'matricula');
 }
 
+public function boletas11()
+{
+    return $this->hasMany(Primero_D__BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
 public function boletas5()
 {
     return $this->hasMany(Primero_C__BoletaParcial1::class, 'matricula', 'matricula');
@@ -76,7 +82,78 @@ public function boletas8()
     return $this->hasMany(Primero_G__BoletaParcial1::class, 'matricula', 'matricula');
 }
 
-//// METODOS RELACIONES SEGUNDO SEMESTRE
+public function boletas9()
+{
+    return $this->hasMany(Primero_B_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas10()
+{
+    return $this->hasMany(Primero_C__BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas12()
+{
+    return $this->hasMany(Primero_D__BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+
+public function boletas13()
+{
+    return $this->hasMany(Primero_E__BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+
+public function boletas14()
+{
+    return $this->hasMany(Primero_G__BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+
+public function boletas15()
+{
+    return $this->hasMany(Primero_B_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas16()
+{
+    return $this->hasMany(Primero_C__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas17()
+{
+    return $this->hasMany(Primero_D__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas18()
+{
+    return $this->hasMany(Primero_E__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas19()
+{
+    return $this->hasMany(Primero_F__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas20()
+{
+    return $this->hasMany(Primero_E__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas21()
+{
+    return $this->hasMany(Primero_G__BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+
+
+
+
+
+
+
 
 
 

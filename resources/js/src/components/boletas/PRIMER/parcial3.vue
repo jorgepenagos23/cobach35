@@ -131,7 +131,7 @@
       this.pdfGenerationProgress = 0;
   
       // Realizar la solicitud GET para iniciar la generación del PDF
-      axios.get('api/v1/generar/primersemestre_A_parcial3', {
+      axios.get(`api/v1/generar/primeroparcial3/${this.selectedGroup}`, {
         onDownloadProgress: progressEvent => {
           // Calcular el progreso en base a los datos de progreso del evento
           this.pdfGenerationProgress = Math.round((progressEvent.loaded / progressEvent.total) * 100);

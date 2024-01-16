@@ -108,7 +108,7 @@
 </head>
 <body>
     <div class="formulario">
-        <h1> Boleta Parcial 1 GRUPO C PRIMER SEMESTRE </h1>
+        <h1> Boleta Parcial 2  GRUPO D PRIMER SEMESTRE </h1>
         <div class="marca-agua"></div>
         <div class="logo">
             <img src="{{ asset('/public/imagenes/cobachlogo.png') }}" alt="Logo" >

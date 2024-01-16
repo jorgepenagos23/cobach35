@@ -218,6 +218,279 @@ public function generarPdf(Request $request, $grupo)
             ]);
 
             break;
+            case 'Grupo C':
+                $totalBoletas = Primero_C__BoletaParcial1::count();
+                if ($totalBoletas === 0) {
+                    return response()->json(['message' => 'No hay boletas disponibles'], 404);
+                }
+            
+                $counter = 0;
+            
+                return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+                    Primero_C__BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                        foreach ($boletas as $boleta) {
+                            try {
+                                // Obtener datos del alumno
+                                $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+            
+                                // Verificar si el alumno existe
+                                if ($alumno) {
+                                    $data = [
+                                        'boleta_parcial1' => $boleta,
+                                        'alumno' => $alumno,
+                                    ];
+    
+                                    $pdf = PDF::loadView('Primero.A.B.C.parcial1', $data)->setPaper('letter', 'landscape');
+        
+                                    $matriculaSlug = Str::slug($boleta->matricula, '_');
+                                    $pdfPath = "boletas/primer_semestre/grupoC/parcial1/{$matriculaSlug}_boleta.pdf";
+                                    Storage::put($pdfPath, $pdf->output());
+            
+                                    $boleta->update(['pdf_path' => $pdfPath]);
+            
+                                    unset($data, $pdf);
+                                } else {
+                                    Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                                }
+                            } catch (\Exception $e) {
+                                Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                            }
+            
+                            // Incrementar el contador de boletas procesadas
+                            $counter++;
+            
+                            // Calcular y enviar el progreso actual
+                            $progress = ($counter / $totalBoletas) * 100;
+                            echo "data: {\"progress\": $progress}\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    });
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ]);
+
+
+            break;
+            case 'Grupo D':
+                $totalBoletas = Primero_D__BoletaParcial1::count();
+                if ($totalBoletas === 0) {
+                    return response()->json(['message' => 'No hay boletas disponibles'], 404);
+                }
+            
+                $counter = 0;
+            
+                return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+                    Primero_D__BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                        foreach ($boletas as $boleta) {
+                            try {
+                                // Obtener datos del alumno
+                                $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+            
+                                // Verificar si el alumno existe
+                                if ($alumno) {
+                                    $data = [
+                                        'boleta_parcial1' => $boleta,
+                                        'alumno' => $alumno,
+                                    ];
+
+                                    $pdf = PDF::loadView('Primero.D.parcial1', $data)->setPaper('letter', 'landscape');
+    
+                                    $matriculaSlug = Str::slug($boleta->matricula, '_');
+                                    $pdfPath = "boletas/primer_semestre/grupoD/parcial1/{$matriculaSlug}_boleta.pdf";
+                                    Storage::put($pdfPath, $pdf->output());
+            
+                                    $boleta->update(['pdf_path' => $pdfPath]);
+            
+                                    unset($data, $pdf);
+                                } else {
+                                    Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                                }
+                            } catch (\Exception $e) {
+                                Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                            }
+            
+                            // Incrementar el contador de boletas procesadas
+                            $counter++;
+            
+                            // Calcular y enviar el progreso actual
+                            $progress = ($counter / $totalBoletas) * 100;
+                            echo "data: {\"progress\": $progress}\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    });
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ]);
+            break;
+            case 'Grupo E':
+                $totalBoletas = Primero_E__BoletaParcial1::count();
+                if ($totalBoletas === 0) {
+                    return response()->json(['message' => 'No hay boletas disponibles'], 404);
+                }
+            
+                $counter = 0;
+            
+                return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+                    Primero_E__BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                        foreach ($boletas as $boleta) {
+                            try {
+                                // Obtener datos del alumno
+                                $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+            
+                                // Verificar si el alumno existe
+                                if ($alumno) {
+                                    $data = [
+                                        'boleta_parcial1' => $boleta,
+                                        'alumno' => $alumno,
+                                    ];
+
+                                    $pdf = PDF::loadView('Primero.E.parcial1', $data)->setPaper('letter', 'landscape');
+    
+                                    $matriculaSlug = Str::slug($boleta->matricula, '_');
+                                    $pdfPath = "boletas/primer_semestre/grupoE/parcial1/{$matriculaSlug}_boleta.pdf";
+                                    Storage::put($pdfPath, $pdf->output());
+            
+                                    $boleta->update(['pdf_path' => $pdfPath]);
+            
+                                    unset($data, $pdf);
+                                } else {
+                                    Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                                }
+                            } catch (\Exception $e) {
+                                Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                            }
+            
+                            // Incrementar el contador de boletas procesadas
+                            $counter++;
+            
+                            // Calcular y enviar el progreso actual
+                            $progress = ($counter / $totalBoletas) * 100;
+                            echo "data: {\"progress\": $progress}\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    });
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ]);
+
+            break;
+            case 'Grupo F':
+
+          $totalBoletas = Primero_F__BoletaParcial1::count();
+                if ($totalBoletas === 0) {
+                    return response()->json(['message' => 'No hay boletas disponibles'], 404);
+                }
+            
+                $counter = 0;
+            
+                return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+                    Primero_F__BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                        foreach ($boletas as $boleta) {
+                            try {
+                                // Obtener datos del alumno
+                                $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+            
+                                // Verificar si el alumno existe
+                                if ($alumno) {
+                                    $data = [
+                                        'boleta_parcial1' => $boleta,
+                                        'alumno' => $alumno,
+                                    ];
+
+                                    $pdf = PDF::loadView('Primero.F.parcial1', $data)->setPaper('letter', 'landscape');
+    
+                                    $matriculaSlug = Str::slug($boleta->matricula, '_');
+                                    $pdfPath = "boletas/primer_semestre/grupoF/parcial1/{$matriculaSlug}_boleta.pdf";
+                                    Storage::put($pdfPath, $pdf->output());
+            
+                                    $boleta->update(['pdf_path' => $pdfPath]);
+            
+                                    unset($data, $pdf);
+                                } else {
+                                    Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                                }
+                            } catch (\Exception $e) {
+                                Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                            }
+            
+                            // Incrementar el contador de boletas procesadas
+                            $counter++;
+            
+                            // Calcular y enviar el progreso actual
+                            $progress = ($counter / $totalBoletas) * 100;
+                            echo "data: {\"progress\": $progress}\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    });
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ]);
+            break;
+            case 'Grupo G':
+                $totalBoletas = Primero_G__BoletaParcial1::count();
+                if ($totalBoletas === 0) {
+                    return response()->json(['message' => 'No hay boletas disponibles'], 404);
+                }
+            
+                $counter = 0;
+            
+                return new StreamedResponse(function () use ($totalBoletas, &$counter) {
+                    Primero_G__BoletaParcial1::chunk(20, function ($boletas) use ($totalBoletas, &$counter) {
+                        foreach ($boletas as $boleta) {
+                            try {
+                                // Obtener datos del alumno
+                                $alumno = Alumno::where('matricula', $boleta->matricula)->first();
+            
+                                // Verificar si el alumno existe
+                                if ($alumno) {
+                                    $data = [
+                                        'boleta_parcial1' => $boleta,
+                                        'alumno' => $alumno,
+                                    ];
+
+                                    $pdf = PDF::loadView('Primero.G.parcial1', $data)->setPaper('letter', 'landscape');
+    
+                                    $matriculaSlug = Str::slug($boleta->matricula, '_');
+                                    $pdfPath = "boletas/primer_semestre/grupoG/parcial1/{$matriculaSlug}_boleta.pdf";
+                                    Storage::put($pdfPath, $pdf->output());
+            
+                                    $boleta->update(['pdf_path' => $pdfPath]);
+            
+                                    unset($data, $pdf);
+                                } else {
+                                    Log::warning("No se encontró al alumno con matrícula {$boleta->matricula}.");
+                                }
+                            } catch (\Exception $e) {
+                                Log::error("Error generando PDF para boleta {$boleta->matricula}: " . $e->getMessage());
+                            }
+            
+                            // Incrementar el contador de boletas procesadas
+                            $counter++;
+            
+                            // Calcular y enviar el progreso actual
+                            $progress = ($counter / $totalBoletas) * 100;
+                            echo "data: {\"progress\": $progress}\n\n";
+                            ob_flush();
+                            flush();
+                        }
+                    });
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ]);
 
 
         default:
@@ -226,6 +499,12 @@ public function generarPdf(Request $request, $grupo)
             ]);
     }
 }
+
+
+
+
+
+
 
 private function generarPdfGrupoA()
 {

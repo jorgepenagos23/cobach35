@@ -39,8 +39,8 @@ Route::get('/v1/boleta/parcial1', [BoletaParcial1Controller::class, 'index'])->n
 
 /// PRIMER SEMESTRE 
 Route::get('v1/generar/parcial1/{grupo}', [BoletaParcial1Controller::class, 'generarPdf']);
-Route::get('v1/generar/primersemestre_A_parcial2', [PrimeroABoletaParcial2Controller::class,'generarPdf']);
-Route::get('v1/generar/primersemestre_A_parcial3', [PrimeroABoletaParcial3Controller::class,'generarPdf']);
+Route::get('v1/generar/primeroparcial2/{grupo}', [PrimeroABoletaParcial2Controller::class,'generarpdfparcial2']);
+Route::get('v1/generar/primeroparcial3/{grupo}', [PrimeroABoletaParcial3Controller::class,'generarpdfparcial3']);
 
 
 

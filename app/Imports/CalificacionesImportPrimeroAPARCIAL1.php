@@ -1,27 +1,27 @@
 <?php
-
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-
 use Maatwebsite\Excel\Concerns\ToModel;
-use App\Models\Primero_A_BoletaParcial2;
 
 class CalificacionesImportPrimeroAPARCIAL1 implements ToModel
-
-// primeer semestre A parcial 2 
 {
+    private $modelo;
+
+    public function __construct($modelo)
+    {
+        $this->modelo = $modelo;
+    }
+
     private $primeraColumnaUsada = true;
+
     public function model(array $row)
     {
-
         if ($this->primeraColumnaUsada) {
-
             $this->primeraColumnaUsada = false;
             return null;
         }
-
-        return new Primero_A_BoletaParcial2([
+        // Crear una nueva instancia del modelo proporcionado
+        $boleta = new $this->modelo([
             'matricula' => $row[0],
             'nombre_alumno' => $row[1],
             'espanol1' => $row[2],
@@ -39,7 +39,7 @@ class CalificacionesImportPrimeroAPARCIAL1 implements ToModel
             'literatura1' => $row[14],
             'literatura2' => $row[15],
             'literatura3' => $row[16],
-            'orientacion1' => $row[17], 
+            'orientacion1' => $row[17],
             'orientacion2' => $row[18],
             'orientacion3' => $row[19],
             'fisica1' => $row[20],
@@ -57,5 +57,10 @@ class CalificacionesImportPrimeroAPARCIAL1 implements ToModel
             'promedio' => $row[32],
             'observaciones' => $row[33],
         ]);
+
+        return $boleta;
     }
 }
+
+
+

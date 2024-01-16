@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+///
 class Primero_D__BoletaParcial1 extends Model
 {
     protected $table = 'primero__d___boleta_parcial1s';
