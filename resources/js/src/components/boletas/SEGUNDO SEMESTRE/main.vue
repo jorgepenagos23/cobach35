@@ -18,7 +18,7 @@
   <v-icon left>mdi-star</v-icon>  Parcial 1
 </v-expansion-panel-title>              
         <v-expansion-panel-text>
-          <router-link to="#" class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full">
+          <router-link to="/boletas-segundo-parcial1" class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full">
             <svg
               class="inline-block w-6 h-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@
         <v-expansion-panel-title class="primary" theme="dark" color="green-accent-3">
   <v-icon left>mdi-star</v-icon>  Parcial 2
 </v-expansion-panel-title>             <v-expansion-panel-text>
-          <router-link to="#" class="inline-block px-4 py-2 mt-2 text-white bg-green-500 rounded-full">
+          <router-link to="/boletas-segundo-parcial2" class="inline-block px-4 py-2 mt-2 text-white bg-green-500 rounded-full">
             <svg
               class="inline-block w-6 h-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@
         <v-expansion-panel-title class="primary" theme="dark" color="cyan-darken-4">
   <v-icon left>mdi-star</v-icon>  Parcial 3
 </v-expansion-panel-title>             <v-expansion-panel-text>
-          <router-link to="#" class="inline-block px-4 py-2 mt-2 text-white bg-red-500 rounded-full">
+          <router-link to="/boletas-segundo-parcial3" class="inline-block px-4 py-2 mt-2 text-white bg-red-500 rounded-full">
             <svg
               class="inline-block w-6 h-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +93,8 @@
 </template>
 
 <script>
-import appbar from "/var/www/app/resources/js/src/components/app_bar.vue";
-import barra from "/var/www/app/resources/js/src/components/barra_navegacion.vue";
+import appbar from "../../app_bar.vue";
+import barra from "../../barra_navegacion.vue";
 import Swal from 'sweetalert2';
 
 export default {

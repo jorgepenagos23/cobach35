@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\BoletaParcial1Controller;
+use App\Http\Controllers\BoletaParcial2Controller;
+
 use App\Http\Controllers\PrimeroBoletaParcial2Controller;
 
 use App\Http\Controllers\DescargaController;
@@ -51,6 +53,22 @@ Route::post('/pdfs', [DescargaController::class, 'store']);
 Route::post('/import_parcial1', [BoletaParcial1Controller::class, 'import'])->name('/import_parcial1');  /// PARCIAL 1 
 Route::post('/import_primero_A_parcial2', [PrimeroABoletaParcial2Controller::class, 'import'])->name('/import_primero_A_parcial2');  /// PARCIAL 1 
 Route::post('/import_primero_A_parcial3', [PrimeroABoletaParcial3Controller::class, 'import'])->name('/import_primero_A_parcial3');  /// PARCIAL 3 
+
+
+
+
+
+///rutas import SEGUNDO SEMESTRE 
+
+Route::post('/import_parcial1/segundo', [BoletaParcial2Controller::class, 'import'])->name('/import_parcial1/segundo');  /// PARCIAL 1 
+Route::post('/import_parcial2/segundo', [BoletaParcial2Controller::class, 'import2'])->name('/import_parcial2/segundo');  /// PARCIAL 1 
+Route::post('/import_parcial3/segundo', [BoletaParcial2Controller::class, 'import3'])->name('/import_parcial2/segundo');  /// PARCIAL 1 
+
+
+
+
+
+
 
 
 

@@ -16,7 +16,7 @@
           <tr v-for="pdf in pdfs" :key="pdf" class="bg-gray-100 border-b hover:bg-orange-100">
             <td class="p-3 px-5">{{ pdf }}</td>
             <td class="p-3 px-5">
-              <img src="/storage/app/imagenes/PDF_file_icon.svg.png" alt="Logo PDF" class="w-10 h-10 ml-4" />
+              <img src="../../assets/pdf.jpeg" alt="Logo PDF" class="w-10 h-10 ml-4" />
             </td>
             <td class="p-3 text-red-400 border cursor-pointer border-grey-light hover:bg-gray-100 hover:text-red-600 hover:font-medium">
 

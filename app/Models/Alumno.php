@@ -149,6 +149,134 @@ public function boletas21()
 
 
 
+///// METODOS RELACIONES SEGUNDO SEMESTRE
+
+
+public function boletas22()
+{
+    return $this->hasMany(Segundo_A_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas23()
+{
+    return $this->hasMany(Segundo_B_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+
+
+public function boletas24()
+{
+    return $this->hasMany(Segundo_C_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas25()
+{
+    return $this->hasMany(Segundo_D_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+public function boletas26()
+{
+    return $this->hasMany(Segundo_E_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+public function boletas27()
+{
+    return $this->hasMany(Segundo_F_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+public function boletas28()
+{
+    return $this->hasMany(Segundo_G_BoletaParcial1::class, 'matricula', 'matricula');
+}
+
+
+public function boletas29()
+{
+    return $this->hasMany(Segundo_A_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas30()
+{
+    return $this->hasMany(Segundo_B_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas31()
+{
+    return $this->hasMany(Segundo_C_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas32()
+{
+    return $this->hasMany(Segundo_D_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas33()
+{
+    return $this->hasMany(Segundo_E_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas34()
+{
+    return $this->hasMany(Segundo_F_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+public function boletas35()
+{
+    return $this->hasMany(Segundo_G_BoletaParcial2::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas36()
+{
+    return $this->hasMany(Segundo_A_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+
+
+public function boletas37()
+{
+    return $this->hasMany(Segundo_B_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas38()
+{
+    return $this->hasMany(Segundo_C_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas39()
+{
+    return $this->hasMany(Segundo_D_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas40()
+{
+    return $this->hasMany(Segundo_E_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas41()
+{
+    return $this->hasMany(Segundo_F_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+public function boletas42()
+{
+    return $this->hasMany(Segundo_G_BoletaParcial3::class, 'matricula', 'matricula');
+}
+
+
+/// relaciones tercer semestre
+
+
 
 
 

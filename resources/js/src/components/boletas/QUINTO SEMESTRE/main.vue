@@ -93,8 +93,8 @@
 </template>
 
 <script>
-import appbar from "/var/www/app/resources/js/src/components/app_bar.vue";
-import barra from "/var/www/app/resources/js/src/components/barra_navegacion.vue";
+import appbar from "../../app_bar.vue";
+import barra from "../../barra_navegacion.vue";
 import Swal from 'sweetalert2';
 
 export default {

@@ -7,6 +7,7 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AlumnoReporteController;
 use App\Http\Controllers\BoletaController;
 use App\Http\Controllers\BoletaParcial1Controller;
+use App\Http\Controllers\BoletaParcial2Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicacionController;
@@ -37,10 +38,16 @@ Route::get('v1/boleta', [BoletaController::class, 'index'])->middleware('auth:sa
 Route::get('/v1/boleta/parcial1', [BoletaParcial1Controller::class, 'index'])->name('index');
 
 
-/// PRIMER SEMESTRE 
+/// PRIMER SEMESTRE  GENERAR PDF
 Route::get('v1/generar/parcial1/{grupo}', [BoletaParcial1Controller::class, 'generarPdf']);
 Route::get('v1/generar/primeroparcial2/{grupo}', [PrimeroABoletaParcial2Controller::class,'generarpdfparcial2']);
 Route::get('v1/generar/primeroparcial3/{grupo}', [PrimeroABoletaParcial3Controller::class,'generarpdfparcial3']);
+
+
+///SEGUNDO SEMESTRE GENERAR PDF
+Route::get('v1/generar/parcial1/segundo/{grupo}',[BoletaParcial2Controller::class,'generarPdf']);
+Route::get('v1/generar/parcial2/segundo/{grupo}',[BoletaParcial2Controller::class,'generarpdfparcial2']);
+Route::get('v1/generar/parcial3/segundo/{grupo}',[BoletaParcial2Controller::class,'generarpdfparcial3']);
 
 
 
@@ -52,7 +59,6 @@ Route::get('v1/generar/primeroparcial3/{grupo}', [PrimeroABoletaParcial3Controll
 
 
 //aluns rutas api
-
 Route::get('v1/alumno/show/{id}',[AlumnoController::class,'show'])->middleware('auth:sanctum');
 //publicaciones api
 Route::get('v1/publicacion', [PublicacionController::class,'index']);

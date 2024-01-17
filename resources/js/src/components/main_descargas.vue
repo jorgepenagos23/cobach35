@@ -73,7 +73,7 @@
             <div v-if="selectedFile">
               <p class="mt-4">
                 Archivo seleccionado: {{ selectedFile.name }}
-                <img src="/storage/app/imagenes/PDF_file_icon.svg.png" alt="Logo PDF" class="w-6 h-6 ml-2" />              </p>
+                <img src=".././assets/pdf.jpeg" alt="Logo PDF" class="w-6 h-6 ml-2" />              </p>
             </div>
 
             <div v-if="uploading">
