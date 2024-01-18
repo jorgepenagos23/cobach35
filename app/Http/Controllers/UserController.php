@@ -26,23 +26,36 @@ class UserController extends Controller
     }
     
     public function index(IndexRequest $request)
-    {
-        $users = User::all();
-        $boletas = Boleta::all();
-        $publicaciones = Publicacion::all(); 
-        $alumnos = Alumno::all();
-    
-        // Crear un arreglo con los datos que deseas devolver
-        $data = [
-            'users' => UserResource::collection($users),
-            'boletas' => $boletas,
-            'publicaciones' => $publicaciones,
-            'alumnos' => $alumnos
-        ];
-    
-        // Devuelve una respuesta JSON con el arreglo
-        return response()->json($data);
+{
+    // Intentar obtener los datos del caché
+    $cachedData = Cache::get('index_data');
+
+    if ($cachedData) {
+        // Si los datos están en caché, devolverlos directamente
+        return response()->json($cachedData);
     }
+
+    // Si no están en caché, obtén los datos de la base de datos
+    $users = User::all();
+    $boletas = Boleta::all();
+    $publicaciones = Publicacion::all(); 
+    $alumnos = Alumno::all();
+
+    // Crear un arreglo con los datos que deseas devolver
+    $data = [
+        'users' => UserResource::collection($users),
+        'boletas' => $boletas,
+        'publicaciones' => $publicaciones,
+        'alumnos' => $alumnos
+    ];
+
+    // Almacenar los datos en caché por un tiempo determinado (por ejemplo, 1 hora)
+    Cache::put('index_data', $data, 60); // 60 minutos
+
+    // Devuelve una respuesta JSON con el arreglo
+    return response()->json($data);
+}
+
 
 
     

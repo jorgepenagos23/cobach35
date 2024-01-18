@@ -90,18 +90,7 @@
           
           <v-expansion-panels variant="inset" class="my-4">
             
-            <v-expansion-panel
-              title="Calificaciones Parcial 1"
-              ></v-expansion-panel>
-              
-              <v-expansion-panel
-              title="Calificaciones Parcial 2"
-              ></v-expansion-panel>
-              
-              <v-expansion-panel
-              title="Calificaciones Parcial 3"
-              ></v-expansion-panel>
-
+    
               
           </v-expansion-panels>
           
