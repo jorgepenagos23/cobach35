@@ -10,7 +10,7 @@
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
                 <a
-                  :href="'/descargar-pdf/primer-semestre-/grupoA/parcial1/' + '22a0710035m0092_boleta.pdf'"
+                  :href="'/descargar_pdf/' + 'formato.pdf'"
                   target="_blank"
                   class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full"
                 >
@@ -28,70 +28,19 @@
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
-                  Descargar Boleta
+                  Descargar Formato de Reinscripcion
                 </a>
               </div>
             </v-expansion-panel-text>
           </v-expansion-panel>
 
-          <v-expansion-panel>
-            <v-expansion-panel-title>Formato de Becas</v-expansion-panel-title>
-            <v-expansion-panel-text>
-               
-              <div>
-                <!-- Botón o enlace para iniciar la descarga -->
-                <v-btn
-                  @click="descargarPDF"
-                  class="px-4 py-2 mt-2 text-white bg-green-500 rounded-full"
-                >
-                  <svg
-                    class="inline-block w-6 h-6 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                    Descargar Boleta Final Parcial 1
-                  </svg>
-                </v-btn>
-              </div>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
 
-          <v-expansion-panel>
-            <v-expansion-panel-title>Formato de Reinscripción</v-expansion-panel-title>
-            <v-expansion-panel-text>
-              <div>
-                <!-- Botón o enlace para iniciar la descarga -->
-                <v-btn
-                  @click="descargarPDF"
-                  class="px-4 py-2 mt-2 text-white bg-red-500 rounded-full"
-                >
-                  <svg
-                    class="inline-block w-6 h-6 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                  Descargar Formato de Reinscripción
-                </v-btn>
-              </div>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
+
+    
+
+       
+
+      
         </v-expansion-panels>
       </v-card>
     </v-app>

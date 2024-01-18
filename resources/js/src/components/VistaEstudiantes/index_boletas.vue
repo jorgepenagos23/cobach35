@@ -11,11 +11,11 @@
                
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
-                <v-btn
-                  @click="descargarPDF"
-                  class="px-4 py-2 mt-2 text-white bg-green-500 rounded-full"
+                <a
+                  :href="'/descargar-pdf/' + '23a0710035m0020_boleta.pdf'"
+                  target="_blank"
+                  class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full"
                 >
-                Descargar
                   <svg
                     class="inline-block w-6 h-6 mr-2"
                     xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,8 @@
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
-                </v-btn>
+                  Descargar Boleta
+                </a>
               </div>
             </v-expansion-panel-text>
           </v-expansion-panel>

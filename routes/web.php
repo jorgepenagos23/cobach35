@@ -88,23 +88,31 @@ Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->nam
 
 
 
+Route::get('/descargar-pdf/{nombreArchivo}', function ($nombreArchivo) {
 
-// En el archivo de rutas (web.php o api.php)
-Route::get('/descargar-pdf/primer-semestre-/a/parcial1/{nombreArchivo}', function ($nombreArchivo) {
-    // Asegúrate de que el nombre del archivo es seguro para evitar posibles problemas de seguridad
-
-    // Define la ruta completa al archivo PDF en el sistema de archivos de Laravel
     $pdfPath = "boletas/primer_semestre/grupoA/parcial1/{$nombreArchivo}";
 
-    // Verifica si el archivo existe en el sistema de archivos de Laravel
     if (Storage::exists($pdfPath)) {
-        // Devuelve el archivo para descarga
         return response()->download(Storage::path($pdfPath));
     } else {
-        // Devuelve una respuesta 404 si el archivo no se encuentra
         return response()->json(['message' => 'Archivo no encontrado'], 404);
     }
 });
+
+
+Route::get('/descargar_pdf/{nombreArchivo}', function ($nombreArchivo) {
+
+    $pdfPath = "pdf/{$nombreArchivo}";
+
+    if (Storage::exists($pdfPath)) {
+        return response()->download(Storage::path($pdfPath));
+    } else {
+        return response()->json(['message' => 'Archivo no encontrado'], 404);
+    }
+});
+
+
+
 
 
 Route::post('/subir-pdf', [DescargaController::class, 'subirPdf']);
@@ -116,8 +124,9 @@ Route::get('/migrar',function(){ Artisan::call('migrate',["--seed"=>true]);
 
 
 
-
-
-
 Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
+
+
+
+
 

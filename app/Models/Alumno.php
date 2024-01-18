@@ -44,6 +44,14 @@ class Alumno extends Model
 {
     return $this->hasMany(BoletaParcial1::class, 'matricula', 'matricula');
 }
+
+
+
+public function alumno()
+{
+    return $this->belongsTo(Alumno::class, 'matricula', 'matricula');
+}
+
 public function boletas2()
 {
     return $this->hasMany(Primero_A_BoletaParcial2::class, 'matricula', 'matricula');
@@ -282,9 +290,6 @@ public function boletas42()
 
 
 
-
-
-
 public function obtenerBoletas($matricula){
 
     $alumno = $this->where('matricula', $matricula)->first();
@@ -295,6 +300,23 @@ public function obtenerBoletas($matricula){
         return null;
     }
 }
+
+
+
+
+public function obtenerBoletaCompleta($matricula){
+
+    $boleta = $this->where('matricula', $matricula)->with('alumno')->first();
+
+    return $boleta;
+}
+
+
+
+
+
+
+
 
   public function grupo()
     {

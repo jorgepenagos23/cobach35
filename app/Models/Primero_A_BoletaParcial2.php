@@ -54,7 +54,22 @@ class Primero_A_BoletaParcial2 extends Model
     {
         return $this->belongsTo(Alumno::class, 'matricula', 'matricula');
     }
+    public function boletas()
+    {
+        return $this->hasMany(BoletaParcial1::class, 'matricula', 'matricula');
+    }
+    
+   
+    public function obtenerBoletaCompleta($matricula){
 
+        $boleta = $this->where('matricula', $matricula)->first();
+    
+        return $boleta;
+    }
+    
+    
+    
 
+    
     
 }

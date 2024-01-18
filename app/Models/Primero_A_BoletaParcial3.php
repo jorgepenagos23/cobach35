@@ -55,5 +55,13 @@ class Primero_A_BoletaParcial3 extends Model
     }
 
 
+    public function obtenerBoletaCompleta($matricula){
+
+        $boleta = $this->where('matricula', $matricula)->first();
+    
+        return $boleta;
+    }
+    
+
     
 }

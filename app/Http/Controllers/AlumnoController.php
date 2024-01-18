@@ -6,8 +6,12 @@ use App\Http\Requests\StoreAlumnoRequest;
 use App\Http\Requests\UpdateAlumnoRequest;
 use App\Models\Alumno;
 use App\Imports\AlumnoRGI;
+use App\Models\BoletaParcial1;
+use App\Models\Primero_A_BoletaParcial2;
+use App\Models\Primero_A_BoletaParcial3;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+
 class AlumnoController extends Controller
 {
     /**
@@ -18,20 +22,22 @@ class AlumnoController extends Controller
         $alumnos = Alumno::all();
         return response()->json(['alumnos' => $alumnos], 200);
     }
-   
+
     public function index2()
     {
         $alumno = Alumno::get();
 
-        return view('alumnos.alumno',['alumnos'=>$alumno]);    }
+        return view('alumnos.alumno', ['alumnos' => $alumno]);
+    }
 
 
 
-    
-    public function import(Request $request){
+
+    public function import(Request $request)
+    {
 
         $request->validate([
-        'excel_file' =>'required|mimes:xls,xlsx,csv'
+            'excel_file' => 'required|mimes:xls,xlsx,csv'
 
 
         ]);
@@ -56,11 +62,9 @@ class AlumnoController extends Controller
 
         return response()->json([
 
-                'data' => $respuesta,
-                'mensaje' => "creado correctamente "
+            'data' => $respuesta,
+            'mensaje' => "creado correctamente "
         ]);
-
-
     }
 
     /**
@@ -69,16 +73,16 @@ class AlumnoController extends Controller
     public function show($id)
     {
         $alumno = Alumno::find($id);
-    
+
         if (!$alumno) {
             return response()->json([
                 'error' => true,
                 'mensaje' => 'No existe esa alumno',
             ]);
         }
-    
+
         $this->authorize('ver', $alumno);
-    
+
         return response()->json([
             'data' => $alumno,
             'mensaje' => 'Encontrada con éxito',
@@ -100,7 +104,7 @@ class AlumnoController extends Controller
     {
         $seccion = Alumno::find($id);
 
-        if( isset($seccion)){
+        if (isset($seccion)) {
 
             $seccion->nombreplan = $request->nombreplan;
             $seccion->clavemuni = $request->clavemuni;
@@ -121,31 +125,27 @@ class AlumnoController extends Controller
             $seccion->created_at = $request->created_at;
             $seccion->updated_at = $request->updated_at;
 
-            if( $seccion->save()){
+            if ($seccion->save()) {
 
                 return response()->json([
 
                     'data' => $seccion,
                     'mensaje' => " actulizada con exito ",
                 ]);
-            }else{
+            } else {
 
                 return response()->json([
-                    'error'=>true,
-                    'mesnsaje'=>"No se actualizo  ",
+                    'error' => true,
+                    'mesnsaje' => "No se actualizo  ",
                 ]);
-
             }
-        }else{
+        } else {
 
             return response()->json([
-                'error'=>true,
-                'mesnsaje'=>"No existe esa ",
+                'error' => true,
+                'mesnsaje' => "No existe esa ",
             ]);
-
         }
-
-
     }
 
     /**
@@ -158,24 +158,59 @@ class AlumnoController extends Controller
 
 
 
-    
+
     public function obtenerBoletasDelAlumno($matricula)
     {
-        // Crear una instancia del modelo Alumno
         $alumno = new Alumno;
 
         // Llamar al método obtenerBoletas
         $boletasDelAlumno = $alumno->obtenerBoletas($matricula);
 
         if ($boletasDelAlumno) {
-            // Hacer algo con las boletas (por ejemplo, pasarlas a la vista)
 
 
-            return response()->json(['boletas' =>$boletasDelAlumno]);
+            return response()->json(['boletas' => $boletasDelAlumno]);
         } else {
-            // Manejar el caso en el que el alumno no fue encontrado
-            return response()->json(['mensaje' => 'Alumno no encontrado'], 404);        }
+
+            return response()->json(['mensaje' => 'Alumno no encontrado'], 404);
+        }
     }
 
 
+
+
+    public function obtenerBoletasDelAlumnoparcial2($matricula)
+    {
+        $alumno = new Primero_A_BoletaParcial2();
+
+        $boletasDelAlumno = $alumno->obtenerBoletaCompleta($matricula);
+
+        if ($boletasDelAlumno) {
+
+            return response()->json(['boletas' => $boletasDelAlumno]);
+        } else {
+            // Manejar el caso en el que el alumno no fue encontrado
+            return response()->json(['mensaje' => 'Alumno no encontrado DE METODO PARCIAL 2'], 404);
+        }
+    }
+
+
+
+
+
+    public function obtenerBoletasDelAlumnoparcial3($matricula)
+    {
+        $alumno = new Primero_A_BoletaParcial3();
+
+        $boletasDelAlumno = $alumno->obtenerBoletaCompleta($matricula);
+
+        if ($boletasDelAlumno) {
+
+
+
+            return response()->json(['boletas' => $boletasDelAlumno]);
+        } else {
+            return response()->json(['mensaje' => 'Alumno no encontrado DE METODO PARCIAL 3'], 404);
+        }
+    }
 }
