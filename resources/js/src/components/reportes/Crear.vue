@@ -8,53 +8,36 @@
       <v-col cols="12" md="8" lg="6"> <!-- Tamaño ajustado para dispositivos medianos y grandes -->
         <v-card>
           <v-theme-provider theme="light" with-background class="pa-5">
-            <v-card title="Crear Reporte" ></v-card>
+            <v-card title="Crear Reporte"></v-card>
           </v-theme-provider>
           <v-card-title class="bg-white text-h5 font-weight-regular"></v-card-title>
           <v-sheet>
             <v-form ref="form">
-              <v-text-field
-                v-model="publicacion.descripcion"
-                label="Descripción"
-                required
-                variant="solo"
-                prepend-icon="mdi-comment-text"
-                class="w-full px-4 py-2"
-              ></v-text-field>
+              <v-text-field v-model="publicacion.descripcion" label="Descripción" required variant="solo"
+                prepend-icon="mdi-comment-text" class="w-full px-4 py-2"></v-text-field>
 
               <div class="form-group">
-  <label for="matricula">Matrícula</label>
-  <input
-    type="text"
-    v-model="publicacion.matricula"
-    id="matricula"
-    @input="autocompletarMatricula"
-    required
-  />
-  <div v-if="alumnosOptions.length > 0" class="autocomplete">
-    <div v-for="alumno in alumnosOptions" :key="alumno.value" @click="selectAlumno(alumno)">
-      {{ alumno.text }}
-    </div>
-  </div>
-</div>
-              <v-text-field
-                v-model="publicacion.fecha"
-                label="Fecha"
-                required
-                type="date"
-                prepend-icon="mdi-calendar"
-                variant="solo"
-                class="w-full px-4 py-2"
-              ></v-text-field>
+
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-blue-600 uppercase bg-blue-200 rounded-full">
+                  Matrícula      </span>
+                <input type="text" v-model="publicacion.matricula" id="matricula" @input="autocompletarMatricula"
+                  required />
+                <div v-if="alumnosOptions.length > 0" class="autocomplete">
+                  <div v-for="alumno in alumnosOptions" :key="alumno.value" @click="selectAlumno(alumno)">
+                    {{ alumno.text }}
+                  </div>
+                </div>
+              </div>
+              <br><br><br> <br>
+              <v-text-field v-model="publicacion.fecha" label="Fecha" required type="date" prepend-icon="mdi-calendar"
+                variant="solo" class="w-full px-4 py-2"></v-text-field>
               <v-sheet class="w-full px-4 py-2">
-                <input
-                  v-model="publicacion.reporte_nombre"
-                  @click="toggleDropdown"
+                <input v-model="publicacion.reporte_nombre" @click="toggleDropdown"
                   class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-                  placeholder="Seleccione un Asunto"
-                />
+                  placeholder="Seleccione un Asunto" />
                 <div v-if="showDropdown" class="w-full px-4 py-2 bg-white border rounded shadow-lg">
-                  <div v-for="reporte in combinedReporteOptions" :key="reporte.id" @click="selectReporte(reporte)" class="px-2 py-1 cursor-pointer hover:bg-blue-100">
+                  <div v-for="reporte in combinedReporteOptions" :key="reporte.id" @click="selectReporte(reporte)"
+                    class="px-2 py-1 cursor-pointer hover:bg-blue-100">
                     {{ reporte.nombre }}
                   </div>
                 </div>
@@ -81,9 +64,9 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 export default {
-  
+
   data() {
-    
+
     return {
       publicacion: {
         descripcion: "",
@@ -102,7 +85,7 @@ export default {
     };
   },
   created() {
-    
+
     axios.get('/api/v1/reporte')
       .then(response => {
         if (Array.isArray(response.data.reportes)) {
@@ -124,25 +107,25 @@ export default {
     },
   },
   methods: {
-  
+
     async obtenerIdUsuarioPorMatricula(matricula) {
-    try {
-      const response = await axios.get('/api/user/index3');
-      const usuarios = response.data.users;
+      try {
+        const response = await axios.get('/api/user/index3');
+        const usuarios = response.data.users;
 
-      const usuarioEncontrado = usuarios.find(usuario => usuario.matricula === matricula);
+        const usuarioEncontrado = usuarios.find(usuario => usuario.matricula === matricula);
 
-      if (usuarioEncontrado) {
-        return usuarioEncontrado.id;
-      } else {
-        console.error('No se encontró un usuario con la matrícula especificada');
+        if (usuarioEncontrado) {
+          return usuarioEncontrado.id;
+        } else {
+          console.error('No se encontró un usuario con la matrícula especificada');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error al obtener el id del usuario', error);
         return null;
       }
-    } catch (error) {
-      console.error('Error al obtener el id del usuario', error);
-      return null;
-    }
-  },
+    },
 
 
     toggleDropdown() {
@@ -181,29 +164,29 @@ export default {
         });
     },
     async autocompletarMatricula() {
-  const inputMatricula = this.publicacion.matricula.toLowerCase();
+      const inputMatricula = this.publicacion.matricula.toLowerCase();
 
-  if (inputMatricula.trim() === "") {
-    this.alumnosOptions = [];
-    return;
-  }
+      if (inputMatricula.trim() === "") {
+        this.alumnosOptions = [];
+        return;
+      }
 
-  try {
-    const response = await axios.get('/api/user/index3');
-    const usuarios = response.data.users;
+      try {
+        const response = await axios.get('/api/user/index3');
+        const usuarios = response.data.users;
 
-    // Filtra las opciones según la entrada del usuario
-    this.alumnosOptions = usuarios
-      .filter(usuario => usuario.matricula.toLowerCase().includes(inputMatricula))
-      .map(usuario => ({ text: usuario.matricula, value: usuario.id }));
+        // Filtra las opciones según la entrada del usuario
+        this.alumnosOptions = usuarios
+          .filter(usuario => usuario.matricula.toLowerCase().includes(inputMatricula))
+          .map(usuario => ({ text: usuario.matricula, value: usuario.id }));
 
-  } catch (error) {
-    console.error('Error al autocompletar la matrícula', error);
-    this.alumnosOptions = [];
-  }
-},
-    
-    limpiarReporteBusqueda(){
+      } catch (error) {
+        console.error('Error al autocompletar la matrícula', error);
+        this.alumnosOptions = [];
+      }
+    },
+
+    limpiarReporteBusqueda() {
       this.publicacion = {
         descripcion: "",
         matricula: "",
@@ -211,7 +194,7 @@ export default {
         reporte_id: "",
       }
     },
-    
+
 
     selectAlumno(alumno) {
       this.publicacion.matricula = alumno.text;
@@ -219,7 +202,7 @@ export default {
     },
 
 
-    
+
   },
   components: {
     appbar,
@@ -262,20 +245,25 @@ input {
 }
 
 .autocomplete {
+  text-align: center;
+  align-items: center;
+  z-index: 2;
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #ffffff;
+  border: 2px solid #045b7e;
   border-radius: 4px;
-  max-height: 200px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .dropdown {
+  text-align: center;
+  z-index: 2;
   position: absolute;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #610202;
   border-radius: 4px;
-  max-height: 200px;
+  max-height: 400px;
   overflow-y: auto;
 }
 </style>

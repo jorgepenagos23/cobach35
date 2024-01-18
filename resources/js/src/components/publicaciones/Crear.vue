@@ -28,6 +28,7 @@
                   prepend-icon="mdi-comment-text"
                    variant="solo"
                 ></v-text-field>
+                
                 <v-text-field
                   v-model="publicacion.publicador"
                   label="Nombre"
@@ -35,16 +36,15 @@
                   prepend-icon="mdi-tooltip-account"
                   variant="solo"
                 ></v-text-field>
-                <v-text-field
-                  v-model="publicacion.imagen"
-                  label="Imagen"
-                  prepend-icon="mdi-image-area"
-                  variant="solo"
-                  required
-                ></v-text-field>
+                
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-blue-600 uppercase bg-blue-200 rounded-full">
+                  Imagen      </span>
+        
+                <input type="file" id="imagenFile" @change="handleFileUpload" accept="image/*">
+
+
                 <label for="datepicker">Selecciona una fecha:</label>
                 <input type="date" id="datepicker" name="datepicker" v-model="publicacion.fecha">
-                <!-- Vincula el campo de fecha al modelo de datos publicacion.fecha -->
                 <div class="div-botones">
                   <v-btn color="success" class="mt-4" block @click="createPublicacion">
                     Crear Publicación
@@ -58,8 +58,14 @@
   </v-app>
 </template>
 
-
+<style>
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+</style>
 <script>
+
+import axios from 'axios';
 import navegacion from "../barra_navegacion.vue";
 import appbar from "../app_bar.vue";
 import Swal from 'sweetalert2';
@@ -72,45 +78,54 @@ export default {
         descripcion: "",
         fecha: null,
         publicador: "",
-        imagen: "",
+        imagenFile: null,
+        imagen: "", 
       },
     };
   },
   methods: {
+    handleFileUpload(event) {
+      this.publicacion.imagenFile = event.target.files[0];
+      this.manejadorImagen(); // Llama a la función para manejar la imagen después de cargarla
+    },
     createPublicacion() {
-  const publicacionData = {
-    titulo: this.publicacion.titulo,
-    descripcion: this.publicacion.descripcion,
-    fecha: this.publicacion.fecha,
-    publicador: this.publicacion.publicador,
-    imagen: this.publicacion.imagen,
+      const formData = new FormData();
+      formData.append('titulo', this.publicacion.titulo);
+      formData.append('descripcion', this.publicacion.descripcion);
+      formData.append('fecha', this.publicacion.fecha);
+      formData.append('publicador', this.publicacion.publicador);
+      formData.append('imagenFile', this.publicacion.imagenFile);
 
-  };
-
-  // Hacemos la solicitud POST al servidor
-  axios.post('api/v1/publicacion', publicacionData)
-    .then(response => {
-      Swal.fire({
-        icon: 'success',
+      // Hacemos la solicitud POST al servidor
+      axios.post('api/v1/publicacion', formData)
+        .then(response => {
+          Swal.fire({
+            icon: 'success',
             title: 'Publicación creada con éxito',
             showConfirmButton: false,
-            timer: 3500 // Cierra automáticamente después de 1.5 segundos
+            timer: 3500
+          });
+          console.log('Publicación creada con éxito', response.data);
+        })
+        .catch(error => {
+          console.error('Error al crear la publicación', error);
+          if (error.response) {
+            console.error('Código de estado HTTP:', error.response.status);
+            console.error('Respuesta del servidor:', error.response.data);
+          } else if (error.request) {
+            console.error('No se recibió respuesta del servidor');
+          } else {
+            console.error('Error durante la configuración de la solicitud', error.message);
+          }
+        });
+    },
 
-      })
-      console.log('Publicación creada con éxito', response.data);
-      // Aquí puedes realizar cualquier acción adicional después de una creación exitosa
-    })
-    .catch(error => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al crear publicacion',
-        text: 'Ha ocurrido un error al crear la publicación',
-
-      })
-      console.error('Error al crear la publicación', error);
-      // Maneja errores o muestra mensajes de error al usuario
-    });
-}
+    manejadorImagen() {
+      const file = this.publicacion.imagenFile;
+      if (file) {
+        this.publicacion.imagen = URL.createObjectURL(file);
+      }
+    },
   },
   components: {
     appbar,

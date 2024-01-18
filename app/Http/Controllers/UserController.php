@@ -6,6 +6,7 @@ use App\Models\Boleta;
 
 use Illuminate\Http\Request;
 use Database\Factories\UserFactory;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\User\IndexRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\User\CreateRequest;
@@ -26,10 +27,9 @@ class UserController extends Controller
     
     public function index(IndexRequest $request)
     {
-        // Obtén los modelos o datos que deseas devolver
         $users = User::all();
         $boletas = Boleta::all();
-        $publicaciones = Publicacion::all(); // Reemplaza 'Publicacion' con el nombre de tu modelo de publicaciones
+        $publicaciones = Publicacion::all(); 
         $alumnos = Alumno::all();
     
         // Crear un arreglo con los datos que deseas devolver
@@ -77,31 +77,29 @@ class UserController extends Controller
     }
 
     public function index2(IndexRequest $request)
-    {
-        // Obtén los modelos o datos que deseas devolver
-        $users = User::all();
-      
-        $alumnos = Alumno::all();
-        
-        // Crear un arreglo para almacenar los datos combinados
-        $combinedData = [];
+{
+    // Intenta obtener los datos desde el cache
+    $combinedData = Cache::remember('combinedData', 60 * 5, function () {
+        // Si los datos no están en el cache, ejecuta la lógica para obtenerlos
+
+        $users = User::with('alumno')->get();
+        $matriculas = $users->pluck('matricula')->toArray();
     
-        // Itera a través de los usuarios para combinar los datos de "alumnos" y "users"
-        foreach ($users as $user) {
-            // Encuentra el alumno correspondiente basado en la relación por "matricula"
+        $alumnos = Alumno::whereIn('matricula', $matriculas)->get();
+    
+        // Combina los datos de usuarios y alumnos
+        return $users->map(function ($user) use ($alumnos) {
             $alumno = $alumnos->where('matricula', $user->matricula)->first();
-    
-            // Combinar datos del usuario y el alumno
-            $combinedData[] = [
+            return [
                 'user' => $user,
                 'alumno' => $alumno,
             ];
-        }
-        
-        // Devuelve una respuesta JSON con los datos combinados
-        return response()->json($combinedData);
-    }
+        });
+    });
 
+    // Devuelve una respuesta JSON con los datos combinados
+    return response()->json($combinedData);
+}
         
     public function import(Request $request){
 

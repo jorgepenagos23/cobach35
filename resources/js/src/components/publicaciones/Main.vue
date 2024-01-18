@@ -111,10 +111,9 @@
                 Eliminar
               </v-btn>
   </div>
-  
-      <infinite-loading @infinite="infiniteHandler" class="my-4">
+  <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" class="my-4">
+  </infinite-loading>
      
-      </infinite-loading>
 
         
 
@@ -130,7 +129,7 @@
   
   
 </v-card>
-<v-dialog v-model="mostrarFormularioEdicion" max-width="700">
+<v-dialog v-model="mostrarFormularioEdicion" max-width="1200">
     <template v-slot:activator="{ props }">
       <!-- Este botón activará el diálogo -->
       <v-btn class="text-none" color="white" rounded="0" variant="outlined" v-bind="props">
@@ -159,16 +158,11 @@
             type="text"
             prepend-icon="mdi-comment-text"
             variant="solo"
-          ></v-text-field>
+            class="w-full"
+          >
+        </v-text-field>
 
-          <v-text-field
-            v-model="publicacionEditando.imagen"
-            label="imagen"
-            id="imagen"
-            type="text"
-            prepend-icon="mdi-image-area"
-            variant="solo"
-          ></v-text-field>
+      
 
           <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
           <input
@@ -221,6 +215,53 @@ export default {
     this.cargarPublicaciones();
   },
   methods: {
+
+    eliminarPublicacion(publicacion) {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción eliminará la publicación.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const eliminarlink = `/api/v1/publicacion/delete/${publicacion}`;
+
+      try {
+        // Elimina la publicación
+        await axios.delete(eliminarlink);
+
+        // Recarga las publicaciones y espera a que se complete
+        await this.cargarPublicaciones();
+
+        // Reinicia el scroller después de un pequeño retraso
+        setTimeout(() => {
+          const scroller = document.querySelector('.your-scroller-selector'); // Reemplaza con el selector adecuado
+          if (scroller) {
+            scroller.scrollTop = 0; // Esto reinicia la posición del scroller
+          }
+        }, 100);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha eliminado correctamente',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      } catch (error) {
+        console.error('Error al eliminar', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al eliminar la publicación',
+          text: 'Ha ocurrido un error al eliminar la publicación'
+        });
+      }
+    }
+  });
+},
+
    
     editarPublicacion(publicacion) {
       this.publicacionEditando = {}; // Inicializa publicacionEditando como un objeto vacío

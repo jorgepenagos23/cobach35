@@ -52,7 +52,7 @@
                 <p class="mt-2 tracking-wide text-gray-500">
                   Subir pdf
                 </p>
-
+ <br><br><br>
                 <input
                   id="dropzone-file"
                   type="file"
@@ -92,7 +92,8 @@
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
             </script>
-          </body>
+             <br>
+          </body> <br><br>
           <Tabladescargas></Tabladescargas>
         </v-card>
       </v-col>
@@ -116,13 +117,37 @@ import Swal from "sweetalert2";
 
 export default {
   data() {
-    return {
-      selectedFile: null, // Almacena el archivo seleccionado
-      uploading: false, // Bandera para controlar el estado de la carga
-      uploadSuccess: false, // Bandera para indicar si la carga fue exitosa
-    };
-  },
+  return {
+    selectedFile: null, // Almacena el archivo seleccionado
+    uploading: false, // Bandera para controlar el estado de la carga
+    uploadSuccess: false, // Bandera para indicar si la carga fue exitosa
+    visible: true, // Nuevo estado para manejar la visibilidad
+  };
+},
   methods: {
+    actualizarVisibilidad() {
+    // Aquí debes enviar una solicitud al servidor para actualizar la visibilidad
+    axios
+      .post("/contenidos/{id}/visibilidad", { visible: this.visible })
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Visibilidad actualizada correctamente',
+          showConfirmButton: true,
+          timer: 3000
+        });
+      })
+      .catch((error) => {
+        console.error(error.response.data);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar la visibilidad',
+          showConfirmButton: true,
+          timer: 3000
+        });
+      });
+  },
     handleFileChange(event) {
       // Almacena el archivo seleccionado en la propiedad de datos
       this.selectedFile = event.target.files[0];
@@ -149,34 +174,33 @@ export default {
   this.uploading = true;
 
   // Enviar la solicitud al servidor
+ 
   axios
-    .post("/subir-pdf", formData, {})
-    .then((response) => {
-      console.log(response);
-      Swal.fire({
-              icon: 'success' ,
-              title: 'Se ha subido  exitosamente',
-              showConfirmButton: true,
-              timer: 3000 
-              
-            });
-      this.uploadSuccess = true;
-    })
-    .catch((error) => {
-      console.error(error.response.data);
-      // Mostrar mensaje de error con SweetAlert
-      Swal.fire({
-              icon: 'error' ,
-              title: 'Verifica el nombre sin espacios y que sea PDF ',
-              showConfirmButton: true,
-              timer: 3000 
-              
-            });
-    })
-    .finally(() => {
-      this.uploading = false;
-    });
-},
+      .post("/subir-pdf", formData, {})
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha subido exitosamente',
+          showConfirmButton: true,
+          timer: 3000
+        });
+        this.uploadSuccess = true;
+        this.visible = response.data.visible;  // Actualiza el estado de visibilidad
+      })
+      .catch((error) => {
+        console.error(error.response.data);
+        Swal.fire({
+          icon: 'error',
+          title: 'Verifica el nombre sin espacios y que sea PDF ',
+          showConfirmButton: true,
+          timer: 3000
+        });
+      })
+      .finally(() => {
+        this.uploading = false;
+      });
+  },
   },
   components: {
     navegacion,

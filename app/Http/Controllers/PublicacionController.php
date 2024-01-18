@@ -15,9 +15,13 @@ class PublicacionController extends Controller
     public function index(Request $request)
     {
         $page = $request->input('page', 1); // Obtiene el número de página desde la solicitud
-        $perPage = 3; // Establece la cantidad de resultados por página según tus necesidades
+        $perPage = 3; // resuultaods per page por pagina 
     
-        $publicaciones = Publicacion::skip(($page - 1) * $perPage)->take($perPage)->get();
+        $publicaciones = Publicacion::orderBy('fecha', 'desc')
+            ->skip(($page - 1) * $perPage)
+            ->take($perPage)
+            ->get();
+    
         $totalPublicaciones = Publicacion::count();
     
         return response()->json([
@@ -26,33 +30,35 @@ class PublicacionController extends Controller
             'message' => 'Solicitud Exitosa API'
         ], 200);
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'titulo' => 'required|string',
             'descripcion' => 'required|string',
-            'fecha' => 'required|date', // Asegúrate de que fecha sea una fecha válida
+            'fecha' => 'required|date',
             'publicador' => 'required|string',
-            'imagen' => 'required|string',
-
+            'imagenFile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // imagen tipo acepta 
         ]);
-    
-        $publicacion = new Publicacion;
-        $publicacion->titulo = $validatedData['titulo'];
-        $publicacion->descripcion = $validatedData['descripcion'];
-        $publicacion->fecha = $validatedData['fecha'];
-        $publicacion->publicador = $validatedData['publicador'];
-        $publicacion->imagen = $validatedData['imagen'];
+
+        $publicacion = new Publicacion();
+        $publicacion->titulo = $request->titulo;
+        $publicacion->descripcion = $request->descripcion;
+        $publicacion->fecha = $request->fecha;
+        $publicacion->publicador = $request->publicador;
+
+        // Manejo de la imagen
+        if ($request->hasFile('imagenFile')) {
+            $imagenFile = $request->file('imagenFile');
+            $imagenNombre = time() . '.' . $imagenFile->getClientOriginalExtension();
+            $imagenRuta = public_path('/images/publicaciones/');
+            $imagenFile->move($imagenRuta, $imagenNombre);
+            $publicacion->imagen = '/images/publicaciones/' . $imagenNombre;
+        }
 
         $publicacion->save();
-    
-        return response()->json([
-            'data' => $publicacion,
-            'message' => 'Publicación creada correctamente',
-        ], 201); // El código 201 indica que la publicación se ha creado con éxito
+
+        return response()->json($publicacion, 201);
     }
 
     /**
@@ -83,6 +89,7 @@ class PublicacionController extends Controller
 
 
     }
+
 
     /**
      * Update the specified resource in storage.

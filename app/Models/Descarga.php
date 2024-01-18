@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Descarga extends Model
 {
     use HasFactory;
-    protected $table ='descargas';
+    protected $table ='contenidos';
+
     protected $fillable =[
 
     'id',
     'nombre',
-    'descripcion',
-    'archivo'
+    'ruta',
+    'visible'
 
     ];
 

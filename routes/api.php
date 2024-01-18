@@ -65,7 +65,9 @@
     Route::get('v1/publicacion/{id}', [PublicacionController::class, 'show'])->middleware('auth:sanctum');
     Route::get('v1/publicacion/{id}/edit', [PublicacionController::class, 'edit'])->middleware('auth:sanctum');
     Route::put('v1/publicacion/{id}', [PublicacionController::class, 'update'])->middleware('auth:sanctum');
-    Route::delete('v1/publicacion/{id}', [PublicacionController::class, 'destroy'])->middleware('auth:sanctum');
+
+
+    Route::delete('v1/publicacion/delete/{id}', [PublicacionController::class, 'destroy'])->middleware('auth:sanctum');
     //reportes api
     Route::get('v1/reporte', [ReporteController::class, 'index']);
     Route::get('v1/reportes/alumnos', [ReporteController::class, 'index2']);

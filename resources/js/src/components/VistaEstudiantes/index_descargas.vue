@@ -8,34 +8,14 @@
             <v-expansion-panel-title>Panel 1</v-expansion-panel-title>
             <v-expansion-panel-text>
               <div>
-                <!-- Botón o enlace para iniciar la descarga -->
-                <a
-                  :href="'/descargar_pdf/' + 'formato.pdf'"
-                  target="_blank"
-                  class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full"
-                >
-                  <svg
-                    class="inline-block w-6 h-6 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                  Descargar Formato de Reinscripcion
-                </a>
+                
+                
               </div>
             </v-expansion-panel-text>
           </v-expansion-panel>
 
 
-
+          <todos></todos>
     
 
        
@@ -51,11 +31,13 @@
 import appbar from "../app_bar.vue";
 import barra from "../VistaEstudiantes/dashboard.vue";
 import Swal from 'sweetalert2';
+import todos from '../todos.vue'
 
 export default {
   components: {
     appbar,
     barra,
+    todos,
   },
 
   data: () => ({

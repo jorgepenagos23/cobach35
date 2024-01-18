@@ -6,13 +6,13 @@
         <v-expansion-panels v-model="panel" :readonly="readonly" multiple>
          
           <v-expansion-panel>
-            <v-expansion-panel-title class="primary" theme="dark" color="orange-darken-4">Boleta  Parcial 1</v-expansion-panel-title>
+            <v-expansion-panel-title class="primary" theme="dark" color="indigo-accent-4">Boleta  Parcial 1</v-expansion-panel-title>
             <v-expansion-panel-text>
                
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
                 <a
-                  :href="'/descargar-pdf/' + '23a0710035m0020_boleta.pdf'"
+                :href="'/descargar-pdf/'+this.MatriculaUsuario+'_boleta.pdf'"         
                   target="_blank"
                   class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded-full"
                 >
@@ -36,8 +36,9 @@
             </v-expansion-panel-text>
           </v-expansion-panel>
 
+        
           <v-expansion-panel>
-            <v-expansion-panel-title class="primary" theme="dark" color="purple-darken-4">Boleta  Parcial 2</v-expansion-panel-title>
+            <v-expansion-panel-title class="primary" theme="dark" color="light-blue-darken-4">Boleta  Parcial 2</v-expansion-panel-title>
             <v-expansion-panel-text>
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
@@ -65,7 +66,7 @@
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel>
-            <v-expansion-panel-title class="primary" theme="dark" color="yellow-darken-4">Boleta  Parcial 3</v-expansion-panel-title>
+            <v-expansion-panel-title class="primary" theme="dark" color="green-accent-3">Boleta  Parcial 3</v-expansion-panel-title>
             <v-expansion-panel-text>
               <div>
                 <!-- Botón o enlace para iniciar la descarga -->
@@ -139,11 +140,11 @@ export default {
         });
     },
 
-    descargarPDF() {
-      const pdfUrl = `/descargar-pdf/primer-semestre-/a/parcial1/${this.MatriculaUsuario}_boleta.pdf`; 
-      console.log(pdfUrl);
-      window.open(pdfUrl, '_blank');
-    },
+    descargarPDF(parcial) {
+    const pdfUrl = `/descargar-pdf/${this.MatriculaUsuario}_boleta.pdf`;
+    console.log(pdfUrl);
+    window.open(pdfUrl, '_blank');
+  },
   },
 };
 </script>

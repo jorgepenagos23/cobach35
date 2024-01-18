@@ -11,6 +11,8 @@
         <v-list dense nav>
           <v-list-item @click="navigateTo('')" prepend-icon="mdi-menu-right" title="Inicio" value=""></v-list-item>
           <v-list-item @click="navigateTo('login')" prepend-icon="mdi-menu-right" title="Sistema Estudiantes" value=""></v-list-item>
+          <v-list-item @click="navigateTo('todos')" prepend-icon="mdi-menu-right" title="Descargas" value=""></v-list-item>
+
         </v-list>
       </v-navigation-drawer>
 

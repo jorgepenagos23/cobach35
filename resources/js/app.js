@@ -89,7 +89,13 @@ const router = createRouter({
 
             ////////// BOLETAS  5  CUARTO  SEMESTRE 
 
-    
+
+
+            
+
+
+            { path: '/todos', component: () => import('./src/components/todos.vue') }, /// para descargas 
+
         
 
               

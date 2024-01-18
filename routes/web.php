@@ -43,7 +43,7 @@ Route::get('/listar_alumno',[AlumnoController::class,'index2'])->name('listarAlu
 Route::post('/import', [AlumnoController::class, 'import'])->name('import');
 
 
-Route::get('/pdfs', [DescargaController::class, 'index']);
+Route::get('/pdfs', [DescargaController::class, 'index2']);
 Route::post('/pdfs', [DescargaController::class, 'store']);
 
 
@@ -87,7 +87,7 @@ Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->nam
 
 
 
-
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 1
 Route::get('/descargar-pdf/{nombreArchivo}', function ($nombreArchivo) {
 
     $pdfPath = "boletas/primer_semestre/grupoA/parcial1/{$nombreArchivo}";
@@ -100,7 +100,26 @@ Route::get('/descargar-pdf/{nombreArchivo}', function ($nombreArchivo) {
 });
 
 
-Route::get('/descargar_pdf/{nombreArchivo}', function ($nombreArchivo) {
+
+
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 2
+
+
+
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 3
+
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 4
+
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 5
+
+/// RUTAS DE DESCARGA  PRIMER SEMESTRE PARCIAL 6
+
+
+
+
+
+
+Route::get('/descargar_pdf/todos/{nombreArchivo}', function ($nombreArchivo) {
 
     $pdfPath = "pdf/{$nombreArchivo}";
 
@@ -115,6 +134,9 @@ Route::get('/descargar_pdf/{nombreArchivo}', function ($nombreArchivo) {
 
 
 
+Route::get('/contenidos', [DescargaController::class, 'index2']);
+
+Route::put('/contenidos/{id}/visibilidad', [DescargaController::class, 'actualizarVisibilidad']);
 Route::post('/subir-pdf', [DescargaController::class, 'subirPdf']);
 
 

@@ -1,4 +1,5 @@
 <template>
+      <v-progress-linear v-if="loading" indeterminate color="teal"></v-progress-linear>
   <barra></barra>
   <v-app>
     <v-card max-width="900" class="mx-500">
@@ -134,7 +135,7 @@
               </v-expansion-panel>
 
               <v-expansion-panel>
-                <v-expansion-panel-title class="primary" theme="dark" color="yellow-darken-4">
+                <v-expansion-panel-title class="primary" theme="dark" color="green-accent-4">
                   <v-icon left>mdi-star</v-icon> Calificaciones Parcial 2
 
                 </v-expansion-panel-title>
@@ -178,45 +179,52 @@
               </v-expansion-panel>
 
 
-
               <v-expansion-panel>
-                <v-expansion-panel-title class="primary" theme="dark" color="teal-darken-4">
+                <v-expansion-panel-title class="primary" theme="dark" color="yellow-darken-4">
                   <v-icon left>mdi-star</v-icon> Calificaciones Parcial 3
-                </v-expansion-panel-title><v-expansion-panel-text>
 
+                </v-expansion-panel-title>
+
+                <v-expansion-panel-header>
+                </v-expansion-panel-header>
+                <v-expansion-panel-text>
                   <div class="overflow-x-auto">
-                    <table class="w-full border-collapse table-auto">
-                      <thead>
-                        <tr>
-                          <th class="px-4 py-2">Nombre del Alumno</th>
+
+                  <table class="w-full border-collapse table-auto">
+                    <thead>
+                      <tr>
+                        <th class="px-4 py-2">Nombre del Alumno</th>
                           <th class="px-4 py-2">Espanol</th>
                           <th class="px-4 py-2">Matematicas</th>
                           <th class="px-4 py-2">Ingles</th>
+                          <th class="px-4 py-2">Biología </th>
                           <th class="px-4 py-2">Promedio</th>
                           <th class="px-4 py-2">Observaciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="boleta in boletas" :key="boleta.id">
-                          <td class="px-4 py-2 border">{{ boleta.nombre_alumno }}</td>
-                          <td class="px-4 py-2 border">{{ boleta.espanol1 }}</td>
-                          <td class="px-4 py-2 border">{{ boleta.matematicas1}}</td>
-                          <td class="px-4 py-2 border">{{ boleta.ingles1}}</td>
-                          <td class="px-4 py-2 border">{{ boleta.promedio }}</td>
-                          <td class="px-4 py-2 border">{{ boleta.observaciones }}</td>
-                        </tr>
-
-
-
-                      </tbody>
-                    </table>
+                        
+                     
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-if="Object.keys(boletas3).length === 0">
+                        <td colspan="5">No hay datos disponibles.</td>
+                      </tr>
+                      <tr v-else>
+                        <td class="px-4 py-2 border">{{ boletas3.nombre_alumno }}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.espanol2 }}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.matematicas2 }}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.ingles2}}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.biologia2}}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.promedio }}</td>
+                          <td class="px-4 py-2 border">{{ boletas3.observaciones }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   </div>
-
-
                 </v-expansion-panel-text>
-
-
               </v-expansion-panel>
+            
+
+
             </v-expansion-panels>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -238,7 +246,7 @@
   /* Agrega estilos personalizados para la tabla */
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px; /* Espaciado superior de la tabla */
+  margin-top: 15px; 
 }
 
 .my-styled-table th, .my-styled-table td {
@@ -248,10 +256,9 @@
 }
 
 .my-styled-table th {
-  background-color: #f2f2f2; /* Color de fondo para las celdas del encabezado */
+  background-color: #f2f2f2; 
 }
 
-/* Agrega más estilos según sea necesario */
 </style>
 
 
@@ -271,6 +278,7 @@ export default {
     matriculaDelUsuario: null,
     boletas: [],
     boletas2: [],
+    boletas3:[],
     reportesA: [],
     response: {},
 
@@ -286,7 +294,6 @@ export default {
 
   async created() {
     try {
-      // Obtener datos de usuario y su matrícula
       const userDataResponse = await axios.get('/api/user/');
       const matriculaDelUsuario = userDataResponse.data.matricula;
 
@@ -315,7 +322,15 @@ export default {
 
 
 
+
+
+    
+
   },
+
+
+
+  
   methods: {
     obtenerMatricula() {
       axios.get('/api/user/')
@@ -327,7 +342,7 @@ export default {
           this.boletas2 = response.data.boletas2;
           this.parcial1ObtenerBoleta();
           this.parcial2ObtenerBoleta();
-
+          this.parcial3ObtenerBoleta();
 
         })
 
@@ -371,6 +386,24 @@ export default {
           console.error('error', error);
         });
     },
+
+    parcial3ObtenerBoleta() {
+      console.log('LLAMASTE OBTENER BOLETA PARCIAL 3 CON MATRICULA:', this.matriculaDelUsuario);
+      axios.get('/api/obtener-boletas/parcial3/' + this.matriculaDelUsuario)
+        .then(response => {
+          console.log('BOLETA PARCIAL 3 ', response.data);
+          this.boletas3 = response.data.boletas;
+        })
+        .catch(error => {
+          console.error('error', error);
+        });
+    },
+
+
+    
+
+
+    
 
     async obteneReporte() {
   try {

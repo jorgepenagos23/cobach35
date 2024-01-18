@@ -13,8 +13,8 @@ class CalificacionesSeeder extends Seeder
     {
         $datos = [
             [
-                'MATRICULA' => '23A0710035M0020',
-                'NOMBRE_ALUMNO' => 'Morales Sol Jeimy Paola',
+                'MATRICULA' => '123456COBACH',
+                'NOMBRE_ALUMNO' => 'Alumno de Prueba',
                 'ESPANOL1' => 85,
                 'ESPANOL2' => 90,
                 'ESPANOL3' => 88,

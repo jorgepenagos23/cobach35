@@ -206,7 +206,6 @@ import es from 'date-fns/locale/es'; // Importa el idioma español
         year: 'numeric',
         month: 'short',
         day: 'numeric',
-        //hour: '2-digit',
         timeZone: 'UTC'
       };
       return new Date(isoDate).toLocaleString('es-es', options);
