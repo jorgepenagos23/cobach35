@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="public/build/tailwind.css">
         <title>Web App</title>
+        <link rel="icon" href="../js/src/assets/logo35.png" type="image/x-icon">
+        
         <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

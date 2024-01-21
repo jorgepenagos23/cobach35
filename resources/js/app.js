@@ -93,19 +93,22 @@ const router = createRouter({
 
             
 
+////
 
-            { path: '/todos', component: () => import('./src/components/todos.vue') }, /// para descargas 
+
+{ path: '/conocenos', component: () => import('./src/components/secciones/conocenos.vue') },
+{ path: '/oferta', component: () => import('./src/components/secciones/oferta.vue') },
+{ path: '/alumnos', component: () => import('./src/components/secciones/alumnos.vue') },
+{ path: '/vinculacion', component: () => import('./src/components/secciones/vinculacion.vue') },
+{ path: '/instalaciones', component: () => import('./src/components/secciones/subsecciones/instalaciones.vue') },
+{ path: '/estructura_fronted', component: () => import('./src/components/estructura.vue') },
+
+
+
+
+{ path: '/todos', component: () => import('./src/components/todos.vue') }, /// para descargas 
 
         
-
-              
-
-                
-
-
-
-
-
 
         {path: '/descargas-tabla',component:()=>import('./src/components/descargas/Tabladescargas.vue')}
 

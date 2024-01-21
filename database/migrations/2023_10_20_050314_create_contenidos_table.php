@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publicaciones', function (Blueprint $table) {
+        Schema::create('contenidos_seccion', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
+            $table->string('titulo')->default('');
             $table->text('descripcion');
-            $table->date('fecha')->default(now()); // Establece la fecha predeterminada a la fecha actual            $table->enum('tipo',['banner','publicacion']);
-            $table->string('publicador');
-            $table->string('imagen')->nullable();
+            $table->string('publicador')->default('');
+            $table->string('imagen')->nullable()->default('');
+            $table->date('fecha')->nullable();
+
             $table->timestamps();
+            
         });
+        
     }
 
     /**
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publicaciones');
+        Schema::dropIfExists('contenidos_seccion');
     }
 };

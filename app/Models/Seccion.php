@@ -1,4 +1,5 @@
 <?php
+// Seccion.php
 
 namespace App\Models;
 
@@ -7,26 +8,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seccion extends Model
 {
-    use HasFactory;
     protected $table = 'secciones';
-    protected $fillable = [
 
-        'id',
+    use HasFactory;
+
+    protected $fillable = [
         'orden_presentacion',
         'nombre',
         'visible',
-        'seccion_id',
-        'objetivo',
+        'nombre_subseccion',
+        'seccion_id_padre',
         'tipo',
-
-
-
+        'ruta',
+        'nombre_componente',
     ];
 
-    public function subsecciones(){
+    // Definir el evento creating para asignar un contenido predeterminado
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($seccion) {
+            // Si no se proporciona un contenido_id, asigna uno predeterminado
+            if (!$seccion->contenido_id) {
+                $contenido = Contenido::create([
+                    'descripcion' => 'Este es el contenido predeterminado',
+                    // Otros campos de contenido que desees completar
+                ]);
 
-        return $this->hasMany(Seccion::class, 'seccion_id');
+                $seccion->contenido_id = $contenido->id;
+            }
+        });
     }
 
+    public function subsecciones()
+    {
+        return $this->hasMany(Seccion::class, 'seccion_id_padre');
+    }
 }

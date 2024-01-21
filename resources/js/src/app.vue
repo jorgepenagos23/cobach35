@@ -1,55 +1,63 @@
 <template>
   <div id="app">
+    <link rel="icon" href="../src/assets/logo35.png" type="image/x-icon">
+
     <header>
     </header>
-        <main>
+
+    <main>
       <transition name="fade" mode="out-in">
         <router-view>
           <ListComponent v-if="$route.path === '/'" />
         </router-view>
       </transition>
-    </main>
-    <body>
-      <div class="centered-content"> 
 
-      <router-view></router-view>      </div>
-
-  
-    </body>
+      <div class="centered-content">
+        <router-view></router-view>
       </div>
-    
+    </main>
+  </div>
 </template>
 
 <style scoped>
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+#app {
+  padding-top: 78px; /* Ajusta el espacio superior para dar lugar al banner */
+}
+
 header {
-  position: fixed; /* Fija el banner en la parte superior */
-  width: 80%; /* Ancho completo */
-  background-color: #ffffff; /* Cambia el color de fondo según tus preferencias */
-  color: #f3f3f300; /* Cambia el color del texto según tus preferencias */
-  padding: 78px 0; /* Ajusta el espacio interior del banner */
-  text-align: center; /* Centra el contenido del banner */
-  z-index: -3; /* Asegura que el banner esté por encima del contenido */
+  position: fixed;
+  width: 100%;
+  background-color: #0d922e;
+  color: #f3f3f300;
+  padding: 0px 0; /* Ajusta el espacio interior del banner */
+  text-align: center;
+  z-index: 1000; /* Asegura que el banner esté por encima del contenido */
 }
 
 main {
-  margin-top: 70px; /* Ajusta el margen superior para dar espacio al banner en dispositivos móviles */
-  width: auto; /* Ancho completo en dispositivos móviles */
-  height: auto; /* Cambia la altura automática a "auto" para ajustarse al contenido */
+  width: 100%;
+  height: auto;
 }
+
 .centered-content {
   display: flex;
   justify-content: center;
   text-align: center;
   height: auto;
 }
+
 /* Estilo para el contenido debajo del banner en dispositivos móviles */
 @media (max-width: 768px) {
-  main {
-    margin-top: 10px; /* Ajusta el margen superior para dar espacio al banner en dispositivos móviles */
-    width: 100%; /* Ancho completo en dispositivos móviles */
+  #app {
+    padding-top: 20px;
+  }
+
+  header {
+    padding: 10px 0;
   }
 }
 </style>

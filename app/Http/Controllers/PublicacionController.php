@@ -38,7 +38,8 @@ class PublicacionController extends Controller
             'descripcion' => 'required|string',
             'fecha' => 'required|date',
             'publicador' => 'required|string',
-            'imagenFile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // imagen tipo acepta 
+            'imagenFile' => 'required|mimetypes:image/jpeg,image/png,image/jpg,image/gif,video/mp4|max:29480', // admite imágenes (jpeg, png, jpg, gif) y videos (mp4)
+
         ]);
 
         $publicacion = new Publicacion();

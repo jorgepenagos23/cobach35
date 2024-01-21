@@ -8,12 +8,16 @@
     use App\Http\Controllers\BoletaController;
     use App\Http\Controllers\BoletaParcial1Controller;
     use App\Http\Controllers\BoletaParcial2Controller;
-    use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ContenidoController;
+use App\Http\Controllers\LoginController;
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\PublicacionController;
     use App\Http\Controllers\ReporteController;
     use App\Http\Controllers\PrimeroABoletaParcial2Controller;
-    use App\Http\Controllers\PrimeroABoletaParcial3Controller;;
+    use App\Http\Controllers\PrimeroABoletaParcial3Controller;
+use App\Http\Controllers\SeccionController;
+
+;
 
 
 
@@ -84,6 +88,17 @@
     Route::get('/obtener-boletas/parcial3/{matricula}', [AlumnoController::class, 'obtenerBoletasDelAlumnoparcial3'])->middleware('auth:sanctum');
 
 
+
+
+
+
+
+
+    ///SECCIONES
+    Route::get('v1/secciones', [SeccionController::class, 'index']);
+    Route::get('v1/subseccion', [SeccionController::class, 'index2']);
+
+    Route::get('v1/contenido', [ContenidoController::class, 'index']);
 
 
 
