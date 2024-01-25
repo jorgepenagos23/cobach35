@@ -20,7 +20,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-  
+        $this->call([
+            GruposSeeder::class,
+        ]);
+
+        
     \App\Models\User::factory(0)->create();
     \App\Models\Alumno::factory(0)->create();
     \App\Models\Permiso::factory()->count(5)->create();
@@ -109,7 +113,7 @@ class DatabaseSeeder extends Seeder
                         'visible' => true,
                         'seccion_id_padre' => null, // No hay sección padre para Conócenos
                         'tipo' => 'contenido',
-                        'ruta' => 'conocenos',
+                        'ruta' => '/conocenos',
                         'nombre_componente' =>'conocenos.vue',
                     ]);
             
@@ -119,7 +123,7 @@ class DatabaseSeeder extends Seeder
                         'visible' => true,
                         'seccion_id_padre' => null, 
                         'tipo' => 'contenido',
-                        'ruta' => 'oferta',
+                        'ruta' => '/oferta',
                         'nombre_componente' =>'oferta.vue',
                     ]);
             
@@ -129,7 +133,7 @@ class DatabaseSeeder extends Seeder
                         'visible' => true,
                         'seccion_id_padre' => null, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Alumnos',
+                        'ruta' => '/alumnos',
                         'nombre_componente' =>'Alumnos.vue',
                     ]);
             
@@ -140,7 +144,7 @@ class DatabaseSeeder extends Seeder
                         'visible' => true,
                         'seccion_id_padre' => null, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Vinculacion',
+                        'ruta' => '/vinculacion',
                         'nombre_componente' =>'vinculacion.vue',
                     ]);
 
@@ -150,7 +154,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Mision & Vision',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'mision',
+                        'ruta' => '/mision',
                         'nombre_componente' =>'mision.vue',
                     ]);
                     Seccion::create([
@@ -169,7 +173,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Estructura Funcional',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Estructura',
+                        'ruta' => 'estructura',
                         'nombre_componente' =>'Estructura.vue',
                     ]);
             
@@ -189,7 +193,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Visitanos',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Visitanos',
+                        'ruta' => 'visitanos',
                         'nombre_componente' =>'Visitanos.vue',
                     ]);
             
@@ -200,7 +204,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Academias',
                         'seccion_id_padre' => 3, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Academias',
+                        'ruta' => 'academias',
                         'nombre_componente' =>'Academias.vue',
                     ]);
             
@@ -211,7 +215,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Plan de Estudios',
                         'seccion_id_padre' => 3, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Plan',
+                        'ruta' => 'plan',
                         'nombre_componente' =>'Plan.vue',
                     ]);
             
@@ -224,7 +228,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Horarios',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Horarios',
+                        'ruta' => 'horarios',
                         'nombre_componente' =>'Horarios.vue',
                     ]);
 
@@ -234,7 +238,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Calendarios',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Calendarios',
+                        'ruta' => 'calendarios',
                         'nombre_componente' =>'Calendarios.vue',
                     ]);
 
@@ -244,7 +248,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Becas',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'Becas',
+                        'ruta' => 'becas',
                         'nombre_componente' =>'Becas.vue',
                     ]);
 
@@ -267,7 +271,7 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Danza Folklorika',
                         'seccion_id_padre' => 5,  
                         'tipo' => 'contenido',
-                        'ruta' => 'Danza',
+                        'ruta' => 'danza',
                         'nombre_componente' =>'Danza.vue',
                     ]);
 

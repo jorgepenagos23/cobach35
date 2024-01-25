@@ -96,10 +96,18 @@ use App\Http\Controllers\SeccionController;
 
     ///SECCIONES
     Route::get('v1/secciones', [SeccionController::class, 'index']);
+
+    Route::get('v1/secciones_todas', [SeccionController::class, 'index_todos']);
+
+    
+
+
+    
+
     Route::get('v1/subseccion', [SeccionController::class, 'index2']);
 
     Route::get('v1/contenido', [ContenidoController::class, 'index']);
-
+    Route::get('v1/fachada_subseccion', [SeccionController::class, 'fachada_subseccion']);
 
 
 

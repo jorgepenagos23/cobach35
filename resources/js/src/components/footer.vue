@@ -1,133 +1,9 @@
 <template>
-    <div>
-        <banner></banner>
-    </div>
-    <v-app>
-        <v-container>
-    <v-card class="mt-5">
-      <v-carousel height="460" width="800" show-arrows hide-delimiter-background>
-        <template v-slot:prev="{ props }"></template>
-        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-          <v-sheet :color="colors[i]" height="100%">
-            <v-img
-              :src="slide.url"
-              height="200%"
-              class="object-cover w-full h-full rounded"
-            ></v-img>
-           
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
-    </v-card>
-        </v-container>
-        <body>
 
-
-
-            <div class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
-                <div
-                    class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
-                    <div class="flex flex-row items-center justify-between py-2">
-                        <div class="flex flex-row items-center">
-                            <a href="#"
-                                class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-                                <img class="object-cover w-8 h-8 rounded-full"
-                                    src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg"
-                                    alt="">
-                                <v-chip color="primary">
-                                </v-chip>
-                            </a>
-                        </div>
-
-                        <div class="flex flex-row items-center">
-                            <v-chip color="red">
-                            </v-chip>
-                        </div>
-                    </div>
-
-                    <div class="mt-2">
-                        <img class="object-cover w-full h-48 rounded"
-                            src="https://i.ytimg.com/vi/ufNLvPrifUA/maxresdefault.jpg">
-                        <div class="flex flex-row items-center py-2"></div>
-                    </div>
-
-                    <div class="flex flex-row items-center">
-                        <v-chip color="secondary">
-                        </v-chip>
-                    </div>
-
-                    <div class="py-2">
-                        <p class="leading-snug text-justify"> Alumnos
-                `    Si eres tutor o alumno del COBACH 35, ya eres parte de nuestra comunidad escolar, ¡Siéntete bienvenido! 
-                    
-                    En esta sección podrás encontrar todo lo que necesitas saber : Horario de clases, calificaciones, becas, asesor académico, noticias y mucho más.
-                    ​
-                    Si tienes alguna duda o comentario comunícate con nosotros al teléfono: 6166894 nos dará mucho gusto poder atenderte.
-
-                    </p>`
-                    </div>
-                </div>
-            </div>
-
-
-            <br><br><br><br>
-
-
-            <v-row align="center" justify="center">
-
-
-                
-                <v-col cols="auto">
-                    <v-card class="mx-auto" max-width="344" title="Valores 1" subtitle="prepend-icon and append-icon"
-                        prepend-icon="mdi-account" append-icon="mdi-check">
-                        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</v-card-text>
-                    </v-card>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-card class="mx-auto" max-width="344" title="Valores 2" subtitle="prepend and append">
-                        <template v-slot:prepend>
-                            <v-icon icon="mdi-account" color="primary"></v-icon>
-                        </template>
-                        <template v-slot:append>
-                            <v-icon icon="mdi-check" color="success"></v-icon>
-                        </template>
-                        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</v-card-text>
-                    </v-card>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-card class="mx-auto" max-width="344" title="Valores 3" subtitle="prepend-avatar and append-avatar"
-                        prepend-avatar="https://cdn.vuetifyjs.com/images/logos/v-alt.svg"
-                        append-avatar="https://cdn.vuetifyjs.com/images/john.jpg">
-                        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</v-card-text>
-                    </v-card>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-card class="mx-auto" max-width="344" title="Valores 4" subtitle="prepend and append">
-                        <template v-slot:prepend>
-                            <v-avatar color="blue-darken-2">
-                                <v-icon icon="mdi-alarm"></v-icon>
-                            </v-avatar>
-                        </template>
-                        <template v-slot:append>
-                            <v-avatar size="24">
-                                <v-img src="https://cdn.vuetifyjs.com/images/john.png" alt="John"></v-img>
-                            </v-avatar>
-                        </template>
-                        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
-
-            <br><br><br><br>
-        </body>
-
-
-
-        <footer class="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
-            <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+<v-app class="flex flex-col min-h-screen">
+    
+    <footer class="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 flex-grow">
+                    <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
                         <img src="#" class="h-6 mr-5 sm:h-9" alt="logo" />
@@ -229,53 +105,34 @@
             </div>
         </footer>
 
+</v-app>
 
-
-
-    </v-app>
 </template>
-  
 <style>
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 .centered-content {
     display: flex;
     text-align: center;
     justify-content: center;
     height: auto;
-    /* Elimina la altura fija para que el contenido se ajuste automáticamente */
+}
+html,
+body {
+  height: 100%;
 }
 
 @media only screen and (max-width: 600px) {
-    .text-h2 {
-        font-size: 1.5rem;
-      
-    }
+ 
+   .text-h2 {
+      font-size: 1.5rem;
+   }
 }
 </style>
-  
+
 <script>
-import banner from "../inicio.vue";
-import Swal from 'sweetalert2';
-
-
- export default {
-    data() {
-    return {
-        colors: [
-        'white', 
-        'white', 
-      ],
-      slides: [
-        { title: 'First', url: 'https://scontent.ftgz1-1.fna.fbcdn.net/v/t1.6435-9/51929161_1997642960535831_2328698321197072384_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=755d08&_nc_eui2=AeGpxHOYLPxGKT0wmlPMOgQwKoD6vWtBkMAqgPq9a0GQwF4-l0d-THD-ZRIXG3uvP2QDjC2qY8tm-vVtfPrRGlQI&_nc_ohc=IKG0BOXqaPsAX9eqt4Z&_nc_ht=scontent.ftgz1-1.fna&oh=00_AfCd27xmSLpEe0JRwdiV0obvT98f9REA5RYO6wTiDy6lvg&oe=65D1916C' },
-        { title: 'Second', url: 'https://scontent.ftgz1-1.fna.fbcdn.net/v/t1.6435-9/51929161_1997642960535831_2328698321197072384_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=755d08&_nc_eui2=AeGpxHOYLPxGKT0wmlPMOgQwKoD6vWtBkMAqgPq9a0GQwF4-l0d-THD-ZRIXG3uvP2QDjC2qY8tm-vVtfPrRGlQI&_nc_ohc=IKG0BOXqaPsAX9eqt4Z&_nc_ht=scontent.ftgz1-1.fna&oh=00_AfCd27xmSLpEe0JRwdiV0obvT98f9REA5RYO6wTiDy6lvg&oe=65D1916C' },
-        { title: 'Third', url: 'URL_DE_LA_IMAGEN_3' },
-      ],
-    }
-  },
-
-
-   components:{banner,}
-  
- }
 </script>
 
-  

@@ -15,7 +15,25 @@
           <v-theme-provider theme="light" with-background class="pa-5">
               <v-card title=" Administrador Publicaciones" 
               prepend-icon="mdi-file-chart-outline"
-              ></v-card>
+              
+              >
+              <v-btn
+        prepend-icon="mdi-check-circle"
+        color="blue-darken-4"
+        density="compact"
+        hide-details
+        inline
+        inset
+        @click="fachada"
+      >
+        <template v-slot:prepend>
+          <v-icon color="success"></v-icon>
+        </template>
+        Contenido del Sitio 
+        <template v-slot:append>
+        </template>
+      </v-btn>
+</v-card>
             </v-theme-provider>
         <template v-slot:activator="{ props }">
           <v-btn
@@ -115,18 +133,11 @@
   </infinite-loading>
      
 
-        
-
-            <!-- Formulario de edición -->
-    
+          
       </v-card>
     </v-app>
 
     <v-card class="mx-auto" max-width="400">
-  <!-- ... Otras partes de la tarjeta ... -->
-
-  <!-- Formulario de edición dentro de la tarjeta -->
-  
   
 </v-card>
 <v-dialog v-model="mostrarFormularioEdicion" max-width="1200">

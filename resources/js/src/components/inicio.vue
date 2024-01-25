@@ -55,6 +55,7 @@
         <v-list-item @click="navigateTo('alumnos')" prepend-icon="mdi-menu-right" title="Sistema Estudiantes" value=""></v-list-item>
         <v-list-item @click="navigateTo('login')" prepend-icon="mdi-menu-right" title="Sistema Estudiantes" value=""></v-list-item>
         <v-list-item @click="navigateTo('instalaciones')" prepend-icon="mdi-menu-right" title="Instalaciones" value=""></v-list-item>
+        <v-list-item @click="navigateTo('footer')" prepend-icon="mdi-menu-right" title="footer" value=""></v-list-item>
 
         <v-list-item @click="navigateTo('todos')" prepend-icon="mdi-menu-right" title="Descargas" value=""></v-list-item>
       </v-list>

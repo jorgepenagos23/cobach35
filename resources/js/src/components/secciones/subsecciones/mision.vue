@@ -15,25 +15,24 @@
           
 <!-- Sección de Secciones Filtradas -->
 <section class="bg-blue-200 dark:bg-gray-900">
-        <div class="container px-6 py-10 mx-auto">
-          <div class="xl:flex xl:items-center xl:-mx-4">
-            <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-              <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
-              <p class="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
-            </div>
-  
-            <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
-              <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
-                <div class="mb-4">
-                  <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
-                </div>
-                <p class="text-gray-500 dark:text-gray-300"></p>
+      <div class="container px-6 py-10 mx-auto">
+        <div class="xl:flex xl:items-center xl:-mx-4">
+          <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
+            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
+            <p class="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
+            <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id">
+              <div class="mb-4">
+                <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
               </div>
+              <p class="text-gray-500 dark:text-gray-300">{{ data.seccion.nombre_subseccion }}</p>
             </div>
           </div>
         </div>
-      </section>
-                            
+      </div>
+    </section>     
 
       <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
   <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
@@ -112,22 +111,18 @@
 }
 </style>
 <script>
-  import axios from 'axios';
-  import { VImg } from "vuetify/lib/components/index.mjs";
-  import { format } from 'date-fns';
-  import es from 'date-fns/locale/es'; // Importa el idioma español
-  import banner from "../inicio.vue";
-  import pie from "../footer.vue";
-  import Swal from 'sweetalert2';
+import axios from 'axios';
+import banner from "../../inicio.vue";
+import pie from "../../footer.vue";
+import Swal from 'sweetalert2';
 
   const api = '/api/v1/publicacion';
 
   export default {
-    name: 'conocenos',
+    name: 'mision',
     components: {
       banner,
       pie,
-      VImg,
     },
     data() {
       return {
@@ -135,11 +130,7 @@
         list: [],
         isLoading: false,
         hasMoreResults: true,
-        items: [
-          { text: 'Slide 1', color: 'white', image: 'https://i.ytimg.com/vi/lZ-D6vgcie0/maxresdefault.jpg' },
-          { text: 'Slide 2', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1N5xmc3hGjYTCZMnzaMoTRZe80LlEBH8z0w&usqp=CAU' },
-          { text: 'Slide 3', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThLrpEm8LVg2Y8GeINyUAlzavtT4lFvr4pFA&usqp=CAU' },
-        ],
+        
         publicaciones: [],
         slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
         currentIndex: 0,
@@ -147,7 +138,7 @@
         posts: [],
         contenido: [],
         secciones: {},
-        seccionesContenidoFiltrado: [], // Nuevo array para almacenar secciones y contenido filtrado
+        seccionesContenidoFiltrado: [], 
         componentRuta: '',
       };
     },
@@ -159,7 +150,7 @@
     methods: {
       infiniteHandler($state) {
         if (this.isLoading) {
-          // Evita realizar múltiples solicitudes simultáneas
+        
           return;
         }
 
@@ -172,7 +163,6 @@
         }).then((response) => {
           if (response.data.publicaciones.length) {
             this.page += 1;
-            // Ordena las publicaciones por fecha en orden descendente antes de agregarlas a la lista existente
             const newPublicaciones = response.data.publicaciones.sort((a, b) => {
               return new Date(b.fecha) - new Date(a.fecha);
             });
@@ -183,7 +173,6 @@
             $state.loaded();
 
             if (this.list.length >= response.data.total) {
-              // Si has cargado todos los resultados disponibles, completa la paginación
               this.hasMoreResults = false;
               $state.complete();
             }
@@ -201,7 +190,6 @@
           .then((response) => {
             console.log(response);
             this.publicaciones = response.data.publicaciones.sort((a, b) => {
-              // Ordenar por fecha en orden descendente (más reciente primero)
               return new Date(b.fecha) - new Date(a.fecha);
             });
             console.log(this.publicaciones);
@@ -222,41 +210,42 @@
       },
 
       fetchData() {
-        axios.get('/api/v1/contenido')
-          .then(response => {
-            this.contenido = response.data.contenido;
-            this.filterContenido();
-          })
-          .catch(error => {
-            console.error('Error al obtener datos de la API', error);
-          });
+      axios.all([
+        axios.get('/api/v1/contenido'),
+        axios.get('/api/v1/fachada_subseccion')
+      ])
+      .then(axios.spread((response1, response2) => {
+        console.log('Datos de contenido:', response1.data.contenido);
+        console.log('Datos de subsecciones:', response2.data.subsecciones);
 
-        axios.get('/api/v1/secciones')
-          .then(response2 => {
-            console.log(response2);
-            this.secciones = response2.data.secciones;
-            this.filterContenido();
-          })
-          .catch(error => {
-            console.error('Error al obtener datos secciones', error);
-          });
-      },
+        this.contenido = response1.data.contenido;
+        this.subsecciones = response2.data.subsecciones;
+        this.filterContenido();
+      }))
+      .catch(error => {
+        console.error('Error al obtener datos de la API', error);
+      });
+    },
 
-      filterContenido() {
-        this.seccionesContenidoFiltrado = [];
+    filterContenido() {
+  if (this.contenido && this.subsecciones) {
+    // Obtiene la ruta actual
+    const rutaActual = this.$route.path;
 
-        for (const id in this.secciones) {
-          const seccion = this.secciones[id];
-          const contenidoId = seccion.contenido_id;
+    console.log('Ruta actual:', rutaActual);
 
-          for (const contenido of this.contenido) {
-            if (contenido.id === contenidoId && seccion.ruta === this.componentRuta) {
-              this.seccionesContenidoFiltrado.push({ seccion, contenido });
-              break;
-            }
-          }
-        }
-      },
+    this.subseccionesContenidoFiltrado = Object.values(this.subsecciones).map(seccion => {
+      const contenidoRelacionado = this.contenido.find(cont => cont.id === seccion.contenido_id);
+      return {
+        seccion,
+        contenido: contenidoRelacionado,
+      };
+    }).filter(data => data.seccion.ruta === rutaActual);
+
+    console.log('Contenido filtrado:', this.subseccionesContenidoFiltrado);
+  }
+},
+      
     },
   };
 </script>

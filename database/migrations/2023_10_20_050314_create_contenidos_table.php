@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('publicador')->default('');
             $table->string('imagen')->nullable()->default('');
             $table->date('fecha')->nullable();
+            $table->string('seccion')->nullable()->default('');
+            $table->string('subseccion')->nullable();
 
             $table->timestamps();
             

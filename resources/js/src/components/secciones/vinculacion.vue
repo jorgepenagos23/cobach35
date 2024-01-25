@@ -44,6 +44,15 @@
                         Préstamo de Instalaciones para actividades académicas. 
                         Presentación  de agrupaciones artísticas, banda de guerra y escolta del plantel.
                         Platicas y conferencias por parte de nuestro personal académico
+                        Préstamo de Instalaciones para actividades académicas. 
+                        Presentación  de agrupaciones artísticas, banda de guerra y escolta del plantel.
+                        Platicas y conferencias por parte de nuestro personal académico
+                        Préstamo de Instalaciones para actividades académicas. 
+                        Presentación  de agrupaciones artísticas, banda de guerra y escolta del plantel.
+                        Platicas y conferencias por parte de nuestro personal académico
+                        Préstamo de Instalaciones para actividades académicas. 
+                        Presentación  de agrupaciones artísticas, banda de guerra y escolta del plantel.
+                        Platicas y conferencias por parte de nuestro personal académico
 
                     <span class="text-yellow-500">Button.</span></h1>
         <div class="w-20 h-1 bg-indigo-500 rounded"></div>

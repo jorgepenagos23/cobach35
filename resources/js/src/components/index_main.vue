@@ -15,7 +15,7 @@
                 <div class="flex-no-wrap d-flex justify-space-between">
                   <div>
                     <v-card-title class="text-h5">PUBLICACIONES</v-card-title>
-                    <v-card-subtitle>Manejador de Publicaciones</v-card-subtitle>
+                    <v-card-subtitle>Manejador de INICIO</v-card-subtitle>
                     <v-card-actions>
                       <button @click="$router.push('/index_publicaciones')" class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
                         ENTRAR
