@@ -13,77 +13,77 @@
 
         <body style="overflow-x: auto;">
           
-<!-- Sección de Secciones Filtradas -->
-<section class="bg-blue-200 dark:bg-gray-900">
-      <div class="container px-6 py-10 mx-auto">
-        <div class="xl:flex xl:items-center xl:-mx-4">
-          <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
-            <p class="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
-          </div>
+<!-- Hero section -->
 
-          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
-            <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id">
-              <div class="mb-4">
-                <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
-              </div>
-              <p class="text-gray-500 dark:text-gray-300">{{ data.seccion.nombre_subseccion }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>     
-
-      <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
-  <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
-    <div class="flex flex-row items-center justify-between py-2">
-      <div class="flex flex-row items-center">
-        <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-          <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
-          <v-chip color="primary"> 
-            {{ publicacion.publicador }}
-          </v-chip>
-        </a>
-      </div>
-    
-      <div class="flex flex-row items-center">
-        <v-chip  color="red">
-          {{ formatDate(publicacion.fecha) }}
-        </v-chip>
-      </div>
+<section class="relative py-24 mb-0 bg-white lg:py-23"> 
+   <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
+      <img class="object-cover w-full h-80 rounded-xl" :src="data.contenido.imagen" alt="">
     </div>
 
-    <div class="mt-2">
-      <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full h-48 rounded">
-      <div class="flex flex-row items-center py-2"></div>
-    </div>
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
+      <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
+      </div>
+      
 
-    <div class="flex flex-row items-center">
-      <v-chip  color="secondary">
-                {{ publicacion.titulo }}
-      </v-chip>
-    </div>
+      <h1 class="text-3xl font-bold leading-tight text-left text-gray-900 sm:text-4xl md:text-5xl xl:text-6xl">
+        {{ data.contenido.titulo }} 
+      </h1>
+      <p class="mt-8 text-justify text-gray-700">
+        {{ data.contenido.descripcion }}
+      </p>
 
-    <div class="py-2">
-      <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
     </div>
   </div>
+</section>
+
+           <!-- section  -->
+           <div v-for="publicacion in list" :key="publicacion.id"
+     class="relative flex flex-col justify-center min-h-screen py-3 overflow-hidden bg-white sm:py-5">
+     <div class="items-center w-full max-w-screen-xl mx-auto mt-2 mb-4">
+              <div class="relative block w-full p-4 text-base leading-5 text-white opacity-100 rounded-xl group-hover:bg-lime-600 bg-teal-950 font-regular">{{ publicacion.titulo }}</div>
+        <div class="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
+            
+    <div class="h-full px-2 py-3 transition-all bg-white w-50 botom-3 md:w-4/6 md:px-2 rounded-xl group-hover:bg-sky-600">
+        <h2 class="w-full text-3xl font-bold text-left text-white"></h2>    </div>
+
+            <br>
+            <div>
+                <div class=" rounded-xl">
+                    <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full rounded h-96">
+                </div>
+            </div>
+            <div class="md:pr-3">
+                <p class="mb-6 text-justify text-black peer">
+                    <v-card class="mx-auto" max-width="1200" color="black" variant="tonal">
+                        <v-card-item>
+                            <div>
+                                <div class="mb-1 text-overline"></div>
+                                <p class="mt-6 text-lg leading-8 text-gray-600">{{ publicacion.descripcion }}</p>
+                            </div>
+                        </v-card-item>
+                        <v-card-actions></v-card-actions>
+                    </v-card>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-      
-   
-  
-
 <infinite-loading @infinite="infiniteHandler" class="my-4">
-        <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
-          Cargar más
-        </button>
-      </infinite-loading>
-        
-         
+    <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
+        Cargar más
+    </button>
+</infinite-loading>
+      
+      
+
+
         </body>
      
+
+        
         <div>
         <pie></pie>
          </div>

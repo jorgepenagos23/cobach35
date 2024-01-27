@@ -7,6 +7,8 @@ import CrearPublicaciones from  "./src/components/publicaciones/Crear.vue"
 import CrearReportes from  "./src/components/reportes/Crear.vue"
 import conocenos from "./src/components/secciones/conocenos.vue"
 import mision from "./src/components/secciones/subsecciones/mision.vue"
+import vinculacion from "./src/components/secciones/vinculacion.vue"
+
 
 
 import { createRouter, createWebHistory } from 'vue-router';
@@ -112,13 +114,20 @@ const router = createRouter({
     name: 'mision',
     component: mision,
 },
+{
+
+    path: '/vinculacion',
+    name: 'vinculacion',
+    component: vinculacion,
+},
+
 
 
 
 
 { path: '/oferta', component: () => import('./src/components/secciones/oferta.vue') },
 { path: '/alumnos', component: () => import('./src/components/secciones/alumnos.vue') },
-{ path: '/vinculacion', component: () => import('./src/components/secciones/vinculacion.vue') },
+
 { path: '/estructura_fronted', component: () => import('./src/components/estructura.vue') },
 { path: '/footer', component: () => import('./src/components/footer.vue') },
 { path: '/todos', component: () => import('./src/components/todos.vue') }, /// para descargas 
@@ -128,16 +137,21 @@ const router = createRouter({
 
 
 
-{ path: '/historia', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
+{ path: '/mision', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
+
+{ path: '/historia', component: () => import('./src/components/secciones/subsecciones/historia.vue') },
 { path: '/instalaciones', component: () => import('./src/components/secciones/subsecciones/instalaciones.vue') },
-{ path: '/estructura', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/visitanos', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/academias', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/plan', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/horarios', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/calendarios', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/becas', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
-{ path: '/danza', component: () => import('./src/components/secciones/subsecciones/mision.vue') },
+{ path: '/estructura', component: () => import('./src/components/secciones/subsecciones/estructura.vue') },
+
+{ path: '/visitanos', component: () => import('./src/components/secciones/subsecciones/visitanos.vue') },
+{ path: '/academias', component: () => import('./src/components/secciones/subsecciones/academias.vue') },
+
+{ path: '/plan', component: () => import('./src/components/secciones/subsecciones/plan.vue') },
+
+{ path: '/horarios', component: () => import('./src/components/secciones/subsecciones/horarios.vue') },
+{ path: '/calendarios', component: () => import('./src/components/secciones/subsecciones/calendarios.vue') },
+{ path: '/becas', component: () => import('./src/components/secciones/subsecciones/becas.vue') },
+{ path: '/danza', component: () => import('./src/components/secciones/subsecciones/danza.vue') },
 
 
     ],

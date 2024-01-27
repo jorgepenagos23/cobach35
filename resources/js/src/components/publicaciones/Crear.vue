@@ -36,6 +36,17 @@
                   prepend-icon="mdi-tooltip-account"
                   variant="solo"
                 ></v-text-field>
+
+                
+              <label for="seleccion">Selecciona una opción:</label>
+              <select id="seleccion" v-model="opcionSeleccionada">
+                <option v-for="opcion in opciones" :key="opcion.id" :value="opcion.valor">
+                  {{ opcion.nombre }}
+                </option>
+              </select>
+
+              <p>Opción seleccionada: {{ opcionSeleccionada }}</p>
+                          
                 
                 <span class="inline-block px-2 py-1 text-xs font-semibold text-blue-600 uppercase bg-blue-200 rounded-full">
                   Imagen      </span>
@@ -80,6 +91,14 @@ export default {
         publicador: "",
         imagenFile: null,
         imagen: "", 
+
+        opciones: [
+        { id: 1, nombre: 'Opción 1', valor: 'opcion1' },
+        { id: 2, nombre: 'Opción 2', valor: 'opcion2' },
+        { id: 3, nombre: 'Opción 3', valor: 'opcion3' },
+        // Agrega más opciones según sea necesario
+      ],
+      opcionSeleccionada: null,
       },
     };
   },

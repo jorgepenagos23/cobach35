@@ -43,7 +43,7 @@
         </div>
     </header>
 
-    <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+    <div v-for="publicacion in list" :key="publicacion.id" class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
   <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
     <div class="flex flex-row items-center justify-between py-2">
       <div class="flex flex-row items-center">
@@ -68,7 +68,7 @@
     </div>
 
     <div class="flex flex-row items-center">
-      <v-chip  color="secondary">
+      <v-chip  color="red">
                 {{ publicacion.titulo }}
       </v-chip>
     </div>
@@ -79,13 +79,12 @@
   </div>
 </div>
 
-  
       <infinite-loading @infinite="infiniteHandler" class="my-4">
         <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
           Cargar más
         </button>
       </infinite-loading>
-    </div>
+    </div>zz
   </template>
   
   <style>

@@ -14,8 +14,9 @@
         <body style="overflow-x: auto;">
           
 <!-- Sección de Secciones Filtradas -->
-<section class="bg-blue-200 dark:bg-green-600">
-    <h1>visitanos</h1>
+<section class="bg-blue-200 dark:bg-green-300">
+    <h1>PLAN DE ESTUDIOS</h1>
+    
       <div class="container px-6 py-10 mx-auto">
         <div class="xl:flex xl:items-center xl:-mx-4">
           <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
