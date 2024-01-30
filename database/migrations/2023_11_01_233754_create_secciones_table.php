@@ -20,9 +20,11 @@ return new class extends Migration
             $table->integer('orden_presentacion')->nullable();
             $table->string('ruta')->nullable()->default('/ruta');
             $table->string('nombre_componente')->nullable()->default('componente');
-
+            $table->boolean('es_subseccion')->default(false)->nullable(); // Nueva columna para indicar si es subsección
+        
             $table->timestamps();
         });
+        
     }
 
     public function down(): void

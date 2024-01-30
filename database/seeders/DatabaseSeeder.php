@@ -96,17 +96,32 @@ class DatabaseSeeder extends Seeder
 
 
          // Crear la sección
-                    $seccion = Seccion::create([
-                        'orden_presentacion' => 1,
-                        'nombre' => 'Inicio',
-                        'visible' => true,
-                        'seccion_id_padre' => null, // Asignar el ID de la sección padre
-                        'tipo' => 'contenido',
-                        'ruta' => '/',
-                        'nombre_componente' =>'inicio.vue',
-                 ]);
+         $seccionInicio = Seccion::firstOrCreate(
+            ['nombre' => 'Inicio'],
+            [
+                'orden_presentacion' => 1,
+                'visible' => true,
+                'seccion_id_padre' => null,
+                'tipo' => 'contenido',
+                'ruta' => '/',
+                'nombre_componente' => 'inicio.vue',
+                'es_subseccion' => false,
+            ]
+        );
+        
+        $contenidoInicio = Contenido::create([
+            'descripcion' => 'Nos complace darles una cálida bienvenida a esta institución educativa que se distingue por su compromiso con la excelencia académica y el desarrollo integral de sus estudiantes. En COBACH, nos esforzamos por proporcionar un ambiente educativo enriquecedor que fomente el aprendizaje, la creatividad y el crecimiento personal.
+            Este nuevo capítulo en sus vidas les brinda la oportunidad de explorar nuevas ideas, descubrir sus pasiones y cultivar habilidades que les serán útiles a lo largo de su trayectoria académica y profesional. Nuestra comunidad educativa está compuesta por profesionales dedicados, comprometidos con su éxito y dispuestos a apoyarlos en cada paso de su educación.',
+            'titulo' => 'Bienvenida',
+            'publicador' => 'Admin',
+            'imagen' => '/images/publicaciones/1706342839.jpg',
+            'fecha' => now(),
+        ]);
+        $seccionInicio->update(['contenido_id' => $contenidoInicio->id]);
 
-                   
+
+
+
                     Seccion::create([
                         'orden_presentacion' => 2,
                         'nombre' => 'Conócenos',
@@ -115,6 +130,7 @@ class DatabaseSeeder extends Seeder
                         'tipo' => 'contenido',
                         'ruta' => '/conocenos',
                         'nombre_componente' =>'conocenos.vue',
+                        'es_subseccion' => false, // Agregar el campo es_subseccion
                     ]);
             
                     Seccion::create([
@@ -125,6 +141,7 @@ class DatabaseSeeder extends Seeder
                         'tipo' => 'contenido',
                         'ruta' => '/oferta',
                         'nombre_componente' =>'oferta.vue',
+                        'es_subseccion' => false, // Agregar el campo es_subseccion
                     ]);
             
                     Seccion::create([
@@ -135,6 +152,7 @@ class DatabaseSeeder extends Seeder
                         'tipo' => 'contenido',
                         'ruta' => '/alumnos',
                         'nombre_componente' =>'Alumnos.vue',
+                        'es_subseccion' => false, // Agregar el campo es_subseccion
                     ]);
             
 
@@ -146,6 +164,7 @@ class DatabaseSeeder extends Seeder
                         'tipo' => 'contenido',
                         'ruta' => '/vinculacion',
                         'nombre_componente' =>'vinculacion.vue',
+                        'es_subseccion' => false, // Agregar el campo es_subseccion
                     ]);
 
                     Seccion::create([
@@ -155,7 +174,8 @@ class DatabaseSeeder extends Seeder
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
                         'ruta' => '/mision',
-                        'nombre_componente' =>'mision.vue',
+                        'nombre_componente' =>'mision.vue',   
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
                     ]);
                     Seccion::create([
                         'orden_presentacion' => null,
@@ -163,8 +183,11 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Historia',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'historia',
+                        'ruta' => '/historia',
                         'nombre_componente' =>'historia.vue',
+
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
             
                     Seccion::create([
@@ -173,8 +196,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Estructura Funcional',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'estructura',
-                        'nombre_componente' =>'Estructura.vue',
+                        'ruta' => '/estructura',
+                        'nombre_componente' =>'estructura.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
             
                     Seccion::create([
@@ -183,8 +208,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Instalaciones',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'instalaciones',
+                        'ruta' => '/instalaciones',
                         'nombre_componente' =>'instalaciones.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
 
                     Seccion::create([
@@ -193,8 +220,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Visitanos',
                         'seccion_id_padre' => 2, 
                         'tipo' => 'contenido',
-                        'ruta' => 'visitanos',
+                        'ruta' => '/visitanos',
                         'nombre_componente' =>'Visitanos.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
             
                   
@@ -204,8 +233,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Academias',
                         'seccion_id_padre' => 3, 
                         'tipo' => 'contenido',
-                        'ruta' => 'academias',
-                        'nombre_componente' =>'Academias.vue',
+                        'ruta' => '/academias',
+                        'nombre_componente' =>'academias.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
             
                   
@@ -215,8 +246,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Plan de Estudios',
                         'seccion_id_padre' => 3, 
                         'tipo' => 'contenido',
-                        'ruta' => 'plan',
+                        'ruta' => '/plan',
                         'nombre_componente' =>'Plan.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
             
                   
@@ -228,8 +261,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Horarios',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'horarios',
+                        'ruta' => '/horarios',
                         'nombre_componente' =>'Horarios.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
 
                     Seccion::create([
@@ -238,8 +273,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Calendarios',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'calendarios',
+                        'ruta' => '/calendarios',
                         'nombre_componente' =>'Calendarios.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
 
                     Seccion::create([
@@ -248,8 +285,11 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Becas',
                         'seccion_id_padre' => 4, 
                         'tipo' => 'contenido',
-                        'ruta' => 'becas',
+                        'ruta' => '/becas',
                         'nombre_componente' =>'Becas.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
+                        
                     ]);
 
 
@@ -260,8 +300,10 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Sistema COBACH',
                         'seccion_id_padre' => 4,  
                         'tipo' => 'contenido',
-                        'ruta' => 'login',
+                        'ruta' => '/login',
                         'nombre_componente' =>'login.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
 
             
@@ -271,24 +313,17 @@ class DatabaseSeeder extends Seeder
                         'nombre_subseccion'=>'Danza Folklorika',
                         'seccion_id_padre' => 5,  
                         'tipo' => 'contenido',
-                        'ruta' => 'danza',
-                        'nombre_componente' =>'Danza.vue',
+                        'ruta' => '/danza',
+                        'nombre_componente' =>'danza.vue',
+                        'es_subseccion' => true, // Agregar el campo es_subseccion
+
                     ]);
 
             
        
-       
 
 
-                    // Asociar un contenido a la sección creada
-                    $contenido = Contenido::create([
-                        'descripcion' => 'Este es el contenido predeterminado',
-                        'titulo' => 'Título predeterminado', 
-                        'fecha' => now(), 
-
-                    ]);
-
-
+            
 
 
                     

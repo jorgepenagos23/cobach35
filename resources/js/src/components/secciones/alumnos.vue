@@ -247,6 +247,8 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
           });
       },
 
+      
+
       formatDate(isoDate) {
         const options = {
           year: 'numeric',

@@ -1,10 +1,10 @@
 <script setup>
   import InfiniteLoading from "v3-infinite-loading";
-  import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+  import "v3-infinite-loading/lib/style.css"; 
 </script>
-
 <template>
-    <div>
+
+ <div>
         <banner></banner>
     </div>
 
@@ -12,86 +12,76 @@
 
 
         <body style="overflow-x: auto;">
+
           
-<!-- Sección de Secciones Filtradas -->
-<section class="bg-blue-200 dark:bg-green-300">
-    <h1>PLAN DE ESTUDIOS</h1>
-    
-      <div class="container px-6 py-10 mx-auto">
-        <div class="xl:flex xl:items-center xl:-mx-4">
-          <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
-            <p class="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
-          </div>
-
-          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
-            <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id">
-              <div class="mb-4">
-                <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
-              </div>
-              <p class="text-gray-500 dark:text-gray-300">{{ data.seccion.nombre_subseccion }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>     
-
-      <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
-  <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
-    <div class="flex flex-row items-center justify-between py-2">
-      <div class="flex flex-row items-center">
-        <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-          <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
-          <v-chip color="primary"> 
-            {{ publicacion.publicador }}
-          </v-chip>
-        </a>
-      </div>
-    
-      <div class="flex flex-row items-center">
-        <v-chip  color="red">
-          {{ formatDate(publicacion.fecha) }}
-        </v-chip>
-      </div>
+<section class="relative bg-white py-27 lg:py-27">
+  <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
+      <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
     </div>
 
-    <div class="mt-2">
-      <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full h-48 rounded">
-      <div class="flex flex-row items-center py-2"></div>
-    </div>
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
+      <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
+        <span class="absolute hidden w-24 h-24 rotate-90 skew-x-12 bg-green-400 -left-6 md:left-4 top-24 lg:top-28 rounded-3xl blur-xl opacity-60 lg:opacity-25 lg:block"></span>
+        <span class="absolute w-24 h-24 bg-blue-600 right-4 bottom-12 rounded-3xl blur-xl opacity-20"></span>
+      </div>
+      
+      <span class="absolute w-4/12 rotate-90 rounded-full skew-y-15 skew-x-18 lg:w-2/12 aspect-square bg-gradient-to-tr from-blue-600 to-green-400 -top-5 lg:left-0 blur-2xl opacity-40"></span>
 
-    <div class="flex flex-row items-center">
-      <v-chip  color="secondary">
-                {{ publicacion.titulo }}
-      </v-chip>
-    </div>
-
-    <div class="py-2">
-      <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
+      <h1 class="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-5xl xl:text-6xl">
+        {{ data.contenido.titulo }} 
+        <span class="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 from-20% via-blue-600 via-30% to-green-600"></span>
+      </h1>
+      <p class="mt-8 text-justify text-gray-700">
+        {{ data.contenido.descripcion }}
+      </p>
     </div>
   </div>
-</div>
+</section>
 
+  <div>
+    <div v-for="publicacion in publicacionesFiltradas" :key="publicacion.id">
+      <!-- Renderiza la información de la publicación aquí -->
+      <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
+        <div class="flex flex-row items-center justify-between py-2">
+          <div class="flex flex-row items-center">
+            <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
+              <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
+              <v-chip color="primary"> 
+                {{ publicacion.publicador }}
+              </v-chip>
+            </a>
+          </div>
 
-      
-   
-  
+          <div class="flex flex-row items-center">
+            <v-chip  color="red">
+              {{ formatDate(publicacion.fecha) }}
+            </v-chip>
+          </div>
+        </div>
 
-<infinite-loading @infinite="infiniteHandler" class="my-4">
-        <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
-          Cargar más
-        </button>
-      </infinite-loading>
-        
-         
-        </body>
-     
-        <div>
-        <pie></pie>
-         </div>
-    </v-app>
+        <div class="mt-2">
+          <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full h-48 rounded">
+          <div class="flex flex-row items-center py-2"></div>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <v-chip  color="secondary">
+            {{ publicacion.titulo }}
+          </v-chip>
+        </div>
+
+        <div class="py-2">
+          <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </body>
+  </v-app>
 </template>
-  
 <style>
 
 @import "tailwindcss/base";
@@ -118,16 +108,11 @@ import banner from "../../inicio.vue";
 import pie from "../../footer.vue";
 import Swal from 'sweetalert2';
 
-  const api = '/api/v1/publicacion';
 
-  export default {
-    name: 'mision',
-    components: {
-      banner,
-      pie,
-    },
-    data() {
-      return {
+export default {
+  data() {
+    return {
+     
         page: 1,
         list: [],
         isLoading: false,
@@ -142,76 +127,91 @@ import Swal from 'sweetalert2';
         secciones: {},
         seccionesContenidoFiltrado: [], 
         componentRuta: '',
-      };
+
+
+
+      
+    };
+    
+  },
+  components: {
+      banner,
+      pie,
     },
-    created() {
-      this.cargarPublicaciones();
-      this.componentRuta = this.$route.path;
+  computed: {
+    publicacionesFiltradas() {
+      const rutaActual = this.$route.path.toLowerCase();
+      return this.publicaciones.filter(publicacion => {
+        const rutaPublicacion = (publicacion.seccion || publicacion.subseccion)?.ruta.toLowerCase();
+        return rutaPublicacion === rutaActual;
+      });
+    },
+  },
+  created() {
+    // Llama automáticamente a cargarPublicacionesConSecciones al crear la instancia
+    this.cargarPublicacionesConSecciones();
+    this.componentRuta = this.$route.path;
       this.fetchData();
+  },
+  methods: {
+    async cargarPublicacionesConSecciones() {
+      try {
+        const response = await axios.get('api/v1/publicaciones-con-secciones');
+        this.publicaciones = response.data;
+        console.log('Publicaciones cargadas:', this.publicaciones);
+      } catch (error) {
+        console.error('Error al cargar las publicaciones con secciones', error);
+      }
     },
-    methods: {
-      infiniteHandler($state) {
-        if (this.isLoading) {
-        
-          return;
-        }
 
-        this.isLoading = true;
+    formatDate(isoDate) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      };
+      return new Date(isoDate).toLocaleString('es-es', options);
+    },
 
-        axios.get(api, {
-          params: {
-            page: this.page,
-          },
-        }).then((response) => {
-          if (response.data.publicaciones.length) {
-            this.page += 1;
-            const newPublicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            this.list.push(...newPublicaciones);
-            this.isLoading = false;
-            console.log("solicitando más información");
+    infiniteHandler($state) {
+      if (this.isLoading) {
+        return;
+      }
 
-            $state.loaded();
+      this.isLoading = true;
 
-            if (this.list.length >= response.data.total) {
-              this.hasMoreResults = false;
-              $state.complete();
-            }
-          } else {
-            console.log("has llegado al final del contenido");
-            this.isLoading = false;
+      axios.get('/api/v1/publicaciones-con-secciones', {
+        params: {
+          page: this.page,
+        },
+      }).then((response) => {
+        if (response.data.length) {
+          this.page += 1;
+          const newPublicaciones = response.data.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha);
+          });
+          this.publicaciones.push(...newPublicaciones);
+          this.isLoading = false;
+          console.log("Solicitando más información");
+
+          $state.loaded();
+
+          if (this.publicaciones.length >= response.data.total) {
             this.hasMoreResults = false;
             $state.complete();
           }
-        });
-      },
+        } else {
+          console.log("Has llegado al final del contenido");
+          this.isLoading = false;
+          this.hasMoreResults = false;
+          $state.complete();
+        }
+      });
+    },
 
-      cargarPublicaciones() {
-        axios.get('/api/v1/publicacion')
-          .then((response) => {
-            console.log(response);
-            this.publicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            console.log(this.publicaciones);
-          })
-          .catch((error) => {
-            console.error('Error al cargar las publicaciones:', error);
-          });
-      },
 
-      formatDate(isoDate) {
-        const options = {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'UTC'
-        };
-        return new Date(isoDate).toLocaleString('es-es', options);
-      },
-
-      fetchData() {
+    fetchData() {
       axios.all([
         axios.get('/api/v1/contenido'),
         axios.get('/api/v1/fachada_subseccion')
@@ -247,7 +247,6 @@ import Swal from 'sweetalert2';
     console.log('Contenido filtrado:', this.subseccionesContenidoFiltrado);
   }
 },
-      
-    },
-  };
+  },
+};
 </script>

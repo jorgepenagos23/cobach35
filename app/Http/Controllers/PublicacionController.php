@@ -12,6 +12,9 @@ class PublicacionController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+     
     public function index(Request $request)
     {
         $page = $request->input('page', 1); // Obtiene el número de página desde la solicitud
@@ -30,6 +33,21 @@ class PublicacionController extends Controller
             'message' => 'Solicitud Exitosa API'
         ], 200);
     }
+
+    
+    
+
+
+public function indexConSecciones()
+{
+    // Lógica para obtener publicaciones con información de secciones y subsecciones
+    $publicaciones = Publicacion::with(['seccion', 'subseccion'])->get();
+
+    return response()->json($publicaciones);
+}
+
+
+
     
     public function store(Request $request)
     {

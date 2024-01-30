@@ -64,6 +64,10 @@ use App\Http\Controllers\SeccionController;
     Route::get('v1/alumno/show/{id}', [AlumnoController::class, 'show'])->middleware('auth:sanctum');
     //publicaciones api
     Route::get('v1/publicacion', [PublicacionController::class, 'index']);
+    Route::get('v1/publicaciones-con-secciones', [PublicacionController::class, 'indexConSecciones']);
+
+
+
     Route::get('v1/publicacion/create', [PublicacionController::class, 'create'])->middleware('auth:sanctum');
     Route::post('v1/publicacion', [PublicacionController::class, 'store']);
     Route::get('v1/publicacion/{id}', [PublicacionController::class, 'show'])->middleware('auth:sanctum');
