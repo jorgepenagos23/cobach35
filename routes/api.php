@@ -64,9 +64,13 @@ use App\Http\Controllers\SeccionController;
     Route::get('v1/alumno/show/{id}', [AlumnoController::class, 'show'])->middleware('auth:sanctum');
     //publicaciones api
     Route::get('v1/publicacion', [PublicacionController::class, 'index']);
+
     Route::get('v1/publicaciones-con-secciones', [PublicacionController::class, 'indexConSecciones']);
 
 
+    Route::get('v1/publicaciones-con-secciones/2', [PublicacionController::class, 'indexConSecciones2']);
+
+    Route::get('v1/publicaciones-con-secciones/3', [PublicacionController::class, 'indexConSecciones3']);
 
     Route::get('v1/publicacion/create', [PublicacionController::class, 'create'])->middleware('auth:sanctum');
     Route::post('v1/publicacion', [PublicacionController::class, 'store']);
@@ -113,6 +117,13 @@ use App\Http\Controllers\SeccionController;
     Route::get('v1/contenido', [ContenidoController::class, 'index']);
     Route::get('v1/fachada_subseccion', [SeccionController::class, 'fachada_subseccion']);
 
+
+
+    ////CONTENIDOS
+
+
+    Route::put('v1/contenido/update/{id}', [ContenidoController::class, 'update']);
+    Route::delete('v1/contenido/delete/{id}', [ContenidoController::class, 'destroy'])->middleware('auth:sanctum');
 
 
 

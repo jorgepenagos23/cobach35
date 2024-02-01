@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use App\Models\Seccion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class PublicacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-
+    
      
     public function index(Request $request)
     {
@@ -46,39 +43,76 @@ public function indexConSecciones()
     return response()->json($publicaciones);
 }
 
+public function indexConSecciones2()
+{
+    // Obtener todas las publicaciones con información de secciones y subsecciones
+    $publicaciones = Publicacion::with(['seccion', 'subseccion'])->get();
+
+    // Obtener todas las secciones
+    $secciones = Seccion::all();
+
+    // Retornar un arreglo asociativo con las publicaciones y las secciones
+    return response()->json([
+        'publicaciones' => $publicaciones,
+        'secciones' => $secciones,
+    ]);
+}
+
+public function indexConSecciones3()
+{
+    // Obtener todas las publicaciones con información de secciones y subsecciones
+
+    // Obtener todas las secciones
+    $secciones = Seccion::all();
+
+    // Retornar un arreglo asociativo con las publicaciones y las secciones
+    return response()->json([
+        'secciones' => $secciones,
+    ]);
+}
 
 
-    
-    public function store(Request $request)
-    {
-        $request->validate([
-            'titulo' => 'required|string',
-            'descripcion' => 'required|string',
-            'fecha' => 'required|date',
-            'publicador' => 'required|string',
-            'imagenFile' => 'required|mimetypes:image/jpeg,image/png,image/jpg,image/gif,video/mp4|max:29480', // admite imágenes (jpeg, png, jpg, gif) y videos (mp4)
 
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'titulo' => 'required|string',
+        'descripcion' => 'required|string',
+        'fecha' => 'required|date',
+        'publicador' => 'required|string',
+        'imagenFile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $publicacion = new Publicacion();
-        $publicacion->titulo = $request->titulo;
-        $publicacion->descripcion = $request->descripcion;
-        $publicacion->fecha = $request->fecha;
-        $publicacion->publicador = $request->publicador;
+    $publicacion = new Publicacion();
+    $publicacion->titulo = $request->titulo;
+    $publicacion->descripcion = $request->descripcion;
+    $publicacion->fecha = $request->fecha;
+    $publicacion->publicador = $request->publicador;
 
-        // Manejo de la imagen
-        if ($request->hasFile('imagenFile')) {
-            $imagenFile = $request->file('imagenFile');
-            $imagenNombre = time() . '.' . $imagenFile->getClientOriginalExtension();
-            $imagenRuta = public_path('/images/publicaciones/');
-            $imagenFile->move($imagenRuta, $imagenNombre);
-            $publicacion->imagen = '/images/publicaciones/' . $imagenNombre;
-        }
-
-        $publicacion->save();
-
-        return response()->json($publicacion, 201);
+    // Manejo de la imagen
+    if ($request->hasFile('imagenFile')) {
+        $imagenFile = $request->file('imagenFile');
+        $imagenNombre = time() . '.' . $imagenFile->getClientOriginalExtension();
+        $imagenRuta = public_path('/images/publicaciones/');
+        $imagenFile->move($imagenRuta, $imagenNombre);
+        $publicacion->imagen = '/images/publicaciones/' . $imagenNombre;
     }
+
+    // Verificar si seccion_id está presente y no es nulo antes de asignarlo
+    if ($request->has('seccion_id') && $request->input('seccion_id') !== null) {
+        $publicacion->seccion_id = $request->input('seccion_id');
+    }
+
+    // Verificar si subseccion_id está presente y no es nulo antes de asignarlo
+    if ($request->has('subseccion_id') && $request->input('subseccion_id') !== null) {
+        $publicacion->subseccion_id = $request->input('subseccion_id');
+    }
+
+    $publicacion->save();
+
+    return response()->json($publicacion, 201);
+}
+
 
     /**
      * Display the specified resource.

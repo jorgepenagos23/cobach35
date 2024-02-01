@@ -35,10 +35,12 @@ class ContenidoPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Contenido $contenido): bool
+    public function update(User $user)
     {
-        //
+        // Verificar si el usuario autenticado es el propietario de la publicación
+        return in_array($user->rol, ['director', 'administrador', 'estudiante']);
     }
+
 
     /**
      * Determine whether the user can delete the model.

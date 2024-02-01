@@ -1,9 +1,13 @@
 <template>
+      <v-app>
+
   <div>
     <header>
       <navegacion></navegacion>
     </header>
-    
+
+
+    <appbar></appbar>
     <div class="bg-deep-orange">
       <div class="max-w-screen-xl">
         <div class="max-w-4xl p-5 mx-auto bg-light">
@@ -67,6 +71,7 @@
       </div>
     </div>
   </div>
+</v-app>
 </template>
 
 <script>

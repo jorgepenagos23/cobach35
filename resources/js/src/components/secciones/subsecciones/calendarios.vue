@@ -14,7 +14,7 @@
         <body style="overflow-x: auto;">
           
 <!-- Sección de Secciones Filtradas -->
-<section class="bg-blue-200 dark:bg-green-300">
+<section class="bg-blue-200 dark:bg-blue-900">
     <h1>CALENDARIOS</h1>
       <div class="container px-6 py-10 mx-auto">
         <div class="xl:flex xl:items-center xl:-mx-4">
@@ -35,7 +35,7 @@
       </div>
     </section>     
 
-      <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+      <div v-for="publicacion in publicacionesFiltradas" :key="publicacion.id"  class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
   <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
     <div class="flex flex-row items-center justify-between py-2">
       <div class="flex flex-row items-center">
@@ -66,27 +66,18 @@
     </div>
 
     <div class="py-2">
-      <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
-    </div>
+                        <p class="leading-snug text-justify" v-html="publicacion.descripcion"></p>
+                      </div>
   </div>
 </div>
 
 
       
-   
   
-
-<infinite-loading @infinite="infiniteHandler" class="my-4">
-        <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
-          Cargar más
-        </button>
-      </infinite-loading>
-        
          
         </body>
      
         <div>
-        <pie></pie>
          </div>
     </v-app>
 </template>
@@ -111,106 +102,115 @@
    }
 }
 </style>
+
 <script>
 import axios from 'axios';
 import banner from "../../inicio.vue";
 import pie from "../../footer.vue";
 import Swal from 'sweetalert2';
 
-  const api = '/api/v1/publicacion';
 
-  export default {
-    name: 'mision',
-    components: {
-      banner,
-      pie,
-    },
-    data() {
-      return {
+export default {
+  data() {
+    return {
+     
         page: 1,
         list: [],
         isLoading: false,
         hasMoreResults: true,
         
         publicaciones: [],
-        slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
         currentIndex: 0,
-        colors: ['white', 'white'],
         posts: [],
         contenido: [],
         secciones: {},
         seccionesContenidoFiltrado: [], 
         componentRuta: '',
-      };
+
+
+
+      
+    };
+    
+  },
+  components: {
+      banner,
+      pie,
     },
-    created() {
-      this.cargarPublicaciones();
-      this.componentRuta = this.$route.path;
+  computed: {
+    publicacionesFiltradas() {
+      const rutaActual = this.$route.path.toLowerCase();
+      return this.publicaciones.filter(publicacion => {
+        const rutaPublicacion = (publicacion.seccion || publicacion.subseccion)?.ruta.toLowerCase();
+        return rutaPublicacion === rutaActual;
+      });
+    },
+  },
+  created() {
+    // Llama automáticamente a cargarPublicacionesConSecciones al crear la instancia
+    this.cargarPublicacionesConSecciones();
+    this.componentRuta = this.$route.path;
       this.fetchData();
+  },
+  methods: {
+    async cargarPublicacionesConSecciones() {
+      try {
+        const response = await axios.get('api/v1/publicaciones-con-secciones');
+        this.publicaciones = response.data;
+        console.log('Publicaciones cargadas:', this.publicaciones);
+      } catch (error) {
+        console.error('Error al cargar las publicaciones con secciones', error);
+      }
     },
-    methods: {
-      infiniteHandler($state) {
-        if (this.isLoading) {
-        
-          return;
-        }
 
-        this.isLoading = true;
+    formatDate(isoDate) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      };
+      return new Date(isoDate).toLocaleString('es-es', options);
+    },
 
-        axios.get(api, {
-          params: {
-            page: this.page,
-          },
-        }).then((response) => {
-          if (response.data.publicaciones.length) {
-            this.page += 1;
-            const newPublicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            this.list.push(...newPublicaciones);
-            this.isLoading = false;
-            console.log("solicitando más información");
+    infiniteHandler($state) {
+      if (this.isLoading) {
+        return;
+      }
 
-            $state.loaded();
+      this.isLoading = true;
 
-            if (this.list.length >= response.data.total) {
-              this.hasMoreResults = false;
-              $state.complete();
-            }
-          } else {
-            console.log("has llegado al final del contenido");
-            this.isLoading = false;
+      axios.get('/api/v1/publicaciones-con-secciones', {
+        params: {
+          page: this.page,
+        },
+      }).then((response) => {
+        if (response.data.length) {
+          this.page += 1;
+          const newPublicaciones = response.data.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha);
+          });
+          this.publicaciones.push(...newPublicaciones);
+          this.isLoading = false;
+          console.log("Solicitando más información");
+
+          $state.loaded();
+
+          if (this.publicaciones.length >= response.data.total) {
             this.hasMoreResults = false;
             $state.complete();
           }
-        });
-      },
+        } else {
+          console.log("Has llegado al final del contenido");
+          this.isLoading = false;
+          this.hasMoreResults = false;
+          $state.complete();
+        }
+      });
+    },
 
-      cargarPublicaciones() {
-        axios.get('/api/v1/publicacion')
-          .then((response) => {
-            console.log(response);
-            this.publicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            console.log(this.publicaciones);
-          })
-          .catch((error) => {
-            console.error('Error al cargar las publicaciones:', error);
-          });
-      },
 
-      formatDate(isoDate) {
-        const options = {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'UTC'
-        };
-        return new Date(isoDate).toLocaleString('es-es', options);
-      },
-
-      fetchData() {
+    fetchData() {
       axios.all([
         axios.get('/api/v1/contenido'),
         axios.get('/api/v1/fachada_subseccion')
@@ -246,7 +246,6 @@ import Swal from 'sweetalert2';
     console.log('Contenido filtrado:', this.subseccionesContenidoFiltrado);
   }
 },
-      
-    },
-  };
+  },
+};
 </script>

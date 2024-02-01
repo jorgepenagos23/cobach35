@@ -14,14 +14,15 @@
         <body style="overflow-x: auto;">
           
 <!-- Sección de Secciones Filtradas -->
-<section class="bg-blue-200 dark:bg-gray-900">
+      <section class="relative py-24 mb-0 bg-white lg:py-23"> 
         <div class="container px-6 py-10 mx-auto">
-          <div class="xl:flex xl:items-center xl:-mx-4">
+        <div class="xl:flex xl:items-center xl:-mx-4">
             <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-              <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
-              <p class="max-w-2xl mt-4 text-justify text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
+              <h1 class="text-3xl font-bold leading-tight text-dark sm:text-4xl md:text-5xl xl:text-6xl">
+          {{ data.contenido.titulo }}
+        </h1>
+              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-grey-700">{{ data.contenido.descripcion }}</p>
             </div>
-  
             <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
               <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
                 <div class="mb-4">
@@ -33,9 +34,10 @@
           </div>
         </div>
       </section>
+
                             
 
-      <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+      <div v-for="publicacion in publicacionesFiltradas" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
   <div class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
     <div class="flex flex-row items-center justify-between py-2">
       <div class="flex flex-row items-center">
@@ -66,8 +68,9 @@
     </div>
 
     <div class="py-2">
-      <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
-    </div>
+  <p class="leading-snug text-justify" v-html="publicacion.descripcion"></p>
+</div>
+
   </div>
 </div>
 
@@ -76,17 +79,10 @@
    
   
 
-<infinite-loading @infinite="infiniteHandler" class="my-4">
-        <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
-          Cargar más
-        </button>
-      </infinite-loading>
-        
          
         </body>
      
         <div>
-        <pie></pie>
          </div>
     </v-app>
 </template>
@@ -111,35 +107,23 @@
    }
 }
 </style>
+
 <script>
-  import axios from 'axios';
-  import { VImg } from "vuetify/lib/components/index.mjs";
-  import { format } from 'date-fns';
-  import es from 'date-fns/locale/es'; // Importa el idioma español
-  import banner from "../inicio.vue";
-  import pie from "../footer.vue";
-  import Swal from 'sweetalert2';
+import axios from 'axios';
+import banner from "../../components/inicio.vue";
+import pie from "../../components/footer.vue";
+import Swal from 'sweetalert2';
 
-  const api = '/api/v1/publicacion';
 
-  export default {
-    name: 'conocenos',
-    components: {
-      banner,
-      pie,
-      VImg,
-    },
-    data() {
-      return {
+export default {
+  data() {
+    return {
+     
         page: 1,
         list: [],
         isLoading: false,
         hasMoreResults: true,
-        items: [
-          { text: 'Slide 1', color: 'white', image: 'https://i.ytimg.com/vi/lZ-D6vgcie0/maxresdefault.jpg' },
-          { text: 'Slide 2', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1N5xmc3hGjYTCZMnzaMoTRZe80LlEBH8z0w&usqp=CAU' },
-          { text: 'Slide 3', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThLrpEm8LVg2Y8GeINyUAlzavtT4lFvr4pFA&usqp=CAU' },
-        ],
+        
         publicaciones: [],
         slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
         currentIndex: 0,
@@ -147,81 +131,92 @@
         posts: [],
         contenido: [],
         secciones: {},
-        seccionesContenidoFiltrado: [], // Nuevo array para almacenar secciones y contenido filtrado
+        seccionesContenidoFiltrado: [], 
         componentRuta: '',
-      };
+
+
+
+      
+    };
+    
+  },
+  components: {
+      banner,
+      pie,
     },
-    created() {
-      this.cargarPublicaciones();
-      this.componentRuta = this.$route.path;
+  computed: {
+    publicacionesFiltradas() {
+      const rutaActual = this.$route.path.toLowerCase();
+      return this.publicaciones.filter(publicacion => {
+        const rutaPublicacion = (publicacion.seccion || publicacion.subseccion)?.ruta.toLowerCase();
+        return rutaPublicacion === rutaActual;
+      });
+    },
+  },
+  created() {
+    // Llama automáticamente a cargarPublicacionesConSecciones al crear la instancia
+    this.cargarPublicacionesConSecciones();
+    this.componentRuta = this.$route.path;
       this.fetchData();
+  },
+  methods: {
+    async cargarPublicacionesConSecciones() {
+      try {
+        const response = await axios.get('api/v1/publicaciones-con-secciones');
+        this.publicaciones = response.data;
+        console.log('Publicaciones cargadas:', this.publicaciones);
+      } catch (error) {
+        console.error('Error al cargar las publicaciones con secciones', error);
+      }
     },
-    methods: {
-      infiniteHandler($state) {
-        if (this.isLoading) {
-          // Evita realizar múltiples solicitudes simultáneas
-          return;
-        }
 
-        this.isLoading = true;
+    formatDate(isoDate) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      };
+      return new Date(isoDate).toLocaleString('es-es', options);
+    },
 
-        axios.get(api, {
-          params: {
-            page: this.page,
-          },
-        }).then((response) => {
-          if (response.data.publicaciones.length) {
-            this.page += 1;
-            // Ordena las publicaciones por fecha en orden descendente antes de agregarlas a la lista existente
-            const newPublicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            this.list.push(...newPublicaciones);
-            this.isLoading = false;
-            console.log("solicitando más información");
+    infiniteHandler($state) {
+      if (this.isLoading) {
+        return;
+      }
 
-            $state.loaded();
+      this.isLoading = true;
 
-            if (this.list.length >= response.data.total) {
-              // Si has cargado todos los resultados disponibles, completa la paginación
-              this.hasMoreResults = false;
-              $state.complete();
-            }
-          } else {
-            console.log("has llegado al final del contenido");
-            this.isLoading = false;
+      axios.get('/api/v1/publicaciones-con-secciones', {
+        params: {
+          page: this.page,
+        },
+      }).then((response) => {
+        if (response.data.length) {
+          this.page += 1;
+          const newPublicaciones = response.data.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha);
+          });
+          this.publicaciones.push(...newPublicaciones);
+          this.isLoading = false;
+          console.log("Solicitando más información");
+
+          $state.loaded();
+
+          if (this.publicaciones.length >= response.data.total) {
             this.hasMoreResults = false;
             $state.complete();
           }
-        });
-      },
+        } else {
+          console.log("Has llegado al final del contenido");
+          this.isLoading = false;
+          this.hasMoreResults = false;
+          $state.complete();
+        }
+      });
+    },
 
-      cargarPublicaciones() {
-        axios.get('/api/v1/publicacion')
-          .then((response) => {
-            console.log(response);
-            this.publicaciones = response.data.publicaciones.sort((a, b) => {
-              // Ordenar por fecha en orden descendente (más reciente primero)
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            console.log(this.publicaciones);
-          })
-          .catch((error) => {
-            console.error('Error al cargar las publicaciones:', error);
-          });
-      },
-
-      formatDate(isoDate) {
-        const options = {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'UTC'
-        };
-        return new Date(isoDate).toLocaleString('es-es', options);
-      },
-
-      fetchData() {
+    fetchData() {
         axios.get('/api/v1/contenido')
           .then(response => {
             this.contenido = response.data.contenido;
@@ -257,6 +252,11 @@
           }
         }
       },
-    },
-  };
+
+
+
+
+
+  },
+};
 </script>

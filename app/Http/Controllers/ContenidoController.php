@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContenidoRequest;
 use App\Http\Requests\UpdateContenidoRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 use App\Models\Contenido;
 
 class ContenidoController extends Controller
@@ -13,66 +16,110 @@ class ContenidoController extends Controller
      */
     public function index()
     {
-       
-        
-            
-            $contenido = Contenido::all();     
-    
-            return response()->json([
-                'message'=>'contenido devueltas',
-                 'contenido'=>$contenido,
-            ],200);
-    
-        
+        $contenido = Contenido::all();
+
+        return response()->json([
+            'message' => 'Contenido devueltas',
+            'contenido' => $contenido,
+        ], 200);
     }
 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreContenidoRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contenido $contenido)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Contenido $contenido)
     {
-        //
+        return response()->json([
+            'message' => 'Contenido para editar',
+            'contenido' => $contenido,
+        ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateContenidoRequest $request, Contenido $contenido)
+
+
+
+    
+    public function update(Request $request, $id)
     {
-        //
+    Log::info('Datos del Request:', $request->all());
+        $contenido = Contenido::findOrFail($id);    
+        if (!$contenido) {
+            return response()->json([
+                'error' => true,
+                'mensaje' => "No existe ese contenido",
+            ]);
+        }
+    
+        $this->authorize('update', $contenido);
+    
+        $request->validate([
+            'titulo' => 'required',
+            'descripcion' => 'required',
+            'fecha' => 'required',
+            'imagenFile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Ajusta según tus necesidades
+        ]);
+
+    
+        $contenido->titulo = $request->input('titulo');
+        $contenido->descripcion = $request->input('descripcion');
+        $contenido->fecha = $request->input('fecha');
+
+
+        if ($request->hasFile('imagenFile')) {
+            $imagenPath = $request->file('imagenFile')->storeAs('public/images/contenidos', 'nombre_personalizado.jpg');
+            $contenido->imagen = str_replace('public/', '', $imagenPath);
+        }
+        
+        if ($contenido->save()) {
+            return response()->json([
+                'data' => $contenido,
+                'mensaje' => "Contenido actualizado con éxito",
+            ]);
+        } else {
+            return response()->json([
+                'error' => true,
+                'mensaje' => "No se actualizó ese contenido",
+            ]);
+        }
+    }
+    
+
+
+
+
+
+
+
+
+    public function destroy( $id)
+    {
+       
+        $contenido = Contenido::find($id);
+
+        if( isset($contenido)){
+
+            $resp = Contenido::destroy($id);
+            if($resp){
+
+                return response()->json([
+                    'data'=>$contenido,
+                    'message' => 'Contenido eliminado exitosamente',
+                ]);
+            }else{
+                return response()->json([
+                    'data'=>$contenido,
+                    'mesnsaje'=>"el contenido  no existe",
+                ]);
+
+            }
+
+        }else{
+
+                return response()->json([
+                    'error'=>true,
+                    'mesnsaje'=>"la publicacion no existe",
+                ]);
+
+            }
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contenido $contenido)
-    {
-        //
-    }
+ 
 }

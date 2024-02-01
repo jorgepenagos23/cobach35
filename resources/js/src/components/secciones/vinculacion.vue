@@ -64,24 +64,19 @@
         <v-icon icon="mdi-check" color="success"></v-icon>
       </template>
       <v-expansion-panels v-model="panel" :disabled="disabled" multiple>
-        <v-expansion-panel v-for="publicacion in list" :key="publicacion.id">
+        <v-expansion-panel v-for="publicacion in publicacionesFiltradas" :key="publicacion.id">
             <v-expansion-panel-title class="primary" theme="dark" color="indigo-darken-4">
                 {{ publicacion.titulo }}
             </v-expansion-panel-title>
 
             <v-expansion-panel-text class="text-justify">
-             {{ publicacion.descripcion }}
-
+             <p class="leading-snug text-justify" v-html="publicacion.descripcion"></p>
             </v-expansion-panel-text>
 
         </v-expansion-panel>
       </v-expansion-panels>
 
-      <infinite-loading @infinite="infiniteHandler" class="my-4">
-        <button class="w-full px-4 py-2 text-white bg-blue-500 rounded-md">
-          Cargar más
-        </button>
-      </infinite-loading>
+   
     </v-card>
   </v-col>
 </v-sheet>
@@ -91,7 +86,6 @@
         </body>
      
         <div>
-        <pie></pie>
          </div>
     </v-app>
 </template>
@@ -116,118 +110,127 @@
    }
 }
 </style>
+
 <script>
-  import axios from 'axios';
-  import { VImg } from "vuetify/lib/components/index.mjs";
-  import { format } from 'date-fns';
-  import es from 'date-fns/locale/es'; // Importa el idioma español
-  import banner from "../inicio.vue";
-  import pie from "../footer.vue";
-  import Swal from 'sweetalert2';
+import axios from 'axios';
+import banner from "../../components/inicio.vue";
+import pie from "../../components/footer.vue";
+import Swal from 'sweetalert2';
 
-  const api = '/api/v1/publicacion';
 
-  export default {
-    name: 'conocenos',
-    components: {
-      banner,
-      pie,
-      VImg,
-    },
-    data() {
-      return {
+export default {
+  data() {
+    return {
+     
         page: 1,
         list: [],
         isLoading: false,
         hasMoreResults: true,
-        items: [
-          { text: 'Slide 1', color: 'white', image: 'https://i.ytimg.com/vi/lZ-D6vgcie0/maxresdefault.jpg' },
-          { text: 'Slide 2', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1N5xmc3hGjYTCZMnzaMoTRZe80LlEBH8z0w&usqp=CAU' },
-          { text: 'Slide 3', color: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThLrpEm8LVg2Y8GeINyUAlzavtT4lFvr4pFA&usqp=CAU' },
-        ],
+        
         publicaciones: [],
         slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
         currentIndex: 0,
         colors: ['white', 'white'],
         posts: [],
-        panel: [0, 1],
-            disabled: false,
+        contenido: [],
         secciones: {},
-        seccionesContenidoFiltrado: [], // Nuevo array para almacenar secciones y contenido filtrado
+        seccionesContenidoFiltrado: [], 
+        panel: [0, 1],
+        disabled: false,
         componentRuta: '',
-      };
+
+        colors: [
+                'white',
+                'white',
+
+            ],
+            slides: [
+                { title: 'First', url: 'https://scontent.ftgz1-1.fna.fbcdn.net/v/t1.6435-9/51929161_1997642960535831_2328698321197072384_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=755d08&_nc_eui2=AeGpxHOYLPxGKT0wmlPMOgQwKoD6vWtBkMAqgPq9a0GQwF4-l0d-THD-ZRIXG3uvP2QDjC2qY8tm-vVtfPrRGlQI&_nc_ohc=IKG0BOXqaPsAX9eqt4Z&_nc_ht=scontent.ftgz1-1.fna&oh=00_AfCd27xmSLpEe0JRwdiV0obvT98f9REA5RYO6wTiDy6lvg&oe=65D1916C' },
+                { title: 'Second', url: 'https://scontent.ftgz1-1.fna.fbcdn.net/v/t1.6435-9/51929161_1997642960535831_2328698321197072384_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=755d08&_nc_eui2=AeGpxHOYLPxGKT0wmlPMOgQwKoD6vWtBkMAqgPq9a0GQwF4-l0d-THD-ZRIXG3uvP2QDjC2qY8tm-vVtfPrRGlQI&_nc_ohc=IKG0BOXqaPsAX9eqt4Z&_nc_ht=scontent.ftgz1-1.fna&oh=00_AfCd27xmSLpEe0JRwdiV0obvT98f9REA5RYO6wTiDy6lvg&oe=65D1916C' },
+                { title: 'Third', url: 'URL_DE_LA_IMAGEN_3' },
+            ],
+
+      
+    };
+    
+  },
+  components: {
+      banner,
+     
     },
-    created() {
-      this.cargarPublicaciones();
-      this.componentRuta = this.$route.path;
+  computed: {
+    publicacionesFiltradas() {
+      const rutaActual = this.$route.path.toLowerCase();
+      return this.publicaciones.filter(publicacion => {
+        const rutaPublicacion = (publicacion.seccion || publicacion.subseccion)?.ruta.toLowerCase();
+        return rutaPublicacion === rutaActual;
+      });
+    },
+  },
+  created() {
+    // Llama automáticamente a cargarPublicacionesConSecciones al crear la instancia
+    this.cargarPublicacionesConSecciones();
+    this.componentRuta = this.$route.path;
       this.fetchData();
+  },
+  methods: {
+    async cargarPublicacionesConSecciones() {
+      try {
+        const response = await axios.get('api/v1/publicaciones-con-secciones');
+        this.publicaciones = response.data;
+        console.log('Publicaciones cargadas:', this.publicaciones);
+      } catch (error) {
+        console.error('Error al cargar las publicaciones con secciones', error);
+      }
     },
-    methods: {
-      infiniteHandler($state) {
-        if (this.isLoading) {
-          // Evita realizar múltiples solicitudes simultáneas
-          return;
-        }
 
-        this.isLoading = true;
+    formatDate(isoDate) {
+      const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      };
+      return new Date(isoDate).toLocaleString('es-es', options);
+    },
 
-        axios.get(api, {
-          params: {
-            page: this.page,
-          },
-        }).then((response) => {
-          if (response.data.publicaciones.length) {
-            this.page += 1;
-            // Ordena las publicaciones por fecha en orden descendente antes de agregarlas a la lista existente
-            const newPublicaciones = response.data.publicaciones.sort((a, b) => {
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            this.list.push(...newPublicaciones);
-            this.isLoading = false;
-            console.log("solicitando más información");
+    infiniteHandler($state) {
+      if (this.isLoading) {
+        return;
+      }
 
-            $state.loaded();
+      this.isLoading = true;
 
-            if (this.list.length >= response.data.total) {
-              // Si has cargado todos los resultados disponibles, completa la paginación
-              this.hasMoreResults = false;
-              $state.complete();
-            }
-          } else {
-            console.log("has llegado al final del contenido");
-            this.isLoading = false;
+      axios.get('/api/v1/publicaciones-con-secciones', {
+        params: {
+          page: this.page,
+        },
+      }).then((response) => {
+        if (response.data.length) {
+          this.page += 1;
+          const newPublicaciones = response.data.sort((a, b) => {
+            return new Date(b.fecha) - new Date(a.fecha);
+          });
+          this.publicaciones.push(...newPublicaciones);
+          this.isLoading = false;
+          console.log("Solicitando más información");
+
+          $state.loaded();
+
+          if (this.publicaciones.length >= response.data.total) {
             this.hasMoreResults = false;
             $state.complete();
           }
-        });
-      },
+        } else {
+          console.log("Has llegado al final del contenido");
+          this.isLoading = false;
+          this.hasMoreResults = false;
+          $state.complete();
+        }
+      });
+    },
 
-      cargarPublicaciones() {
-        axios.get('/api/v1/publicacion')
-          .then((response) => {
-            console.log(response);
-            this.publicaciones = response.data.publicaciones.sort((a, b) => {
-              // Ordenar por fecha en orden descendente (más reciente primero)
-              return new Date(b.fecha) - new Date(a.fecha);
-            });
-            console.log(this.publicaciones);
-          })
-          .catch((error) => {
-            console.error('Error al cargar las publicaciones:', error);
-          });
-      },
-
-      formatDate(isoDate) {
-        const options = {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'UTC'
-        };
-        return new Date(isoDate).toLocaleString('es-es', options);
-      },
-
-      fetchData() {
+    fetchData() {
         axios.get('/api/v1/contenido')
           .then(response => {
             this.contenido = response.data.contenido;
@@ -263,6 +266,11 @@
           }
         }
       },
-    },
-  };
+
+
+
+
+
+  },
+};
 </script>

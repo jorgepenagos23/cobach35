@@ -72,8 +72,8 @@
         </div>
 
         <div class="py-2">
-          <p class="leading-snug text-justify">{{ publicacion.descripcion }}</p>
-        </div>
+                        <p class="leading-snug text-justify" v-html="publicacion.descripcion"></p>
+                      </div>
       </div>
     </div>
 

@@ -1,13 +1,18 @@
 <template>
+      <header>
+      <navegacion></navegacion>
+    </header>
+    <v-app>
+
   <div>
+      <appbar></appbar> 
+   
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
     <v-card-title>Editar Sección</v-card-title>
     <v-card-text>
-      <!-- Campo de texto para editar el nombre -->
       <v-text-field v-model="seccionEditada.nombre" label="Nombre"></v-text-field>
 
-      <!-- Campo de texto para editar la subsección -->
       <v-text-field v-model="seccionEditada.nombre_subseccion" label="Subsección"></v-text-field>
 
       <!-- Contenido del diálogo para la visibilidad -->
@@ -17,7 +22,6 @@
       </v-radio-group>
     </v-card-text>
     <v-card-actions>
-      <!-- Botón para guardar los cambios -->
       <v-btn
         prepend-icon="mdi-check-circle"
         color="blue-darken-4"
@@ -36,10 +40,8 @@
         </template>
       </v-btn>
 
-      <!-- Botón para eliminar la sección -->
       <v-btn color="red darken-4" @click="eliminarSeccion">Eliminar</v-btn>
 
-      <!-- Botón para cancelar la edición -->
       <v-btn @click="cerrarDialog">Cancelar</v-btn>
     </v-card-actions>
   </v-card>
@@ -71,25 +73,20 @@
           <td class="px-16 py-2">{{ seccion.id }}</td>
           <td class="px-16 py-2">{{ seccion.nombre }}</td>
           <td class="px-16 py-2">
-            <!-- Verifica si hay subsecciones y muestra sus nombres -->
             <span v-if="seccion.subsecciones.length > 0">
               <span v-for="(subseccion, index) in seccion.subsecciones" :key="index">
                 {{ subseccion.nombre_subseccion }}
-                <!-- Agrega una coma después de cada nombre de subsección, excepto el último -->
                 <span v-if="index < seccion.subsecciones.length - 1">, </span>
               </span>
             </span>
-            <!-- Si no hay subsecciones, muestra "N/A" -->
             <span v-else>No hay subsecciones</span>
           </td>
           <td class="px-16 py-2">
-            <!-- Botón para editar la sección -->
             <v-btn class="px-4 py-2 m-2" color="blue" dark @click="mostrarDialogSeccion(seccion)">
               Editar Sección
             </v-btn>
           </td>
           <td class="px-16 py-2">
-            <!-- Lista de chips para editar cada subsección -->
             <v-chip v-for="(subseccion, index) in seccion.subsecciones" :key="index" class="m-2" @click="mostrarDialogSubseccion(seccion, subseccion)">
               Editar {{ subseccion.nombre_subseccion }}
             </v-chip>
@@ -98,9 +95,14 @@
       </tbody>
     </table>
   </div>
+</v-app>
 </template>
 
 <script>
+import axios from 'axios';
+import navegacion from "./barra_navegacion.vue";
+import appbar from "./app_bar.vue";
+
 export default {
   data() {
     return {
@@ -115,6 +117,11 @@ export default {
     },
       
     };
+    
+  },
+  components: {
+    navegacion,
+    appbar,
   },
   created() {
     this.obtenerSecciones();
@@ -130,17 +137,14 @@ export default {
         });
     },
     mostrarDialogSeccion(seccion) {
-      // Lógica para mostrar el diálogo de acciones de la sección
       console.log('Mostrar acciones de la sección:', seccion);
       this.dialog = true;
     },
     mostrarDialogSubseccion(seccion, subseccion) {
-      // Lógica para mostrar el diálogo de acciones de la subsección
       console.log('Mostrar acciones de la subsección:', subseccion, 'de la sección:', seccion);
       this.dialog = true;
     },
     cerrarDialog() {
-      // Lógica para cerrar el diálogo
       this.dialog = false;
     },
   },
@@ -148,5 +152,4 @@ export default {
 </script>
 
 <style>
-/* Estilos personalizados si es necesario */
 </style>

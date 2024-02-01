@@ -115,7 +115,6 @@ public function fachada_subseccion()
             'contenido_id' => $subseccion->contenido_id,
             'seccion_padre' => $subseccion->seccion_id_padre,
 
-            // Agrega otros campos según sea necesario
         ];
     });
 
@@ -125,30 +124,29 @@ public function fachada_subseccion()
     ], 200);
 }
 
-    
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
+
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Seccion $seccion)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+  
     public function update(Request $request, Seccion $seccion)
     {
         //
     }
+
+
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -153,6 +153,12 @@ const router = createRouter({
 { path: '/becas', component: () => import('./src/components/secciones/subsecciones/becas.vue') },
 { path: '/danza', component: () => import('./src/components/secciones/subsecciones/danza.vue') },
 
+{ path: '/danza', component: () => import('./src/components/secciones/subsecciones/danza.vue') },
+{ path: '/editar-contenidos', component: () => import('./src/components/contenidos_crud.vue') },
+{ path: '/tiny', component: () => import('./src/components/tiny.vue') },
+{ path: '/tiny_llamada', component: () => import('./src/components/prueba_tinyllamada.vue') },
+
+
 
     ],
 })
