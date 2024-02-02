@@ -26,9 +26,15 @@
 
           <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
             <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id">
-              <div class="mb-4">
+              <!-- Sección de Secciones Filtradas
+               <div class="mb-4">
+  
                 <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
               </div>
+              
+              -->
+
+             
               <p class="text-gray-500 dark:text-gray-300">{{ data.seccion.nombre_subseccion }}</p>
             </div>
           </div>

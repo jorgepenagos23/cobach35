@@ -16,9 +16,13 @@
 <!-- Sección de Secciones Filtradas -->
 <section class="relative bg-white py-27 lg:py-27">
   <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+   <!-- Sección de Secciones Filtradas 
+  
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
       <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
     </div>
+
+  -->
 
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
       <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
@@ -59,7 +63,8 @@
               </div>
             </div>
             <p class="text-[#00153B] text-[30px] leading-[63px] font-bold">
-              {{ publicacion.titulo }}
+              <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+
             </p>
             <div>
               <p class="text-[#00153B] text-[19px] leading-[24px] font-bold">

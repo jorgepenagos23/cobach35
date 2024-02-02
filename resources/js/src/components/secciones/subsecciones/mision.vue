@@ -17,24 +17,50 @@
 
 <section class="bg-blue-200 dark:bg-blue-900">
    <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+    <!-- Hero section 
+    
+    
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
       <img class="object-cover w-full h-80 rounded-xl" :src="data.contenido.imagen" alt="">
     </div>
+
+    -->
 
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
       <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
       </div>
       
 
-      <h1 class="text-3xl font-bold leading-tight text-left text-gray-900 sm:text-4xl md:text-5xl xl:text-6xl">
-        {{ data.contenido.titulo }} 
-      </h1>
+      <section class="bg-blue-200 dark:bg-blue-900">
+   <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+    <!-- Hero section 
+    
+    
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
+      <img class="object-cover w-full h-80 rounded-xl" :src="data.contenido.imagen" alt="">
+    </div>
+
+    -->
+
+    <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
+      <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
+      </div>
       
-      <p class="mt-8 text-justify text-gray-700">
-        {{ data.contenido.descripcion }}
-      </p>
+
+   
+      <div class="py-2">
+            <p class="leading-snug text-justify" v-html="data.contenido.titulo"></p>
+          </div>
+          
+        
+        <span class="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 from-20% via-blue-600 via-30% to-green-600"></span>
+        <p class="leading-snug text-justify" v-html="data.contenido.descripcion"></p>
 
     </div>
+  </div>
+</section>
+    
+      </div>
   </div>
 </section>
 
@@ -43,7 +69,11 @@
            <div v-for="publicacion in publicacionesFiltradas" :key="publicacion.id"
      class="relative flex flex-col justify-center min-h-screen py-3 overflow-hidden bg-white sm:py-5">
      <div class="items-center w-full max-w-screen-xl mx-auto mt-2 mb-4">
-              <div class="relative block w-full p-4 text-base leading-5 text-white opacity-100 rounded-xl group-hover:bg-lime-600 bg-teal-950 font-regular">{{ publicacion.titulo }}</div>
+              <div class="relative block w-full p-4 text-base leading-5 text-white opacity-100 rounded-xl group-hover:bg-lime-600 bg-teal-950 font-regular">
+                <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+
+
+              </div>
         <div class="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
             
     <div class="h-full px-2 py-3 transition-all bg-white w-50 botom-3 md:w-4/6 md:px-2 rounded-xl group-hover:bg-sky-600">

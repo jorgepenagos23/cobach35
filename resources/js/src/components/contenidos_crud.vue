@@ -1,3 +1,31 @@
+<script setup>
+import Editor from '@tinymce/tinymce-vue';
+
+const editorConfig = {
+  language: 'es',
+  toolbar_mode: 'sliding',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  tinycomments_mode: 'embedded',
+  
+popup_css: {
+    'z-index': 103213, // Ajusta el z-index de las ventanas emergentes de TinyMCE
+  },
+  
+
+};
+const tituloEditorConfig = {
+  language: 'es',
+  toolbar_mode: 'sliding',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen  advtemplate advtable advcode editimage   powerpaste tinymcespellchecker autocorrect a11ychecker  inlinecss',
+  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  tinycomments_mode: 'embedded',
+  
+};
+
+const apiKey = 'vgvm9x4wbo925nbtlkqal2wmuebfvsqvb8lgq99i2rumla9w';
+const initialValue = 'Bienvenido';
+</script>
 <template>
     <div>
       <header>
@@ -8,27 +36,63 @@
         <h1>CONTENIDOS DE LAS SECCIONES</h1>
 
 
-
-        
-        <v-dialog v-model="dialog" max-width="600">
+        <v-dialog v-model="dialog" max-width="1600" style="z-index: 700;" :persistent="true">
   <v-card>
-    <v-card-title>Editar Sección</v-card-title>
+    <v-card-title>
+      <span>Editar Sección</span>
+      <v-btn icon @click="cerrarDialog">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-card-title>
     <v-card-text>
       <form @submit.prevent="guardarCambios">
-        <v-text-field v-model="seccionEditada.nombre" label="Nombre"></v-text-field>
-        <v-textarea v-model="seccionEditada.nombre_subseccion" label="Subsección"></v-textarea>
-        <v-text-field v-model="seccionEditada.fecha" label="Fecha" type="date"></v-text-field>
+        <!-- Título -->
+        <label for="datepicker" class="block text-sm font-medium text-gray-700">Titulo</label>
+        <div style="z-index: 10002;">
+  <Editor
+    ref="tituloEditor"
+    :api-key="apiKey"
+    :init="{
+      ...tituloEditorConfig,
+      content_style: 'z-index: 1000100;', // Establece un z-index alto para TinyMCE
+    }"
+    :initial-value="seccionEditada.nombre"
+    v-on:blur="handleTituloEditorInput"
+    class="custom-tinymce_titulo"
+  />
+</div>
 
-        <!-- Imagen -->
-        <div class="div-botones">
+
+        <!-- Descripcion -->
+        <label for="datepicker" class="block text-sm font-medium text-gray-700">Descripcion</label>
+        <Editor
+          ref="editor"
+          :api-key="apiKey"
+          :init="{
+    ...editorConfig,
+    content_style: 'z-index: 1000100;', // Establece un z-index alto para TinyMCE
+  }"
+          
+          :initial-value="seccionEditada.nombre_subseccion"
+          v-on:blur="handleDescripcionEditorInput"
+
+        />
+
+  <!-- Imagen -->
+  <div class="div-botones">
           <v-col cols="19">
             <label class="block text-sm font-medium text-gray-700">Imagen:</label>
             <input type="file" id="imagenFile" @change="handleFileUpload" accept="image/*">
           </v-col>
         </div>
+        
+        <v-text-field v-model="seccionEditada.fecha" label="Fecha" type="date"></v-text-field>
 
-        <!-- Otros campos del formulario, si los hay -->
 
+
+
+
+        
         <v-card-actions>
           <v-btn
             prepend-icon="mdi-check-circle"
@@ -49,14 +113,10 @@
           </v-btn>
           <v-btn color="red darken-4" @click="eliminarSeccion">Eliminar</v-btn>
           <v-btn @click="cerrarDialog">Cancelar</v-btn>
-        </v-card-actions>
-      </form>
+        </v-card-actions>      </form>
     </v-card-text>
   </v-card>
 </v-dialog>
-
-
-
         
         <table class="min-w-full table-auto">
           <thead class="justify-between">
@@ -87,8 +147,12 @@
           <tbody>
             <tr v-for="seccion in contenido" :key="seccion.id" class="bg-gray-100 border-b hover:bg-orange-100">
               <td class="px-16 py-2">{{ seccion.id }}</td>
-              <td class="px-16 py-2 text-justify">{{ seccion.titulo }}</td>
-              <td class="px-16 py-2 text-justify">{{ seccion.descripcion }}</td>
+              <td class="px-16 py-2 text-justify">
+                <p class="leading-snug text-justify" v-html="seccion.titulo"></p>              
+              </td>
+              <td class="px-16 py-2 text-justify">
+                <p class="leading-snug text-justify" v-html="seccion.descripcion"></p>              
+              </td>
               <td class="px-16 py-2">
                 <v-btn class="px-4 py-2 m-2" color="blue" dark @click="mostrarDialogSeccion(seccion)">
                   Editar contenido
@@ -105,6 +169,12 @@
       </v-app>
     </div>
   </template>
+<style scoped>
+
+
+
+</style>
+
   
   <script>
   import axios from 'axios';
@@ -135,6 +205,23 @@
       this.obtenerSecciones();
     },
     methods: {
+      
+      handleTituloEditorInput(event) {
+  const content = typeof event === 'object' ? event.target.getContent() : event;
+
+  console.log('Evento input-change disparado. Contenido:', content);
+
+  this.seccionEditada.nombre = content;
+},
+
+handleDescripcionEditorInput(event) {
+  const content = typeof event === 'object' ? event.target.getContent() : event;
+  this.seccionEditada.nombre_subseccion = content;
+},
+
+
+
+  
         handleFileUpload(event) {
   this.seccionEditada.imagenFile = event.target.files[0];
   this.manejadorImagen();
@@ -219,6 +306,4 @@ manejadorImagen() {
   };
   </script>
   
-  <style>
-  </style>
-  
+ 

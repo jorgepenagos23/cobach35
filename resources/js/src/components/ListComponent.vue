@@ -24,9 +24,11 @@
               <div class="grid p-8 m-auto text-center bg-white border rounded-lg w-800 hero md:grid-cols-2 bg-opacity-90">
                 <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
                 <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
-                  <h1 class="mt-4 text-3xl font-bold tracking-tight text-black sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
-                    <span class="block text-black">{{ publicacion.titulo }}</span>
-                  </h1>
+                  
+                  <div class="py-2">
+                <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+              </div>
+
 
                   <div class="mb-2 text-xl font-semibold text-green-600">{{ formatDate(publicacion.fecha) }}</div>
 
@@ -69,7 +71,7 @@
 
     <div class="flex flex-row items-center">
       <v-chip  color="red">
-                {{ publicacion.titulo }}
+        <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
       </v-chip>
     </div>
 

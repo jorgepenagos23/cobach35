@@ -17,15 +17,27 @@
 <section class="relative py-24 mb-0 bg-white lg:py-23"> 
     <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
             <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-              <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-black">{{ data.contenido.titulo }}</h1>
-              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-gray-700">{{ data.contenido.descripcion }}</p>
+              <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-black">
+                
+                <p class="leading-snug text-justify" v-html="data.contenido.titulo"></p>
+              
+              </h1>
+              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-gray-700">
+                
+                <p class="leading-snug text-justify" v-html="data.contenido.descripcion"></p>
+              
+              </p>
             </div>
   
             <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
               <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
+            <!-- Sección de Secciones Filtradas
+                
                 <div class="mb-4">
                   <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
                 </div>
+                
+                -->
                 <p class="text-gray-500 dark:text-gray-300"></p>
               </div>
             </div>
@@ -66,7 +78,8 @@
       <v-expansion-panels v-model="panel" :disabled="disabled" multiple>
         <v-expansion-panel v-for="publicacion in publicacionesFiltradas" :key="publicacion.id">
             <v-expansion-panel-title class="primary" theme="dark" color="indigo-darken-4">
-                {{ publicacion.titulo }}
+              <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+
             </v-expansion-panel-title>
 
             <v-expansion-panel-text class="text-justify">

@@ -1,6 +1,43 @@
 <script setup>
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+
+import Editor from '@tinymce/tinymce-vue';
+
+const editorConfig = {
+  language: 'es',
+  toolbar_mode: 'sliding',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  tinycomments_mode: 'embedded',
+  tinycomments_author: 'Author name',
+  mergetags_list: [
+    { value: 'First.Name', title: 'First Name' },
+    { value: 'Email', title: 'Email' },
+  ],
+
+  
+
+};
+const tituloEditorConfig = {
+  language: 'es',
+  toolbar_mode: 'sliding',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen  advtemplate advtable advcode editimage   powerpaste tinymcespellchecker autocorrect a11ychecker  inlinecss',
+  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  tinycomments_mode: 'embedded',
+  tinycomments_author: 'Author name',
+  mergetags_list: [
+    { value: 'First.Name', title: 'First Name' },
+    { value: 'Email', title: 'Email' },
+  ],
+};
+
+
+
+
+
+const apiKey = 'vgvm9x4wbo925nbtlkqal2wmuebfvsqvb8lgq99i2rumla9w';
+const initialValue = 'Bienvenido';
 </script>
 
 <template>
@@ -97,7 +134,7 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
           </div>
 
           <div class="flex flex-row items-center">
-            <p class="ml-2 text-base font-medium">Titulo : {{ publicacion.titulo }}</p>
+            <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
           </div>
 
           <div class="py-2">
@@ -130,46 +167,77 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
   <v-card class="mx-auto" max-width="400">
 
   </v-card>
-  <v-dialog v-model="mostrarFormularioEdicion" max-width="1200">
-    <template v-slot:activator="{ props }">
-      <!-- Este botón activará el diálogo -->
-      <v-btn class="text-none" color="white" rounded="0" variant="outlined" v-bind="props">
+  
+  <v-dialog v-model="mostrarFormularioEdicion" max-width="1200" :persistent="true" style="z-index: 900;">
+  <template v-slot:activator="{ props }">
+    <!-- Este botón activará el diálogo -->
+    <v-btn class="text-none" color="white" rounded="0" variant="outlined" v-bind="props">
+      Abrir Diálogo
+    </v-btn>
+  </template>
 
-      </v-btn>
-    </template>
+  <v-card title="Editar Publicación">
+    <v-card-text>
+      <form @submit.prevent="guardarCambios">
+        <!-- Contenido del formulario -->
 
-    <v-card title="Editar Publicación">
-      <v-card-text>
-        <form @submit.prevent="guardarCambios">
+        <label for="datepicker" class="block text-sm font-medium text-gray-700"> Editar titulo</label>
+        <!-- Título con TinyMCE -->
+        <Editor
+          ref="editor"
+          :api-key="apiKey"
+          :init="tituloEditorConfig"
+          :initial-value="publicacionEditando.titulo"
+          @mousedown.stop.prevent
+          v-on:blur="handleTituloEditorInput"
+          class="custom-tinymce_titulo"
+          style="z-index: 1000;"
+        />
+        <label for="datepicker" class="block text-sm font-medium text-gray-700"> Editar Descripcion</label>
+        <Editor
+          ref="editor"
+          :api-key="apiKey"
+          :init="editorConfig"
+          @mousedown.stop.prevent
+          :initial-value="publicacionEditando.descripcion"
+          v-on:blur="handleEditorInput"
+          class="custom-tinymce"
+          style="z-index: 1000;"
+        />
+        <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
+        <input type="date" id="fecha" name="fecha" v-model="publicacionEditando.fecha"
+          class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <button type="submit"
+          class="relative w-40 h-12 overflow-hidden text-white transition-all bg-green-500 border border-green-500 shadow-2xl before:ease before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-green-500 hover:before:-translate-x-40">
+          <span relative="relative z-10">Guardar Cambios</span>
+        </button>
+      </form>
+    </v-card-text>
+    <v-btn @click="closeDialog" color="red">Cerrar</v-btn>
+  </v-card>
+</v-dialog>
 
-
-          <v-text-field v-model="publicacionEditando.titulo" label="Titulo" id="titulo" type="text" variant="solo"
-            prepend-icon="mdi-format-text-variant-outline"></v-text-field>
-
-          <v-text-field v-model="publicacionEditando.descripcion" label="Descripcion" id="Descripcion" type="text"
-            prepend-icon="mdi-comment-text" variant="solo" class="w-full">
-          </v-text-field>
-
-
-
-          <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
-          <input type="date" id="fecha" name="fecha" v-model="publicacionEditando.fecha"
-            class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-
-          <button type="submit"
-            class="relative w-40 h-12 overflow-hidden text-white transition-all bg-green-500 border border-green-500 shadow-2xl before:ease before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-green-500 hover:before:-translate-x-40">
-            <span relative="relative z-10">Guardar Cambios</span>
-          </button>
-        </form>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
 </template>
 
 <style>
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.custom-tinymce {
+  height: 700px; /* Ajusta el tamaño según tus necesidades */
+  
+  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
+
+}
+
+.custom-tinymce_titulo {
+  height: 500px; /* Ajusta el tamaño según tus necesidades */
+  
+  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
+
+}
+
 </style>
 
 <script>
@@ -193,6 +261,20 @@ export default {
     this.cargarPublicaciones();
   },
   methods: {
+
+    closeDialog() {
+      this.mostrarFormularioEdicion = false;
+  },
+
+    handleEditorInput(event) {
+      const content = typeof event === 'object' ? event.target.getContent() : event;
+      this.publicacionEditando.descripcion = content;
+    },
+    handleTituloEditorInput(event) {
+      const content = typeof event === 'object' ? event.target.getContent() : event;
+      this.publicacionEditando.titulo = content;
+    },
+
 
     eliminarPublicacion(publicacion) {
       Swal.fire({
@@ -370,7 +452,6 @@ export default {
 
 
 
-
   components: {
     navegacion,
     appbar,
@@ -389,7 +470,7 @@ export default {
         fecha: '', // Inicializa con la fecha en el formato adecuado (por ejemplo, 'YYYY-MM-DD')
         imagen: '',
       },
-
+      showDialog: false,
       mostrarFormularioEdicion: false,
       page: 1,
       list: [], // Define la propiedad list aquí

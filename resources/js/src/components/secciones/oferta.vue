@@ -8,21 +8,38 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
         <banner></banner>
     </div>
     <v-app>
-                    <!-- meter el carrusel component   -->
 
         <v-container>
-            <v-card class="mt-5">
-                <v-carousel height="460" width="800" show-arrows hide-delimiter-background>
-                    <template v-slot:prev="{ props }"></template>
-                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                        <v-sheet :color="colors[i]" height="100%">
-                            <v-img :src="slide.url" height="200%" class="object-cover w-full h-full rounded"></v-img>
+        <!-- Sección de Secciones Filtradas -->
+      <section class="relative py-24 mb-0 bg-white lg:py-23"> 
+        <div class="container px-6 py-10 mx-auto">
+        <div class="xl:flex xl:items-center xl:-mx-4">
+            <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
+              <h1 class="text-3xl font-bold leading-tight text-dark sm:text-4xl md:text-5xl xl:text-6xl">
+                <p class="leading-snug text-justify" v-html="data.contenido.titulo"></p>
+                </h1>
+              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-grey-700">
+                <p class="leading-snug text-justify" v-html="data.contenido.descripcion"></p>
+              
+              </p>
+            </div>
+            <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
+              <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
+               <!-- Sección de Secciones Filtradas
+                
+                <div class="mb-4">
+                  <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
+                </div>
+                
+                -->
+                <p class="text-gray-500 dark:text-gray-300"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                        </v-sheet>
-                    </v-carousel-item>
-                </v-carousel>
-            </v-card>
-
+          
 
         </v-container>
 
@@ -31,7 +48,11 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
             <div v-for="publicacion in publicacionesFiltradas" :key="publicacion.id"
      class="relative flex flex-col justify-center min-h-screen py-6 overflow-hidden bg-white sm:py-12">
     <div class="items-center w-full max-w-screen-xl mx-auto">
-        <div class="relative block w-full p-4 text-base leading-5 text-white opacity-100 rounded-xl group-hover:bg-lime-600 bg-teal-950 font-regular">{{ publicacion.titulo }}</div>
+        <div class="relative block w-full p-4 text-base leading-5 text-white opacity-100 rounded-xl group-hover:bg-lime-600 bg-teal-950 font-regular">
+          <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+
+
+        </div>
         <div class="grid h-full grid-cols-1 gap-6 md:grid-cols-2">
             
     <div class="h-full px-2 py-3 transition-all bg-white w-50 botom-3 md:w-4/6 md:px-2 rounded-xl group-hover:bg-sky-600">

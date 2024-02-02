@@ -19,15 +19,23 @@
       <div class="container px-6 py-10 mx-auto">
         <div class="xl:flex xl:items-center xl:-mx-4">
           <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
-            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">{{ data.contenido.titulo }}</h1>
-            <p class="max-w-2xl mt-4 text-gray-500 dark:text-gray-300">{{ data.contenido.descripcion }}</p>
+              
+              <p class="leading-snug text-justify" v-html=" data.contenido.titulo "></p>
+
+              
+              <p class="leading-snug text-justify" v-html=" data.contenido.descripcion "></p>
+
           </div>
 
           <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
             <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id">
+              <!-- Sección de Secciones Filtradas 
+              
               <div class="mb-4">
                 <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
               </div>
+              
+              -->
               <p class="text-gray-500 dark:text-gray-300">{{ data.seccion.nombre_subseccion }}</p>
             </div>
           </div>

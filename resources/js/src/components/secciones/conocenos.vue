@@ -19,15 +19,24 @@
         <div class="xl:flex xl:items-center xl:-mx-4">
             <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
               <h1 class="text-3xl font-bold leading-tight text-dark sm:text-4xl md:text-5xl xl:text-6xl">
-          {{ data.contenido.titulo }}
+          <p class="leading-snug text-justify" v-html="data.contenido.titulo"></p>
+
         </h1>
-              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-grey-700">{{ data.contenido.descripcion }}</p>
+              <p class="max-w-2xl mt-4 text-justify text-gray-700 dark:text-grey-700">
+
+                <p class="leading-snug text-justify" v-html="data.contenido.descripcion"></p>
+              </p>
             </div>
             <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
               <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
+                <!-- Sección de Secciones Filtradas
+                
                 <div class="mb-4">
                   <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
                 </div>
+                
+                -->
+
                 <p class="text-gray-500 dark:text-gray-300"></p>
               </div>
             </div>
@@ -56,14 +65,18 @@
       </div>
     </div>
 
-    <div class="mt-2">
+    <!-- 
+
+  <div class="mt-2">
       <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full h-48 rounded">
       <div class="flex flex-row items-center py-2"></div>
     </div>
+    -->
 
+  
     <div class="flex flex-row items-center">
-      <v-chip  color="secondary">
-                {{ publicacion.titulo }}
+      <v-chip  color="white">
+        <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
       </v-chip>
     </div>
 

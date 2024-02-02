@@ -132,21 +132,15 @@ Route::get('/descargar_pdf/todos/{nombreArchivo}', function ($nombreArchivo) {
 
 
 
-
-
 Route::get('/contenidos', [DescargaController::class, 'index2']);
 
 Route::put('/contenidos/{id}/visibilidad', [DescargaController::class, 'actualizarVisibilidad']);
 Route::post('/subir-pdf', [DescargaController::class, 'subirPdf']);
 
-
-
 Route::get('/migrar',function(){ Artisan::call('migrate',["--seed"=>true]);
 });
 
-
-
-//Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
+Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
 
 
 

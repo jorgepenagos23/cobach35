@@ -76,13 +76,12 @@ public function indexConSecciones3()
 public function store(Request $request)
 {
     $request->validate([
-        'titulo' => 'required|string',
-        'descripcion' => 'required|string',
+        'titulo' => 'nullable|string',
+        'descripcion' => 'nullable|string',
         'fecha' => 'required|date',
-        'publicador' => 'required|string',
+        'publicador' => 'nullable|string',
         'imagenFile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
-
     $publicacion = new Publicacion();
     $publicacion->titulo = $request->titulo;
     $publicacion->descripcion = $request->descripcion;

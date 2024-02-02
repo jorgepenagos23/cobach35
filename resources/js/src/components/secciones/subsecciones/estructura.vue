@@ -17,9 +17,14 @@
 <!-- Sección de Secciones Filtradas -->
 <section class="relative bg-white py-27 lg:py-27">
   <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
+    <!-- Sección de Secciones Filtradas
+    
+    
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-1 max-w-3xl mx-auto lg:w-1/2 lg:h-auto lg:max-w-none lg:mx-0">
       <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
     </div>
+
+    -->
 
     <div v-for="data in subseccionesContenidoFiltrado" :key="data.seccion.id" class="relative flex flex-col items-center max-w-3xl mx-auto text-center lg:text-left lg:py-7 xl:py-8 lg:items-start lg:max-w-none lg:mx-0 lg:flex-1 lg:w-1/2">
       <div class="absolute inset-y-0 hidden w-full lg:w-1/2 lg:right-0 lg:block">
@@ -29,13 +34,13 @@
       
       <span class="absolute w-4/12 rotate-90 rounded-full skew-y-15 skew-x-18 lg:w-2/12 aspect-square bg-gradient-to-tr from-blue-600 to-green-400 -top-5 lg:left-0 blur-2xl opacity-40"></span>
 
-      <h1 class="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl md:text-5xl xl:text-6xl">
-        {{ data.contenido.titulo }} 
+      <div class="py-2">
+            <p class="leading-snug text-justify" v-html="data.contenido.titulo"></p>
+          </div>
+          
+        
         <span class="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 from-20% via-blue-600 via-30% to-green-600"></span>
-      </h1>
-      <p class="mt-8 text-justify text-gray-700">
-        {{ data.contenido.descripcion }}
-      </p>
+        <p class="leading-snug text-justify" v-html="data.contenido.descripcion"></p>
     </div>
   </div>
 </section>
@@ -68,7 +73,8 @@
 
         <div class="flex flex-row items-center">
           <v-chip  color="secondary">
-            {{ publicacion.titulo }}
+            <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
+
           </v-chip>
         </div>
 

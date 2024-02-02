@@ -13,11 +13,30 @@ const editorConfig = {
     { value: 'Email', title: 'Email' },
   ],
 
+  
+
+};
+const tituloEditorConfig = {
+  language: 'es',
+  toolbar_mode: 'sliding',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen  advtemplate advtable advcode editimage   powerpaste tinymcespellchecker autocorrect a11ychecker  inlinecss',
+  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  tinycomments_mode: 'embedded',
+  tinycomments_author: 'Author name',
+  mergetags_list: [
+    { value: 'First.Name', title: 'First Name' },
+    { value: 'Email', title: 'Email' },
+  ],
 };
 
+
+
+
+
 const apiKey = 'vgvm9x4wbo925nbtlkqal2wmuebfvsqvb8lgq99i2rumla9w';
-const initialValue = 'jorge';
+const initialValue = 'Bienvenido';
 </script>
+
 <template>
   <header>
     <navegacion></navegacion>
@@ -37,24 +56,27 @@ const initialValue = 'jorge';
           <v-form ref="form">
             
             <!-- Título -->
-        
-              <v-col cols="12" >
-                <v-text-field
-                  v-model="publicacion.titulo"
-                  label="Título"
-                  required
-                  rows="4"
-                  variant="solo"
-                  prepend-icon="mdi-format-text-variant-outline"
-                ></v-text-field>
-              </v-col>
-                        <Editor
+            <label for="datepicker" class="block text-sm font-medium text-gray-700">Titulo</label>
+
+            <Editor
+            ref="tituloEditor"
+            :api-key="apiKey"
+            :init="tituloEditorConfig"
+            :initial-value="publicacion.titulo"
+            v-on:blur="handleTituloEditorInput"
+            class="custom-tinymce_titulo"
+            
+          />
+          <label for="datepicker" class="block text-sm font-medium text-gray-700">Descripcion</label>
+
+              <Editor
             ref="editor"
             :api-key="apiKey"
             :init="editorConfig"
             :initial-value="publicacion.descripcion"
             v-on:blur="handleEditorInput"
             class="custom-tinymce" 
+            
 
           />
                                   <!-- Nombre -->
@@ -156,11 +178,21 @@ const initialValue = 'jorge';
 }
 
 .custom-tinymce {
-  height: 500px; /* Ajusta el tamaño según tus necesidades */
+  height: 700px; /* Ajusta el tamaño según tus necesidades */
   
-  margin-bottom: 20px; /* Espaciado inferior para separarlo de otros elementos */
+  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
 
 }
+
+.custom-tinymce_titulo {
+  height: 500px; /* Ajusta el tamaño según tus necesidades */
+  
+  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
+
+}
+
+
+
 </style>
 
 
@@ -217,7 +249,10 @@ export default {
   this.publicacion.descripcion = content;
 },
 
-
+handleTituloEditorInput(event) {
+    const content = typeof event === 'object' ? event.target.getContent() : event;
+    this.publicacion.titulo = content;
+  },
     vaciarFormulario() {
       // Reiniciar todos los valores del objeto publicacion a su estado inicial
       this.publicacion = {

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('contenidos_seccion', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo')->default('');
-            $table->text('descripcion');
+            $table->text('titulo')->nullable();
+            $table->text('descripcion')->nullable();
             $table->string('publicador')->default('');
             $table->string('imagen')->nullable()->default('');
             $table->date('fecha')->nullable();

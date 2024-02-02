@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {  Schema::create('publicaciones', function (Blueprint $table) {
         $table->id();
-        $table->string('titulo');
+        $table->text('titulo');
         $table->text('descripcion');
         $table->date('fecha')->default(now());
         $table->enum('tipo', ['banner', 'publicacion']);
-        $table->string('publicador');
-        $table->string('imagen')->nullable();
+        $table->string('publicador')->nullable();
+        $table->string('imagen')->nullable()->default('');
         $table->unsignedBigInteger('seccion_id')->nullable();
         $table->foreign('seccion_id')->references('id')->on('secciones')->onDelete('cascade');
         $table->unsignedBigInteger('subseccion_id')->nullable();
