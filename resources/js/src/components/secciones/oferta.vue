@@ -25,13 +25,12 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
             </div>
             <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
               <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
-               <!-- Sección de Secciones Filtradas
                 
                 <div class="mb-4">
                   <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
                 </div>
                 
-                -->
+                
                 <p class="text-gray-500 dark:text-gray-300"></p>
               </div>
             </div>

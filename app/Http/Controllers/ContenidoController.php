@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreContenidoRequest;
 use App\Http\Requests\UpdateContenidoRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\File;
 use App\Models\Contenido;
 
 class ContenidoController extends Controller
@@ -22,8 +22,7 @@ class ContenidoController extends Controller
             'message' => 'Contenido devueltas',
             'contenido' => $contenido,
         ], 200);
-    }
-
+    } 
     public function edit(Contenido $contenido)
     {
         return response()->json([
@@ -34,39 +33,18 @@ class ContenidoController extends Controller
 
 
 
-
-    
     public function update(Request $request, $id)
     {
-    Log::info('Datos del Request:', $request->all());
-        $contenido = Contenido::findOrFail($id);    
-        if (!$contenido) {
-            return response()->json([
-                'error' => true,
-                'mensaje' => "No existe ese contenido",
-            ]);
-        }
-    
-        $this->authorize('update', $contenido);
-    
-        $request->validate([
-            'titulo' => 'required',
-            'descripcion' => 'required',
-            'fecha' => 'required',
-            'imagenFile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Ajusta según tus necesidades
-        ]);
+        $contenido = Contenido::findOrFail($id);
 
-    
+        Log::info('Datos del Request:', $request->all());
         $contenido->titulo = $request->input('titulo');
         $contenido->descripcion = $request->input('descripcion');
         $contenido->fecha = $request->input('fecha');
+        // Guarda el modelo en la base de datos
+        $contenido->save();
 
 
-        if ($request->hasFile('imagenFile')) {
-            $imagenPath = $request->file('imagenFile')->storeAs('public/images/contenidos', 'nombre_personalizado.jpg');
-            $contenido->imagen = str_replace('public/', '', $imagenPath);
-        }
-        
         if ($contenido->save()) {
             return response()->json([
                 'data' => $contenido,
@@ -79,10 +57,22 @@ class ContenidoController extends Controller
             ]);
         }
     }
+    public function formSubmit(Request $request)
+    {
+        $id = $request->input('id'); // Obtén el ID desde el cuerpo de la solicitud
     
-
-
-
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+    
+        $request->image->move(public_path('images'), $imageName);
+    
+        // Actualiza la ruta de la imagen y otros campos según sea necesario utilizando el ID
+        $contenido = Contenido::findOrFail($id);
+        $contenido->imagen = '/public/images/' . $imageName;
+        // ... actualiza otros campos si es necesario ...
+        $contenido->save();
+    
+        return response()->json(['success'=>'You have successfully upload image.']);
+    }
 
 
 
@@ -120,6 +110,8 @@ class ContenidoController extends Controller
             }
 
     }
+
+
 
  
 }

@@ -35,88 +35,73 @@ const initialValue = 'Bienvenido';
         <appbar></appbar>
         <h1>CONTENIDOS DE LAS SECCIONES</h1>
 
+        <div>
 
-        <v-dialog v-model="dialog" max-width="1600" style="z-index: 700;" :persistent="true">
-  <v-card>
-    <v-card-title>
-      <span>Editar Sección</span>
-      <v-btn icon @click="cerrarDialog">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <form @submit.prevent="guardarCambios">
-        <!-- Título -->
-        <label for="datepicker" class="block text-sm font-medium text-gray-700">Titulo</label>
-        <div style="z-index: 10002;">
-  <Editor
-    ref="tituloEditor"
-    :api-key="apiKey"
-    :init="{
-      ...tituloEditorConfig,
-      content_style: 'z-index: 1000100;', // Establece un z-index alto para TinyMCE
-    }"
-    :initial-value="seccionEditada.nombre"
-    v-on:blur="handleTituloEditorInput"
-    class="custom-tinymce_titulo"
-  />
+<v-dialog v-model="dialog" max-width="1200" :persistent="true" style="z-index: 900;">
+  <v-card title="Editar Publicación">
+
+
+    <form @submit.prevent="guardarCambios" enctype="multipart/form-data"> <!-- Contenido del formulario -->
+      <label for="datepicker" class="block text-sm font-medium text-gray-700"> Editar titulo</label>
+      <!-- Título con TinyMCE -->
+      <Editor ref="editorTitulo" :api-key="apiKey" :init="tituloEditorConfig"
+        :initial-value="seccionEditada.nombre" v-on:blur="handleTituloEditorInput" class="custom-tinymce_titulo"
+        style="z-index: 1001;" />
+
+      <!-- Editor de descripción -->
+      <Editor ref="editorDescripcion" :api-key="apiKey" :init="editorConfig"
+        :initial-value="seccionEditada.nombre_subseccion" v-on:blur="handleDescripcionEditorInput"
+        class="custom-tinymce" style="z-index: 1000;" />
+
+
+
+      <div class="div-botones">
+        <label for="fecha" class="block mb-2 text-sm font-medium text-gray-700">Cambiar Fecha:</label>
+        <input type="date" id="fecha" name="fecha" v-model="seccionEditada.fecha"
+          class="block w-full px-3 py-2 text-sm placeholder-gray-300 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+
+
+      <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+        Guardar cambios
+      </button>
+
+<br><br>
+      
+    </form>
+  </v-card>
+
+  <v-card title="Actualizar Imagen " class="p-4 bg-blue-100">
+    <div class="card-body">
+      <div v-if="success !== ''" class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+
+      <form @submit="formSubmit" enctype="multipart/form-data" class="mt-4">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Nombre:</label>
+          <input type="text" id="name" v-model="name" class="block w-full mt-1 rounded-md form-input">
+        </div>
+
+        <div class="mb-4">
+          <label for="image" class="block text-sm font-medium text-gray-700">Imagen:</label>
+          <input type="file" id="image" v-on:change="onImageChange" class="block w-full mt-1 rounded-md form-input">
+        </div>
+        <input type="hidden" v-model="seccionEditada.id" name="id">
+        <button type="submit" class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700">
+          Subir imagen
+        </button>
+      </form>
+    </div>
+  </v-card>
+
+
+  <v-btn @click="cerrarDialog" color="red">Cerrar</v-btn>
+
+        </v-dialog>
 </div>
 
-
-        <!-- Descripcion -->
-        <label for="datepicker" class="block text-sm font-medium text-gray-700">Descripcion</label>
-        <Editor
-          ref="editor"
-          :api-key="apiKey"
-          :init="{
-    ...editorConfig,
-    content_style: 'z-index: 1000100;', // Establece un z-index alto para TinyMCE
-  }"
-          
-          :initial-value="seccionEditada.nombre_subseccion"
-          v-on:blur="handleDescripcionEditorInput"
-
-        />
-
-  <!-- Imagen -->
-  <div class="div-botones">
-          <v-col cols="19">
-            <label class="block text-sm font-medium text-gray-700">Imagen:</label>
-            <input type="file" id="imagenFile" @change="handleFileUpload" accept="image/*">
-          </v-col>
-        </div>
-        
-        <v-text-field v-model="seccionEditada.fecha" label="Fecha" type="date"></v-text-field>
-
-
-
-
-
-        
-        <v-card-actions>
-          <v-btn
-            prepend-icon="mdi-check-circle"
-            color="blue darken-4"
-            density="compact"
-            hide-details
-            inline
-            inset
-            type="submit"
-          >
-            <template v-slot:prepend>
-              <v-icon color="success"></v-icon>
-            </template>
-            Guardar
-            <template v-slot:append>
-              <v-icon color="warning"></v-icon>
-            </template>
-          </v-btn>
-          <v-btn color="red darken-4" @click="eliminarSeccion">Eliminar</v-btn>
-          <v-btn @click="cerrarDialog">Cancelar</v-btn>
-        </v-card-actions>      </form>
-    </v-card-text>
-  </v-card>
-</v-dialog>
         
         <table class="min-w-full table-auto">
           <thead class="justify-between">
@@ -195,6 +180,10 @@ const initialValue = 'Bienvenido';
       imagen: '',  // Agrega la propiedad imagen
       visible: true,
         },
+
+        name: '',
+      image: '',
+      success: ''
       };
     },
     components: {
@@ -205,6 +194,40 @@ const initialValue = 'Bienvenido';
       this.obtenerSecciones();
     },
     methods: {
+      submitForm() {
+    // Lógica para el formulario principal
+    this.guardarCambios();
+
+    // Lógica para el segundo formulario
+    this.formSubmit();
+  },
+
+      
+      onImageChange(e) {
+      console.log(e.target.files[0]);
+      this.image = e.target.files[0];
+    },
+    formSubmit(e) {
+      e.preventDefault();
+      let currentObj = this;
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+      };
+      let formData = new FormData();
+      formData.append('id', this.seccionEditada.id );
+      formData.append('image', this.image);
+      axios.post('/formSubmit', formData, config)
+        .then(function (response) {
+          console.log('enviado', formData);
+          currentObj.success = response.data.success;
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+          console.log('error es',error.response)
+        });
+    },
+
+      
       
       handleTituloEditorInput(event) {
   const content = typeof event === 'object' ? event.target.getContent() : event;
@@ -276,7 +299,7 @@ manejadorImagen() {
     imagenFile: this.seccionEditada.imagen = '/storage/images/contenidos/nombre_personalizado.jpg'
   });
 
-  axios.put(`/api/v1/contenido/update/${this.seccionEditada.id}`, {
+  axios.put(`/v1/contenido/update/${this.seccionEditada.id}`, {
     titulo: this.seccionEditada.nombre,
     descripcion: this.seccionEditada.nombre_subseccion,
     fecha: this.seccionEditada.fecha,

@@ -14,8 +14,8 @@
               <v-card color="#0d1b2a" theme="light">
                 <div class="flex-no-wrap d-flex justify-space-between">
                   <div>
-                    <v-card-title class="text-h5">PUBLICACIONES</v-card-title>
-                    <v-card-subtitle>Manejador de INICIO</v-card-subtitle>
+                    <v-card-title class="text-h5">PUBLICACIONES & CONTENIDOS</v-card-title>
+                    <v-card-subtitle>Manejador de Publicaciones  y Contenidos del Sitio</v-card-subtitle>
                     <v-card-actions>
                       <button @click="$router.push('/index_publicaciones')" class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
                         ENTRAR
@@ -31,6 +31,9 @@
           </v-card>
         </div>
       </v-col>
+                      <!-- Título con TinyMCE 
+                      
+                      
       <v-col cols="12" lg="6">
         <div class="flex items-center justify-center w-full h-56 lg:h-50 rounded-xl focus:outline-none bg-gradient-to-r from-emerald-400 to-cyan-400">
           <v-card title=" " theme="light">
@@ -55,6 +58,10 @@
           </v-card>
         </div>
       </v-col>
+                      
+                      
+                      -->
+
 
 
       <v-col cols="12" lg="6">

@@ -3,7 +3,7 @@
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\BoletaParcial1Controller;
 use App\Http\Controllers\BoletaParcial2Controller;
-
+use App\Http\Controllers\ContenidoController;
 use App\Http\Controllers\PrimeroBoletaParcial2Controller;
 
 use App\Http\Controllers\DescargaController;
@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,9 +72,10 @@ Route::post('/import_parcial3/segundo', [BoletaParcial2Controller::class, 'impor
 
 
 
+//Route::post('formSubmit','ImageController@formSubmit');
 
-
-
+Route::post('/formSubmit', [ContenidoController::class, 'formSubmit'])->name('/formSubmit'); 
+//Route::post('/updateContenido/{id}', [ContenidoController::class, 'updateContenido'])->name('/updateContenido'); 
 
 
 
@@ -82,6 +86,7 @@ Route::get('/listar_parcial1', [BoletaParcial1Controller::class, 'index2'])->nam
 
 
 
+Route::put('v1/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 
 
@@ -139,6 +144,32 @@ Route::post('/subir-pdf', [DescargaController::class, 'subirPdf']);
 
 Route::get('/migrar',function(){ Artisan::call('migrate',["--seed"=>true]);
 });
+
+
+
+Route::get('/uploads/{filename}', function ($filename) {
+    $path = storage_path('app/public/images/' . $filename); // Agrega la barra diagonal al final
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+
+
+
+
+
+
+
+
 
 Route::get('/{any}', function () { return redirect('/');})->where('any', '.*');
 

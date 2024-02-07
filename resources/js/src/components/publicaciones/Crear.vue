@@ -19,7 +19,7 @@ const editorConfig = {
 const tituloEditorConfig = {
   language: 'es',
   toolbar_mode: 'sliding',
-  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen  advtemplate advtable advcode editimage   powerpaste tinymcespellchecker autocorrect a11ychecker  inlinecss',
+  plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen  advtemplate advtable advcode editimage  mergetags powerpaste tinymcespellchecker autocorrect a11ychecker  inlinecss',
   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
   tinycomments_mode: 'embedded',
   tinycomments_author: 'Author name',
@@ -34,9 +34,8 @@ const tituloEditorConfig = {
 
 
 const apiKey = 'vgvm9x4wbo925nbtlkqal2wmuebfvsqvb8lgq99i2rumla9w';
-const initialValue = 'Bienvenido';
+const initialValue = 'jorge';
 </script>
-
 <template>
   <header>
     <navegacion></navegacion>
@@ -65,7 +64,6 @@ const initialValue = 'Bienvenido';
             :initial-value="publicacion.titulo"
             v-on:blur="handleTituloEditorInput"
             class="custom-tinymce_titulo"
-            
           />
           <label for="datepicker" class="block text-sm font-medium text-gray-700">Descripcion</label>
 
@@ -76,7 +74,6 @@ const initialValue = 'Bienvenido';
             :initial-value="publicacion.descripcion"
             v-on:blur="handleEditorInput"
             class="custom-tinymce" 
-            
 
           />
                                   <!-- Nombre -->
@@ -178,16 +175,16 @@ const initialValue = 'Bienvenido';
 }
 
 .custom-tinymce {
-  height: 700px; /* Ajusta el tamaño según tus necesidades */
+  height: 500px; /* Ajusta el tamaño según tus necesidades */
   
-  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
+  margin-bottom: 20px; /* Espaciado inferior para separarlo de otros elementos */
 
 }
 
 .custom-tinymce_titulo {
-  height: 500px; /* Ajusta el tamaño según tus necesidades */
+  height: 300px; /* Ajusta el tamaño según tus necesidades */
   
-  margin-bottom: 10px; /* Espaciado inferior para separarlo de otros elementos */
+  margin-bottom: 50px; /* Espaciado inferior para separarlo de otros elementos */
 
 }
 

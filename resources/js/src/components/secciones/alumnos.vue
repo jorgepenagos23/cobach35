@@ -2,13 +2,11 @@
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
 </script>
-
 <template>
   <div>
     <banner></banner>
   </div>
   <v-app>
-
     <section class="relative py-24 mb-0 bg-white lg:py-23">
       <div class="flex flex-col w-full gap-10 px-5 mx-auto lg:max-w-7xl sm:px-10 md:px-12 lg:px-5 lg:flex-row lg:gap-12">
         <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id" class="xl:w-1/2 xl:mx-4">
@@ -21,25 +19,16 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
         </div>
         <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-0 xl:mx-4 xl:w-1/2 md:grid-cols-2">
           <div v-for="data in seccionesContenidoFiltrado" :key="data.seccion.id">
-            <!-- Sección de Secciones Filtradas
-                
-                <div class="mb-4">
-                  <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
-                </div>
-                
-                -->
+            <div class="mb-4">
+              <img class="object-cover w-full h-60 rounded-xl" :src="data.contenido.imagen" alt="">
+            </div>
 
             <p class="text-gray-500 dark:text-gray-300"></p>
           </div>
         </div>
       </div>
     </section>
-
-
-
     <body>
-
-
       <v-sheet color="#F5F5F5">
         <v-card-item>
           <template v-slot:prepend>
@@ -51,14 +40,9 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
           </template>
 
           <v-divider vertical class="mx-2"></v-divider>
-
-
-
         </v-card-item>
-
-
         <v-col cols="auto">
-          <v-card class="mx-auto" max-width="1400" title="Alumnos" color="green accent-3">
+          <v-card class="mx-auto" max-width="1400" title="Alumnos" color="blue accent-3">
             <template v-slot:prepend>
               <v-icon icon="mdi-account" color="primary"> </v-icon>
             </template>
@@ -70,29 +54,22 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
                 max-width="1400">
                 <div class="w-full max-w-screen-xl mx-auto">
                   <div role="alert"
-                    class="relative flex block w-full px-4 py-4 text-base text-white bg-red-800 rounded-lg font-regular">
+                    class="relative flex block w-full px-2 py-2 bg-gray-100 rounded-lg ">
                     <div class="mr-12 ">
                       <p class="font-bold text-black">
-                        <span class="text-white">
+                        <span >
                           <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
-
                         </span>
                         <span title=""
                           class="inline-flex items-center justify-center ml-4 text-sm font-bold text-yellow-300 transition-all duration-200 rounded-md hover:text-gray-700"
                           role="button">
-                          <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5l7 7-7 7"></path>
-                          </svg>
+                       
                         </span>
                       </p>
                     </div>
                     <h4
                       class="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-
                     </h4>
-
                   </div>
                   <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div class="py-2">
@@ -102,29 +79,13 @@ import "v3-infinite-loading/lib/style.css"; //required if you're not going to ov
                       <img :src="publicacion.imagen" alt="Imagen" class="object-cover w-full rounded h-50">
                     </div>
                   </div>
-
-
                 </div>
               </v-card>
             </div>
-
           </v-card>
         </v-col>
-
-
-
-
-
       </v-sheet>
-
-
-
-
     </body>
-
-
-
-
   </v-app>
 </template>
   

@@ -14,7 +14,7 @@ return new class extends Migration
     {  Schema::create('publicaciones', function (Blueprint $table) {
         $table->id();
         $table->text('titulo');
-        $table->text('descripcion');
+        $table->longText('descripcion')->nullable();;
         $table->date('fecha')->default(now());
         $table->enum('tipo', ['banner', 'publicacion']);
         $table->string('publicador')->nullable();

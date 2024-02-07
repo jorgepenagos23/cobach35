@@ -7,30 +7,36 @@ use App\Models\Seccion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
-
+use Illuminate\Support\Facades\Cache;
 class PublicacionController extends Controller
 {
     
      
     public function index(Request $request)
     {
-        $page = $request->input('page', 1); // Obtiene el número de página desde la solicitud
-        $perPage = 3; // resuultaods per page por pagina 
+        $page = $request->input('page', 1);
+        $perPage = 3;
     
-        $publicaciones = Publicacion::orderBy('fecha', 'desc')
-            ->skip(($page - 1) * $perPage)
-            ->take($perPage)
-            ->get();
+        $cacheKey = 'publicaciones_' . $page;
+        $publicaciones = Cache::remember($cacheKey, 300, function () use ($page, $perPage) {
+            // Esta función se ejecutará solo si los datos no están en caché o han expirado (300 segundos = 5 minutos)
+            return Publicacion::orderBy('fecha', 'desc')
+                ->skip(($page - 1) * $perPage)
+                ->take($perPage)
+                ->get();
+        });
     
-        $totalPublicaciones = Publicacion::count();
+        $totalPublicaciones = Cache::remember('total_publicaciones', 300, function () {
+            // También puedes cachear el total de publicaciones si es necesario
+            return Publicacion::count();
+        });
     
         return response()->json([
             'publicaciones' => $publicaciones,
-            'total' => $totalPublicaciones, // Puedes devolver el total de resultados para que la vista lo utilice
+            'total' => $totalPublicaciones,
             'message' => 'Solicitud Exitosa API'
         ], 200);
     }
-
     
     
 
@@ -76,12 +82,13 @@ public function indexConSecciones3()
 public function store(Request $request)
 {
     $request->validate([
-        'titulo' => 'nullable|string',
-        'descripcion' => 'nullable|string',
+        'titulo' => 'required|string',
+        'descripcion' => 'required|string',
         'fecha' => 'required|date',
-        'publicador' => 'nullable|string',
+        'publicador' => 'required|string',
         'imagenFile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
+
     $publicacion = new Publicacion();
     $publicacion->titulo = $request->titulo;
     $publicacion->descripcion = $request->descripcion;

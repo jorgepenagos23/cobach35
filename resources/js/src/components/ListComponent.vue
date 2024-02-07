@@ -20,15 +20,15 @@
       <v-carousel-item v-for="publicacion in publicaciones" :key="publicacion.id">
         <v-sheet class="bg-opacity-0" height="100%">
           <div class="justify-center d-flex fill-height align-center">
-            <div class="text-h2">
+
               <div class="grid p-8 m-auto text-center bg-white border rounded-lg w-800 hero md:grid-cols-2 bg-opacity-90">
                 <img :src="publicacion.imagen" alt="Imagen" style="width: 1200px;" />
                 <div class="p-5 m-auto text-lg text md:ml-5 md:text-left">
-                  
                   <div class="py-2">
                 <p class="leading-snug text-justify" v-html="publicacion.titulo"></p>
               </div>
-
+              <div class="py-2">
+                <p class="leading-snug text-justify" v-html="publicacion.descripcion"></p>
 
                   <div class="mb-2 text-xl font-semibold text-green-600">{{ formatDate(publicacion.fecha) }}</div>
 
@@ -40,9 +40,7 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
-      
-      
-        </div>
+    </div>
     </header>
 
     <div v-for="publicacion in list" :key="publicacion.id" class="max-w-xl px-4 py-4 mx-auto transition-transform transform bg-white rounded-lg shadow-md hover:shadow-lg">
@@ -50,7 +48,9 @@
     <div class="flex flex-row items-center justify-between py-2">
       <div class="flex flex-row items-center">
         <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-          <img class="object-cover w-8 h-8 rounded-full" src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg" alt="">
+          <img class="object-cover w-5 h-8 rounded-full"
+          
+          src="https://sistemascobach.cobach.edu.mx/ConsultaCertificados/Content/imagenes/logo.png">
           <v-chip color="primary"> 
             {{ publicacion.publicador }}
           </v-chip>

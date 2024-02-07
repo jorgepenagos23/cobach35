@@ -115,6 +115,12 @@ use App\Http\Controllers\SeccionController;
     Route::get('v1/subseccion', [SeccionController::class, 'index2']);
 
     Route::get('v1/contenido', [ContenidoController::class, 'index']);
+
+
+
+    Route::get('v1/contenido/show/{id}', [ContenidoController::class, 'show']);
+
+
     Route::get('v1/fachada_subseccion', [SeccionController::class, 'fachada_subseccion']);
 
 
@@ -122,7 +128,7 @@ use App\Http\Controllers\SeccionController;
     ////CONTENIDOS
 
 
-    Route::put('v1/contenido/update/{id}', [ContenidoController::class, 'update']);
+    
     Route::delete('v1/contenido/delete/{id}', [ContenidoController::class, 'destroy'])->middleware('auth:sanctum');
 
 

@@ -44,61 +44,54 @@ const initialValue = 'Bienvenido';
   <header>
     <navegacion></navegacion>
   </header>
-  <v-app>
 
 
     <appbar></appbar>
-    <v-card-item class="bg-white">
-      <v-theme-provider theme="light" with-background class="pa-5">
-        <v-card title=" Administrador Publicaciones" prepend-icon="mdi-file-chart-outline">
-          <router-link to="/editar-contenidos">
+    <v-app>
+    <v-app-bar app color="green darken-4" dark>
+      <v-btn icon>
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
 
-            <v-btn prepend-icon="mdi-check-circle" color="blue-darken-4" density="compact" hide-details inline inset
-              @click="fachada">
-              <template v-slot:prepend>
-                <v-icon color="success"></v-icon>
-              </template>
-              Contenido del Sitio
-              <template v-slot:append>
-              </template>
-            </v-btn>
-          </router-link>
-        </v-card>
-      </v-theme-provider>
-      <template v-slot:activator="{ props }">
-        <v-btn class="text-none" color="blue-darken-4" rounded="0" variant="outlined" v-bind="props">
+      <v-toolbar-title>Administracion de Publicaciones  y Contenidos del Sitio</v-toolbar-title>
 
+      <v-spacer></v-spacer>
+
+      <router-link to="/editar-contenidos">
+        <v-btn > 
+          Editar Contenidos
+          <v-icon>mdi-pencil</v-icon>
         </v-btn>
-      </template>
+      </router-link>
+    </v-app-bar>
 
-
-
-    </v-card-item>
-
-
+    
     <v-card class="mx-auto" max-width="1400">
       <v-container class="text-center">
 
+
       </v-container>
+
       <v-card-item class="bg-blue-darken-4">
+  <v-card-title>Publicaciones</v-card-title>
+  
+  <template v-slot:append>
+    <div>
+      <p class="inline-block mr-2"></p>
+      <router-link to="/crear-publicaciones">
+        <button
+          class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow"
+        >
+          <v-icon>
+            mdi-post-outline
+          </v-icon>
+          Crear Publicaciones
+        </button>
+      </router-link>
+    </div>
+  </template>
+</v-card-item>
 
-        <v-card-title>Publicaciones</v-card-title>
-        <template v-slot:append>
-          <div>
-            <p class="inline-block mr-2"></p>
-            <router-link to="/crear-publicaciones">
-              <button
-                class="w-32 h-10 p-2 font-semibold text-white transition-all duration-200 ease-in-out rounded-r-full min-w-auto bg-sky-800 hover:bg-green-500 hover:flex-grow">
-                <v-icon>
-                  mdi-post-outline
-                </v-icon>
-              </button>
-            </router-link>
-          </div>
-        </template>
-
-
-      </v-card-item>
 
 
       <v-divider></v-divider>
@@ -106,15 +99,15 @@ const initialValue = 'Bienvenido';
 
       <!-- Scroll vue infinite para publicaciones -->
 
-      <div v-for="publicacion in list" :key="publicacion.id" class="grid grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
-        <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
+      <div v-for="publicacion in list" :key="publicacion.id" class="grid max-w-2xl grid-cols-1 gap-6 px-4 my-6 md:px-6 lg:px-8">
+                <div class="max-w-xl px-4 py-4 mx-auto bg-white rounded-lg shadow-md ">
           <div class="flex flex-row items-center justify-between py-2">
             <div class="flex flex-row items-center">
 
 
               <a href="#" class="flex flex-row items-center rounded-lg focus:outline-none focus:shadow-outline">
-                <img class="object-cover w-8 h-8 rounded-full"
-                  src="https://static.wixstatic.com/media/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg/v1/fit/w_2500,h_1330,al_c/c17ec1_c5f829f2caf944b6add97e07291c016c~mv2.jpg"
+                <img class="object-cover w-5 h-8 rounded-full"
+                  src="https://sistemascobach.cobach.edu.mx/ConsultaCertificados/Content/imagenes/logo.png"
                   alt="">
                 <p class="ml-2 text-base font-medium">{{ publicacion.publicador }}</p>
               </a>
@@ -162,15 +155,13 @@ const initialValue = 'Bienvenido';
 
 
     </v-card>
-  </v-app>
 
-  <v-card class="mx-auto" max-width="400">
+    
 
-  </v-card>
   
+
   <v-dialog v-model="mostrarFormularioEdicion" max-width="1200" :persistent="true" style="z-index: 900;">
   <template v-slot:activator="{ props }">
-    <!-- Este botón activará el diálogo -->
     <v-btn class="text-none" color="white" rounded="0" variant="outlined" v-bind="props">
       Abrir Diálogo
     </v-btn>
@@ -188,17 +179,15 @@ const initialValue = 'Bienvenido';
           :api-key="apiKey"
           :init="tituloEditorConfig"
           :initial-value="publicacionEditando.titulo"
-          @mousedown.stop.prevent
           v-on:blur="handleTituloEditorInput"
           class="custom-tinymce_titulo"
-          style="z-index: 1000;"
+          style="z-index: 1001;"
         />
         <label for="datepicker" class="block text-sm font-medium text-gray-700"> Editar Descripcion</label>
         <Editor
           ref="editor"
           :api-key="apiKey"
           :init="editorConfig"
-          @mousedown.stop.prevent
           :initial-value="publicacionEditando.descripcion"
           v-on:blur="handleEditorInput"
           class="custom-tinymce"
@@ -213,10 +202,17 @@ const initialValue = 'Bienvenido';
         </button>
       </form>
     </v-card-text>
-    <v-btn @click="closeDialog" color="red">Cerrar</v-btn>
+
+    <v-btn   @click="closeDialog"  size="small" color="red">
+          <v-icon size="18">
+            mdi-close
+          </v-icon>
+          Cerrar
+        </v-btn>
+  
   </v-card>
 </v-dialog>
-
+</v-app>
 </template>
 
 <style>
